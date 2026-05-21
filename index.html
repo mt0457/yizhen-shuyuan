@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仪贞书院 —— 国学经典，薪火相传</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ========== CSS Variables ========== */
+:root {
+  --bg-paper: #f8f4ed;
+  --bg-warm: #faf7f2;
+  --red-primary: #b5343a;
+  --red-dark: #8b1a1a;
+  --red-light: #d4534a;
+  --gold: #c9a96e;
+  --gold-light: #e0c88a;
+  --ink: #2c2c2c;
+  --ink-light: #5a5a5a;
+  --ink-lighter: #888;
+  --jade: #7ba686;
+  --border: #d4c5b2;
+  --border-light: #e8ddd0;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-lg: 16px;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-serif: 'Noto Serif SC', 'SimSun', 'STSong', 'KaiTi', serif;
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-paper);
+  color: var(--ink);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(180,160,140,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(180,160,140,0.05) 0%, transparent 50%);
+}
+
+/* ========== Scrollbar ========== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-paper); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ========== Header ========== */
+.header {
+  background: linear-gradient(180deg, #fff 0%, var(--bg-warm) 100%);
+  border-bottom: 2px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.logo-icon {
+  width: 44px; height: 44px;
+  background: var(--red-primary);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+}
+.logo-text { font-family: var(--font-serif); font-size: 22px; font-weight: 700; letter-spacing: 2px; }
+.logo-sub  { font-size: 11px; color: var(--ink-lighter); letter-spacing: 1px; }
+
+.nav { display: flex; gap: 4px; }
+.nav-link {
+  padding: 8px 20px;
+  text-decoration: none;
+  color: var(--ink-light);
+  font-size: 15px;
+  border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+  font-weight: 500;
+}
+.nav-link:hover,
+.nav-link.active {
+  color: var(--red-primary);
+  background: rgba(181,52,58,0.06);
+}
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 20%; right: 20%;
+  height: 2px;
+  background: var(--red-primary);
+  border-radius: 1px;
+}
+
+.menu-toggle {
+  display: none;
+  background: none; border: none;
+  font-size: 28px; cursor: pointer;
+  color: var(--ink);
+  padding: 8px;
+}
+
+/* ========== Main Content ========== */
+.main { flex: 1; }
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ========== Home Page ========== */
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(201,169,110,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(181,52,58,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 20px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  font-family: var(--font-serif);
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--red-dark);
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+.hero h2 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink-lighter);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+.hero-desc {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  color: var(--ink-light);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.btn-primary {
+  background: var(--red-primary);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(181,52,58,0.3);
+}
+.btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(181,52,58,0.4); }
+.btn-outline {
+  background: transparent;
+  color: var(--red-primary);
+  border: 1.5px solid var(--red-primary);
+}
+.btn-outline:hover { background: rgba(181,52,58,0.06); }
+.btn-gold {
+  background: var(--gold);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(201,169,110,0.3);
+}
+.btn-gold:hover { background: #b8945e; transform: translateY(-1px); }
+.btn-sm { padding: 6px 16px; font-size: 13px; border-radius: 16px; }
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 40px 24px 60px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.feature-card {
+  text-align: center;
+  padding: 36px 24px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border-light);
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.feature-icon {
+  width: 60px; height: 60px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--bg-warm), #fff);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  border: 1px solid var(--border-light);
+}
+.feature-card h3 { font-family: var(--font-serif); font-size: 18px; margin-bottom: 8px; color: var(--ink); }
+.feature-card p { font-size: 13px; color: var(--ink-lighter); line-height: 1.8; }
+
+/* ========== Section Header ========== */
+.section-header {
+  text-align: center;
+  padding: 48px 0 32px;
+}
+.section-header h2 {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.section-header .subtitle {
+  color: var(--ink-lighter);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.section-header .divider {
+  display: inline-block;
+  width: 60px; height: 2px;
+  background: var(--gold);
+  margin-top: 12px;
+  border-radius: 1px;
+}
+
+/* ========== Toolbar ========== */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 24px;
+  flex-wrap: wrap;
+}
+.toolbar-left { display: flex; gap: 8px; align-items: center; }
+.search-box {
+  display: flex; align-items: center;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: 8px 16px;
+  gap: 8px;
+  transition: var(--transition);
+}
+.search-box:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.12); }
+.search-box input {
+  border: none; outline: none;
+  font-size: 14px; width: 200px;
+  background: transparent;
+  font-family: var(--font-sans);
+  color: var(--ink);
+}
+.search-box .search-icon { color: var(--ink-lighter); font-size: 16px; }
+.filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-tag {
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--ink-light);
+  transition: var(--transition);
+  font-family: var(--font-sans);
+}
+.filter-tag:hover { border-color: var(--gold); color: var(--gold); }
+.filter-tag.active { background: var(--red-primary); color: #fff; border-color: var(--red-primary); }
+
+/* ========== Price Badge & Lock ========== */
+.book-cover-wrapper { position: relative; }
+.price-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+.price-badge.free { background: var(--jade); }
+.price-badge.paid { background: var(--red-primary); }
+.price-badge.purchased { background: var(--gold); }
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.book-card:hover .lock-overlay { opacity: 1; }
+.lock-icon {
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ========== Donation Amount Grid ========== */
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+.donation-amount {
+  padding: 14px 8px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--red-primary);
+  background: #fff;
+}
+.donation-amount:hover,
+.donation-amount.selected {
+  border-color: var(--red-primary);
+  background: rgba(181,52,58,0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(181,52,58,0.12);
+}
+.donation-custom {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 8px;
+}
+.donation-custom input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  text-align: center;
+  font-family: var(--font-serif);
+  transition: var(--transition);
+}
+.donation-custom input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+}
+
+/* ========== QR Code Placeholder ========== */
+.qr-area {
+  text-align: center;
+  padding: 24px;
+  margin: 16px 0;
+  background: var(--bg-warm);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+}
+.qr-placeholder {
+  width: 180px; height: 180px;
+  margin: 0 auto 12px;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  color: var(--ink-lighter);
+  font-size: 13px;
+  gap: 8px;
+  background: #fff;
+}
+.qr-placeholder .icon { font-size: 48px; }
+
+/* ========== Payment Method Tabs ========== */
+.pay-tabs {
+  display: flex; gap: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.pay-tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  border: none;
+  font-family: var(--font-sans);
+  color: var(--ink-light);
+}
+.pay-tab:first-child { border-right: 1px solid var(--border); }
+.pay-tab.active {
+  background: var(--red-primary);
+  color: #fff;
+}
+
+/* ========== Purchase Status ========== */
+.purchase-success {
+  text-align: center;
+  padding: 24px;
+  animation: fadeIn 0.5s ease;
+}
+.purchase-success .icon { font-size: 56px; margin-bottom: 12px; }
+
+/* ========== Book Grid ========== */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding-bottom: 60px;
+}
+.book-card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid var(--border-light);
+  display: flex; flex-direction: column;
+}
+.book-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.book-cover {
+  height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  position: relative;
+  text-align: center;
+  padding: 16px;
+  line-height: 1.4;
+}
+.book-cover.type-1 { background: linear-gradient(135deg, #8b3a3a, #b5343a); }
+.book-cover.type-2 { background: linear-gradient(135deg, #3a5a4a, #5a8a6a); }
+.book-cover.type-3 { background: linear-gradient(135deg, #4a3a6a, #6a5a9a); }
+.book-cover.type-4 { background: linear-gradient(135deg, #6a4a3a, #9a6a5a); }
+.book-cover.type-5 { background: linear-gradient(135deg, #3a4a5a, #5a7a9a); }
+.book-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.book-info h3 { font-family: var(--font-serif); font-size: 16px; margin-bottom: 4px; color: var(--ink); }
+.book-info .author { font-size: 12px; color: var(--ink-lighter); margin-bottom: 8px; }
+.book-info .desc {
+  font-size: 12px;
+  color: var(--ink-lighter);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+.book-actions {
+  display: flex; gap: 6px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-light);
+}
+.book-actions .btn-sm { flex: 1; text-align: center; justify-content: center; }
+
+/* ========== Video Grid ========== */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding-bottom: 60px;
+}
+.video-card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid var(--border-light);
+}
+.video-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.video-thumb {
+  height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+  position: relative;
+}
+.video-thumb.type-1 { background: linear-gradient(135deg, #2c3e50, #34495e); }
+.video-thumb.type-2 { background: linear-gradient(135deg, #3e2c50, #5e3c70); }
+.video-thumb.type-3 { background: linear-gradient(135deg, #503e2c, #705e4c); }
+.video-play {
+  position: absolute;
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: var(--red-primary);
+  transition: var(--transition);
+}
+.video-card:hover .video-play { transform: scale(1.1); background: #fff; }
+.video-info { padding: 16px; }
+.video-info h3 { font-family: var(--font-serif); font-size: 16px; margin-bottom: 4px; color: var(--ink); }
+.video-info .meta { font-size: 12px; color: var(--ink-lighter); }
+.video-info .desc { font-size: 12px; color: var(--ink-lighter); margin-top: 8px; line-height: 1.6; }
+
+/* ========== About Page ========== */
+.about-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  text-align: center;
+}
+.about-section h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: var(--ink);
+  letter-spacing: 2px;
+}
+.about-section p {
+  color: var(--ink-light);
+  line-height: 2.2;
+  font-size: 15px;
+  margin-bottom: 16px;
+  text-align: justify;
+}
+.about-quote {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--red-dark);
+  padding: 24px 0;
+  letter-spacing: 2px;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  margin: 32px 0;
+}
+
+/* ========== Modals ========== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  max-width: 700px;
+  width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+.modal-lg { max-width: 900px; }
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+.modal-header h3 { font-family: var(--font-serif); font-size: 20px; letter-spacing: 1px; }
+.modal-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-paper);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+  color: var(--ink-light);
+}
+.modal-close:hover { background: #eee; color: var(--ink); }
+.modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+.modal-body.reader-body { padding: 32px 40px; }
+
+/* Reader */
+.reader-title {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  margin-bottom: 4px;
+  letter-spacing: 2px;
+}
+.reader-author {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-lighter);
+  margin-bottom: 24px;
+}
+.reader-content {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 2.2;
+  color: var(--ink);
+  text-align: justify;
+  white-space: pre-wrap;
+}
+.reader-divider {
+  text-align: center;
+  color: var(--gold);
+  margin: 16px 0;
+  letter-spacing: 4px;
+}
+
+/* Form */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--ink-light);
+  letter-spacing: 1px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  transition: var(--transition);
+  background: var(--bg-warm);
+  color: var(--ink);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+  background: #fff;
+}
+.form-group textarea { resize: vertical; min-height: 120px; font-family: var(--font-serif); }
+.form-hint { font-size: 11px; color: var(--ink-lighter); margin-top: 4px; }
+.form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+/* ========== Footer ========== */
+.footer {
+  background: linear-gradient(0deg, #2c2c2c, #3a3a3a);
+  color: #aaa;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+.footer a { color: var(--gold-light); text-decoration: none; }
+.footer .footer-divider { color: #555; margin: 0 8px; }
+
+/* Upload card */
+.upload-card {
+  border: 2px dashed var(--border);
+  background: var(--bg-warm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: var(--radius);
+}
+.upload-card:hover { border-color: var(--gold); background: rgba(201,169,110,0.04); }
+.upload-card .plus {
+  font-size: 48px;
+  color: var(--gold);
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+.upload-card .label {
+  font-size: 14px;
+  color: var(--ink-lighter);
+  letter-spacing: 1px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--ink-lighter);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 24px;
+  font-size: 14px;
+  z-index: 9999;
+  animation: toastIn 0.3s ease;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(16px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* Video player */
+.video-player-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.video-player-wrapper iframe,
+.video-player-wrapper video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ========== Toggle Switch ========== */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0;
+}
+.toggle-label { font-size: 14px; color: var(--ink); font-weight: 500; }
+.toggle-switch {
+  position: relative;
+  width: 48px; height: 26px;
+  flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #ccc;
+  border-radius: 26px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--red-primary); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+/* ========== QR Upload Area ========== */
+.qr-upload-area {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.qr-upload-box {
+  flex: 1; min-width: 140px;
+  text-align: center;
+  padding: 16px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--bg-warm);
+}
+.qr-upload-box:hover { border-color: var(--gold); background: rgba(201,169,110,0.04); }
+.qr-upload-box.has-image { border-style: solid; border-color: var(--jade); }
+.qr-upload-box img { max-width: 100%; max-height: 150px; border-radius: 4px; }
+.qr-upload-box .label { font-size: 13px; color: var(--ink-lighter); margin-top: 6px; }
+.qr-upload-box .icon { font-size: 32px; }
+
+/* ========== Settings Page ========== */
+.settings-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+.settings-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow);
+}
+.settings-card h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+  letter-spacing: 1px;
+}
+.settings-hint {
+  font-size: 12px;
+  color: var(--ink-lighter);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* ========== Mobile Bottom Nav ========== */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border-light);
+  z-index: 99;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+}
+.mobile-nav-inner {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.mobile-nav-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 4px 6px;
+  text-decoration: none;
+  color: var(--ink-lighter);
+  font-size: 10px;
+  transition: var(--transition);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+.mobile-nav-item .icon { font-size: 20px; }
+.mobile-nav-item.active { color: var(--red-primary); }
+
+/* ========== Payment QR Image ========== */
+.qr-image {
+  width: 180px; height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+.pay-notice {
+  background: #fffbf0;
+  border: 1px solid #f0d78c;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #8b6914;
+  text-align: center;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* ========== Enhanced Responsive ========== */
+@media (max-width: 768px) {
+  .header-inner { height: 56px; }
+  .logo-text { font-size: 17px; }
+  .logo-icon { width: 36px; height: 36px; font-size: 20px; }
+  .nav { display: none; position: fixed; top: 56px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 8px 16px 16px; box-shadow: var(--shadow-lg); border-bottom: 2px solid var(--border-light); z-index: 99; }
+  .nav.open { display: flex; }
+  .nav-link { padding: 12px 16px; font-size: 15px; border-radius: 8px; }
+  .menu-toggle { display: block; }
+  .hero { padding: 50px 16px 32px; }
+  .hero h1 { font-size: 28px; letter-spacing: 2px; }
+  .hero h2 { font-size: 16px; }
+  .hero-desc { font-size: 13px; line-height: 1.8; }
+  .features { grid-template-columns: 1fr; padding: 20px 16px; gap: 14px; }
+  .book-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; }
+  .book-cover { height: 140px; font-size: 17px; }
+  .book-info { padding: 10px; }
+  .book-info h3 { font-size: 14px; }
+  .book-actions { padding: 8px 10px; gap: 4px; }
+  .book-actions .btn-sm { padding: 5px 8px; font-size: 11px; }
+  .video-grid { grid-template-columns: 1fr; }
+  .video-thumb { height: 160px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .search-box { width: 100%; }
+  .search-box input { width: 100%; }
+  .filter-tags { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .filter-tag { flex-shrink: 0; font-size: 12px; padding: 5px 12px; }
+  .modal { max-width: 95vw; width: 95%; max-height: 90vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin-top: auto; }
+  .modal-lg { max-width: 100vw; width: 100%; max-height: 100vh; border-radius: 0; }
+  .modal-body.reader-body { padding: 16px; }
+  .modal-header { padding: 14px 16px; }
+  .modal-header h3 { font-size: 17px; }
+  .reader-content { font-size: 14px; line-height: 2; }
+  .modal-body { padding: 16px; }
+  /* Mobile nav */
+  .mobile-nav { display: block; }
+  body { padding-bottom: 60px; }
+  .footer { padding-bottom: 80px; }
+  /* Fullscreen modals on mobile */
+  .modal-overlay.open { align-items: flex-end; }
+  #readerModal .modal-lg,
+  #playerModal .modal-lg { max-width: 100vw; width: 100%; max-height: 100vh; border-radius: 0; }
+  /* Donation grid */
+  .donation-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .donation-amount { padding: 12px 6px; font-size: 15px; }
+  /* QR area */
+  .qr-upload-area { flex-direction: column; }
+  /* Book card inner */
+  .price-badge { font-size: 10px; padding: 2px 8px; top: 4px; right: 4px; }
+}
+
+@media (max-width: 480px) {
+  .book-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .book-cover { height: 120px; font-size: 15px; }
+  .hero { padding: 36px 12px; }
+  .hero h1 { font-size: 24px; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn { padding: 10px 24px; font-size: 14px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header { padding: 32px 0 20px; }
+  .reader-title { font-size: 20px; }
+  .donation-grid { grid-template-columns: repeat(2, 1fr); }
+  .settings-section { padding: 20px 12px 40px; }
+  .settings-card { padding: 16px; }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .book-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+  .video-grid { grid-template-columns: repeat(2, 1fr); }
+  .features { padding: 32px 20px; }
+}
+
+/* ========== Original Responsive (merged above) ========== */
+</style>
+</head>
+<body>
+
+<!-- ========== Header ========== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#home" class="logo" onclick="navigate('home')">
+      <div class="logo-icon">仪</div>
+      <div>
+        <div class="logo-text">仪贞书院</div>
+        <div class="logo-sub">国学经典 · 薪火相传</div>
+      </div>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="菜单">☰</button>
+    <nav class="nav" id="mainNav">
+      <a href="#home" class="nav-link active" data-page="home" onclick="navigate('home')">首页</a>
+      <a href="#books" class="nav-link" data-page="books" onclick="navigate('books')">经典书籍</a>
+      <a href="#videos" class="nav-link" data-page="videos" onclick="navigate('videos')">经典视频</a>
+      <a href="#about" class="nav-link" data-page="about" onclick="navigate('about')">关于本站</a>
+      <a href="#settings" class="nav-link" data-page="settings" onclick="navigate('settings')">⚙️ 设置</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ========== Main Content ========== -->
+<main class="main">
+
+  <!-- Home Page -->
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-badge">传 承 国 学 经 典</div>
+      <h1>仪贞书院</h1>
+      <h2>为往圣继绝学，为万世开太平</h2>
+      <p class="hero-desc">
+        汇聚中华五千年智慧结晶，涵盖经史子集、诗词歌赋、诸子百家。<br>
+        让每一位国学爱好者在书香墨韵中，感受传统文化的深厚魅力。
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="navigate('books')">📖 浏览经典书籍</button>
+        <button class="btn btn-outline" onclick="navigate('videos')">🎬 观看经典视频</button>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>经典藏书</h3>
+        <p>收录经史子集各类国学经典，支持在线阅读与自主上传，打造个人专属书库</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎬</div>
+        <h3>国学视频</h3>
+        <p>汇集国学讲座、文化纪录片、经典解读视频，支持自主添加与收藏</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏛️</div>
+        <h3>文化传承</h3>
+        <p>以弘扬中华优秀传统文化为己任，让国学之光照亮每一个心灵</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Books Page -->
+  <section class="page" id="page-books">
+    <div class="container">
+      <div class="section-header">
+        <h2>📖 经典书籍</h2>
+        <p class="subtitle">经史子集 · 诗词歌赋 · 诸子百家</p>
+        <div class="divider"></div>
+      </div>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="bookSearch" placeholder="搜索书名或作者..." oninput="renderBooks()">
+          </div>
+        </div>
+        <div class="filter-tags" id="bookFilters">
+          <button class="filter-tag active" data-cat="all" onclick="setBookFilter('all', this)">全部</button>
+          <button class="filter-tag" data-cat="经部" onclick="setBookFilter('经部', this)">经部</button>
+          <button class="filter-tag" data-cat="史部" onclick="setBookFilter('史部', this)">史部</button>
+          <button class="filter-tag" data-cat="子部" onclick="setBookFilter('子部', this)">子部</button>
+          <button class="filter-tag" data-cat="集部" onclick="setBookFilter('集部', this)">集部</button>
+          <button class="filter-tag" data-cat="蒙学" onclick="setBookFilter('蒙学', this)">蒙学</button>
+        </div>
+      </div>
+      <div class="book-grid" id="bookGrid"></div>
+    </div>
+  </section>
+
+  <!-- Videos Page -->
+  <section class="page" id="page-videos">
+    <div class="container">
+      <div class="section-header">
+        <h2>🎬 经典视频</h2>
+        <p class="subtitle">国学讲座 · 文化纪录片 · 经典解读</p>
+        <div class="divider"></div>
+      </div>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="videoSearch" placeholder="搜索视频标题..." oninput="renderVideos()">
+          </div>
+        </div>
+        <div class="filter-tags" id="videoFilters">
+          <button class="filter-tag active" data-cat="all" onclick="setVideoFilter('all', this)">全部</button>
+          <button class="filter-tag" data-cat="讲座" onclick="setVideoFilter('讲座', this)">讲座</button>
+          <button class="filter-tag" data-cat="纪录片" onclick="setVideoFilter('纪录片', this)">纪录片</button>
+          <button class="filter-tag" data-cat="解读" onclick="setVideoFilter('解读', this)">解读</button>
+          <button class="filter-tag" data-cat="诗词" onclick="setVideoFilter('诗词', this)">诗词</button>
+        </div>
+      </div>
+      <div class="video-grid" id="videoGrid"></div>
+    </div>
+  </section>
+
+  <!-- About Page -->
+  <section class="page" id="page-about">
+    <div class="about-section">
+      <h2>🏛️ 关于仪贞书院</h2>
+      <p>
+        「仪贞书院」取义于《周易》"元亨利贞"之贞正之道，与《诗经》"令仪令色"之仪范之美。
+        书院致力于汇集与传承中华优秀传统文化，为海内外国学爱好者提供一个纯净、雅致的经典阅读与学习平台。
+      </p>
+      <p>
+        本站收录经、史、子、集四部经典，涵盖儒家十三经、二十四史、诸子百家、诗词歌赋、蒙学读物等，
+        同时汇集国学讲座、文化纪录片、经典解读视频，以多元形式传播国学智慧。
+      </p>
+      <div class="about-quote">
+        "为天地立心，为生民立命，为往圣继绝学，为万世开太平"<br>
+        <span style="font-size:14px; color:var(--ink-lighter);">—— 北宋 · 张载</span>
+      </div>
+      <p>
+        每一位用户都可以上传自己珍藏的经典书籍与视频资源，共同丰富这座国学宝库。
+        让我们携手同行，在经典的海洋中涵养心性，在文化的传承中砥砺前行。
+      </p>
+      <p style="color:var(--ink-lighter);margin-top:32px;">
+        版本：1.0 &nbsp;|&nbsp; 建立于 2026年 &nbsp;|&nbsp; 以文会友 · 以友辅仁
+      </p>
+    </div>
+  </section>
+
+  <!-- Settings Page -->
+  <section class="page" id="page-settings">
+    <div class="settings-section">
+      <div class="section-header">
+        <h2>⚙️ 网站设置</h2>
+        <p class="subtitle">收款码配置 · 支付设置</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="settings-card">
+        <h3>💚 微信收款码</h3>
+        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的微信个人收款码，用于书籍购买和视频打赏的微信支付</p>
+        <div class="qr-upload-area">
+          <div class="qr-upload-box" id="wechatQrBox" onclick="document.getElementById('wechatQrInput').click()">
+            <div class="icon">💚</div>
+            <div class="label" id="wechatQrLabel">点击上传微信收款码</div>
+            <img id="wechatQrPreview" style="display:none;" alt="微信收款码">
+          </div>
+          <input type="file" id="wechatQrInput" accept="image/*" style="display:none;" onchange="uploadQR('wechat', this)">
+          <div style="flex:1;min-width:200px;">
+            <p style="font-size:13px;font-weight:500;margin-bottom:6px;">如何获取微信收款码？</p>
+            <ol style="font-size:12px;color:var(--ink-lighter);line-height:2;padding-left:16px;">
+              <li>打开微信 → 我 → 服务 → 收付款</li>
+              <li>选择"二维码收款"</li>
+              <li>截图保存收款码图片</li>
+              <li>在此上传截图即可</li>
+            </ol>
+            <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR('wechat')">清除收款码</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h3>💙 支付宝收款码</h3>
+        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的支付宝个人收款码，用于书籍购买和视频打赏的支付宝支付</p>
+        <div class="qr-upload-area">
+          <div class="qr-upload-box" id="alipayQrBox" onclick="document.getElementById('alipayQrInput').click()">
+            <div class="icon">💙</div>
+            <div class="label" id="alipayQrLabel">点击上传支付宝收款码</div>
+            <img id="alipayQrPreview" style="display:none;" alt="支付宝收款码">
+          </div>
+          <input type="file" id="alipayQrInput" accept="image/*" style="display:none;" onchange="uploadQR('alipay', this)">
+          <div style="flex:1;min-width:200px;">
+            <p style="font-size:13px;font-weight:500;margin-bottom:6px;">如何获取支付宝收款码？</p>
+            <ol style="font-size:12px;color:var(--ink-lighter);line-height:2;padding-left:16px;">
+              <li>打开支付宝 → 首页 → 收钱</li>
+              <li>截图保存收款码图片</li>
+              <li>在此上传截图即可</li>
+            </ol>
+            <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR('alipay')">清除收款码</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pay-notice">
+        ⚠️ <strong>支付说明：</strong>本网站使用个人收款码方案。用户在支付页面扫描您的收款码完成支付后，点击"确认已支付"即可。建议在收到款项确认后再提供服务。如需全自动支付，需接入微信支付/支付宝商户接口（需企业资质）。
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== Mobile Bottom Nav ========== -->
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <button class="mobile-nav-item active" data-mpage="home" onclick="navigate('home')"><span class="icon">🏠</span>首页</button>
+    <button class="mobile-nav-item" data-mpage="books" onclick="navigate('books')"><span class="icon">📚</span>书籍</button>
+    <button class="mobile-nav-item" data-mpage="videos" onclick="navigate('videos')"><span class="icon">🎬</span>视频</button>
+    <button class="mobile-nav-item" data-mpage="settings" onclick="navigate('settings')"><span class="icon">⚙️</span>设置</button>
+  </div>
+</nav>
+
+<!-- ========== Footer ========== -->
+<footer class="footer">
+  <p>仪贞书院 &copy; 2026 &nbsp;<span class="footer-divider">|</span>&nbsp; 国学经典 · 薪火相传</p>
+  <p style="font-size:11px;">为往圣继绝学，为万世开太平</p>
+</footer>
+
+<!-- ========== Book Reader Modal ========== -->
+<div class="modal-overlay" id="readerModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 id="readerBookTitle">阅读</h3>
+      <button class="modal-close" onclick="closeReader()">✕</button>
+    </div>
+    <div class="modal-body reader-body">
+      <div class="reader-title" id="readerTitle"></div>
+      <div class="reader-author" id="readerAuthor"></div>
+      <div class="reader-divider">◆ ◇ ◆</div>
+      <div class="reader-content" id="readerContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Video Player Modal ========== -->
+<div class="modal-overlay" id="playerModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 id="playerTitle">视频播放</h3>
+      <button class="modal-close" onclick="closePlayer()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="video-player-wrapper" id="playerContainer"></div>
+      <h3 style="font-family:var(--font-serif);margin-bottom:4px;" id="playerVTitle"></h3>
+      <p style="color:var(--ink-lighter);font-size:13px;margin-bottom:12px;" id="playerVDesc"></p>
+      <button class="btn btn-gold btn-sm" id="playerDonateBtn" onclick="donateCurrentVideo()">🎁 打赏支持</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Book Upload Modal ========== -->
+<div class="modal-overlay" id="bookUploadModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📖 上传经典书籍</h3>
+      <button class="modal-close" onclick="closeBookUpload()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>书名 *</label>
+        <input type="text" id="buTitle" placeholder="请输入书籍名称">
+      </div>
+      <div class="form-group">
+        <label>作者 / 编者</label>
+        <input type="text" id="buAuthor" placeholder="如：孔子、老子、司马迁等">
+      </div>
+      <div class="form-group">
+        <label>分类 *</label>
+        <select id="buCategory">
+          <option value="经部">经部</option>
+          <option value="史部">史部</option>
+          <option value="子部">子部</option>
+          <option value="集部">集部</option>
+          <option value="蒙学">蒙学</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="toggle-row">
+          <span class="toggle-label">设为付费书籍</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="buIsPaid" onchange="togglePriceInput()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p class="form-hint">关闭则为免费书籍，开启后可设置阅读价格</p>
+      </div>
+      <div class="form-group" id="buPriceGroup" style="display:none;">
+        <label>阅读价格（元）</label>
+        <input type="number" id="buPrice" placeholder="请输入价格" min="0.01" step="0.01" value="9.90" style="width:100%;">
+      </div>
+      <div class="form-group">
+        <label>内容来源</label>
+        <select id="buSourceType" onchange="toggleBookSource()">
+          <option value="file">上传 TXT 文件</option>
+          <option value="text">手动输入 / 粘贴文本</option>
+        </select>
+      </div>
+      <div class="form-group" id="buFileGroup">
+        <label>选择文件（.txt）</label>
+        <input type="file" id="buFile" accept=".txt,.md,.csv">
+      </div>
+      <div class="form-group" id="buTextGroup" style="display:none;">
+        <label>书籍内容</label>
+        <textarea id="buContent" rows="10" placeholder="请在此输入或粘贴书籍内容...&#10;&#10;支持纯文本格式，建议分段排版。"></textarea>
+      </div>
+      <div class="form-group">
+        <label>简短介绍</label>
+        <textarea id="buDesc" rows="3" placeholder="简要介绍此书的内容与价值..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeBookUpload()">取消</button>
+        <button class="btn btn-primary btn-sm" onclick="uploadBook()">确认上传</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Video Upload Modal ========== -->
+<div class="modal-overlay" id="videoUploadModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🎬 添加经典视频</h3>
+      <button class="modal-close" onclick="closeVideoUpload()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>视频标题 *</label>
+        <input type="text" id="vuTitle" placeholder="请输入视频标题">
+      </div>
+      <div class="form-group">
+        <label>分类 *</label>
+        <select id="vuCategory">
+          <option value="讲座">讲座</option>
+          <option value="纪录片">纪录片</option>
+          <option value="解读">解读</option>
+          <option value="诗词">诗词</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="toggle-row">
+          <span class="toggle-label">开启打赏功能</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="vuAllowDonate" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p class="form-hint">开启后，用户可在视频下方对创作者进行打赏</p>
+      </div>
+      <div class="form-group">
+        <label>视频链接类型</label>
+        <select id="vuLinkType" onchange="toggleVideoLinkHint()">
+          <option value="bilibili">B站视频链接</option>
+          <option value="youtube">YouTube 链接</option>
+          <option value="direct">直接视频链接（mp4等）</option>
+          <option value="iframe">自定义嵌入代码</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>视频链接 / 嵌入代码 *</label>
+        <input type="text" id="vuUrl" placeholder="请粘贴视频链接或iframe嵌入代码">
+        <p class="form-hint" id="vuLinkHint">请输入B站视频的分享链接（如 https://www.bilibili.com/video/BV...）</p>
+      </div>
+      <div class="form-group">
+        <label>视频简介</label>
+        <textarea id="vuDesc" rows="3" placeholder="简要介绍此视频的内容..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-outline btn-sm" onclick="closeVideoUpload()">取消</button>
+        <button class="btn btn-primary btn-sm" onclick="uploadVideo()">确认添加</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Book Purchase Modal ========== -->
+<div class="modal-overlay" id="purchaseModal">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-header">
+      <h3>📖 购买书籍</h3>
+      <button class="modal-close" onclick="closePurchase()">✕</button>
+    </div>
+    <div class="modal-body" id="purchaseBody">
+      <div id="purchaseStep1">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="font-family:var(--font-serif);font-size:20px;font-weight:700;margin-bottom:4px;" id="purchaseTitle"></div>
+          <div style="font-size:13px;color:var(--ink-lighter);" id="purchaseAuthor"></div>
+          <div style="font-size:28px;color:var(--red-primary);font-weight:700;margin-top:12px;" id="purchasePrice"></div>
+        </div>
+        <div class="pay-tabs">
+          <button class="pay-tab active" onclick="switchPayTab('wechat', this)">💚 微信支付</button>
+          <button class="pay-tab" onclick="switchPayTab('alipay', this)">💙 支付宝</button>
+        </div>
+        <div class="qr-area">
+          <div class="qr-placeholder" id="qrDisplay">
+            <span class="icon">💳</span>
+            <span>微信扫码支付</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink-lighter);">请使用微信或支付宝扫描二维码完成支付</p>
+        </div>
+        <div class="form-actions" style="justify-content:center;">
+          <button class="btn btn-outline btn-sm" onclick="closePurchase()">取消</button>
+          <button class="btn btn-primary btn-sm" onclick="simulatePayment()">✅ 确认已支付</button>
+        </div>
+      </div>
+      <div id="purchaseStep2" style="display:none;">
+        <div class="purchase-success">
+          <div class="icon">🎉</div>
+          <h3 style="font-family:var(--font-serif);margin-bottom:8px;">购买成功！</h3>
+          <p style="color:var(--ink-light);font-size:14px;margin-bottom:20px;">感谢您的购买，祝您阅读愉快！</p>
+          <button class="btn btn-primary btn-sm" onclick="openPurchasedBook()">📖 立即阅读</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Video Donation Modal ========== -->
+<div class="modal-overlay" id="donateModal">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-header">
+      <h3>🎁 打赏支持</h3>
+      <button class="modal-close" onclick="closeDonate()">✕</button>
+    </div>
+    <div class="modal-body" id="donateBody">
+      <div id="donateStep1">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="font-family:var(--font-serif);font-size:18px;font-weight:600;margin-bottom:4px;" id="donateTitle"></div>
+          <div style="font-size:13px;color:var(--ink-lighter);">如果喜欢这个视频，欢迎打赏支持创作者</div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;font-weight:500;">选择打赏金额</p>
+        <div class="donation-grid" id="donationGrid">
+          <div class="donation-amount selected" data-amount="5" onclick="selectAmount('5', this)">¥5</div>
+          <div class="donation-amount" data-amount="10" onclick="selectAmount('10', this)">¥10</div>
+          <div class="donation-amount" data-amount="20" onclick="selectAmount('20', this)">¥20</div>
+          <div class="donation-amount" data-amount="50" onclick="selectAmount('50', this)">¥50</div>
+          <div class="donation-amount" data-amount="100" onclick="selectAmount('100', this)">¥100</div>
+          <div class="donation-amount" data-amount="custom" onclick="selectAmount('custom', this)">自定义</div>
+        </div>
+        <div class="donation-custom" id="customAmountRow" style="display:none;">
+          <span style="font-size:18px;font-weight:600;">¥</span>
+          <input type="number" id="customAmount" placeholder="输入金额" min="1" step="1" oninput="updateCustomAmount()">
+        </div>
+        <div class="pay-tabs" style="margin-top:16px;">
+          <button class="pay-tab active" onclick="switchDonateTab('wechat', this)">💚 微信支付</button>
+          <button class="pay-tab" onclick="switchDonateTab('alipay', this)">💙 支付宝</button>
+        </div>
+        <div class="qr-area">
+          <div class="qr-placeholder" id="donateQr">
+            <span class="icon">💳</span>
+            <span>微信扫码支付</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink-lighter);">请使用微信或支付宝扫描二维码完成支付</p>
+        </div>
+        <div class="form-actions" style="justify-content:center;">
+          <button class="btn btn-outline btn-sm" onclick="closeDonate()">取消</button>
+          <button class="btn btn-gold btn-sm" onclick="confirmDonate()">❤️ 确认已打赏</button>
+        </div>
+      </div>
+      <div id="donateStep2" style="display:none;">
+        <div class="purchase-success">
+          <div class="icon">🌸</div>
+          <h3 style="font-family:var(--font-serif);margin-bottom:8px;">感谢您的打赏！</h3>
+          <p style="color:var(--ink-light);font-size:14px;margin-bottom:8px;" id="donateThankMsg"></p>
+          <p style="color:var(--ink-lighter);font-size:12px;">您的支持是我们持续前行的动力</p>
+          <button class="btn btn-gold btn-sm" onclick="closeDonate()" style="margin-top:16px;">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Confirm Delete Modal ========== -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header">
+      <h3>确认操作</h3>
+      <button class="modal-close" onclick="closeConfirm()">✕</button>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <p id="confirmMsg" style="margin-bottom:20px;font-size:15px;"></p>
+      <div class="form-actions" style="justify-content:center;">
+        <button class="btn btn-outline btn-sm" onclick="closeConfirm()">取消</button>
+        <button class="btn btn-primary btn-sm" id="confirmBtn" style="background:#d32f2f;">确认删除</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toastContainer"></div>
+
+<script>
+/* ========== App State ========== */
+const STORAGE_KEY_BOOKS = 'yizhen_books';
+const STORAGE_KEY_VIDEOS = 'yizhen_videos';
+const STORAGE_KEY_PURCHASES = 'yizhen_purchases';
+const STORAGE_KEY_QRCODES = 'yizhen_qrcodes';
+
+let state = {
+  currentPage: 'home',
+  bookFilter: 'all',
+  videoFilter: 'all',
+  books: [],
+  videos: [],
+  purchasedBooks: [],
+  qrCodes: { wechat: '', alipay: '' },
+  pendingDelete: null,
+  pendingPurchaseId: null,
+  pendingDonateId: null,
+  selectedDonateAmount: '5',
+};
+
+/* ========== Default Data ========== */
+const DEFAULT_BOOKS = [
+  {
+    id: 'b1', title: '论语', author: '孔子及其弟子', category: '经部',
+    price: 0, coverType:1,
+    desc: '儒家经典，记录孔子及其弟子的言行，集中体现了孔子的政治主张、伦理思想、道德观念及教育原则。',
+    content: `学而篇第一\n\n子曰："学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知而不愠，不亦君子乎？"\n\n有子曰："其为人也孝弟，而好犯上者，鲜矣；不好犯上，而好作乱者，未之有也。君子务本，本立而道生。孝弟也者，其为仁之本与！"\n\n子曰："巧言令色，鲜矣仁！"\n\n曾子曰："吾日三省吾身：为人谋而不忠乎？与朋友交而不信乎？传不习乎？"\n\n为政篇第二\n\n子曰："为政以德，譬如北辰，居其所而众星共之。"\n\n子曰："《诗》三百，一言以蔽之，曰：'思无邪'。"\n\n子曰："道之以政，齐之以刑，民免而无耻；道之以德，齐之以礼，有耻且格。"\n\n八佾篇第三\n\n孔子谓季氏："八佾舞于庭，是可忍也，孰不可忍也？"\n\n子曰："人而不仁，如礼何？人而不仁，如乐何？"\n\n里仁篇第四\n\n子曰："里仁为美。择不处仁，焉得知？"\n\n子曰："不仁者不可以久处约，不可以长处乐。仁者安仁，知者利仁。"\n\n子曰："唯仁者能好人，能恶人。"\n\n子曰："苟志于仁矣，无恶也。"`
+  },
+  {
+    id: 'b2', title: '道德经', author: '老子', category: '子部',
+    price: 0, coverType:2,
+    desc: '道家哲学经典，以"道"为核心，阐述宇宙万物运行规律与处世智慧，被誉为"万经之王"。',
+    content: `第一章\n\n道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常有欲，以观其徼。此两者同出而异名，同谓之玄。玄之又玄，众妙之门。\n\n第二章\n\n天下皆知美之为美，斯恶已；皆知善之为善，斯不善已。故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。是以圣人处无为之事，行不言之教。万物作焉而不辞，生而不有，为而不恃，功成而弗居。夫唯弗居，是以不去。\n\n第八章\n\n上善若水。水善利万物而不争，处众人之所恶，故几于道。居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。夫唯不争，故无尤。\n\n第三十三章\n\n知人者智，自知者明。胜人者有力，自胜者强。知足者富，强行者有志。不失其所者久，死而不亡者寿。`
+  },
+  {
+    id: 'b3', title: '诗经', author: '佚名（周代采集）', category: '经部',
+    price: 0, coverType:3,
+    desc: '中国最早的诗歌总集，收录西周初年至春秋中叶的诗歌305篇，分为风、雅、颂三部分。',
+    content: `关雎（周南）\n\n关关雎鸠，在河之洲。窈窕淑女，君子好逑。\n参差荇菜，左右流之。窈窕淑女，寤寐求之。\n求之不得，寤寐思服。悠哉悠哉，辗转反侧。\n参差荇菜，左右采之。窈窕淑女，琴瑟友之。\n参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。\n\n蒹葭（秦风）\n\n蒹葭苍苍，白露为霜。所谓伊人，在水一方。\n溯洄从之，道阻且长。溯游从之，宛在水中央。\n蒹葭萋萋，白露未晞。所谓伊人，在水之湄。\n溯洄从之，道阻且跻。溯游从之，宛在水中坻。\n\n桃夭（周南）\n\n桃之夭夭，灼灼其华。之子于归，宜其室家。\n桃之夭夭，有蕡其实。之子于归，宜其家室。\n桃之夭夭，其叶蓁蓁。之子于归，宜其家人。`
+  },
+  {
+    id: 'b4', title: '孙子兵法', author: '孙武', category: '子部',
+    price: 0, coverType:4,
+    desc: '中国现存最早的兵书，被誉为"兵学圣典"，其战略思想影响深远，广泛应用于军事、商业等领域。',
+    content: `始计第一\n\n孙子曰：兵者，国之大事，死生之地，存亡之道，不可不察也。\n故经之以五事，校之以计，而索其情：一曰道，二曰天，三曰地，四曰将，五曰法。道者，令民与上同意，可与之死，可与之生，而不畏危也。天者，阴阳、寒暑、时制也。地者，远近、险易、广狭、死生也。将者，智、信、仁、勇、严也。法者，曲制、官道、主用也。\n\n作战第二\n\n孙子曰：凡用兵之法，驰车千驷，革车千乘，带甲十万，千里馈粮。则内外之费，宾客之用，胶漆之材，车甲之奉，日费千金，然后十万之师举矣。\n\n谋攻第三\n\n孙子曰：夫用兵之法，全国为上，破国次之；全军为上，破军次之。是故百战百胜，非善之善者也；不战而屈人之兵，善之善者也。故上兵伐谋，其次伐交，其次伐兵，其下攻城。\n\n知彼知己，百战不殆；不知彼而知己，一胜一负；不知彼不知己，每战必败。`
+  },
+  {
+    id: 'b5', title: '大学', author: '曾子', category: '经部',
+    price: 0, coverType:5,
+    desc: '"四书"之首，论述儒家修身齐家治国平天下的思想体系，为古人入德之门。',
+    content: `大学之道，在明明德，在亲民，在止于至善。知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得。物有本末，事有终始，知所先后，则近道矣。\n\n古之欲明明德于天下者，先治其国；欲治其国者，先齐其家；欲齐其家者，先修其身；欲修其身者，先正其心；欲正其心者，先诚其意；欲诚其意者，先致其知；致知在格物。\n\n物格而后知至，知至而后意诚，意诚而后心正，心正而后身修，身修而后家齐，家齐而后国治，国治而后天下平。\n\n自天子以至于庶人，一是皆以修身为本。其本乱而末治者否矣。其所厚者薄，而其所薄者厚，未之有也。此谓知本，此谓知之至也。`
+  },
+  {
+    id: 'b6', title: '中庸', author: '子思', category: '经部',
+    price: 0, coverType:1,
+    desc: '"四书"之一，阐述儒家中庸之道，主张不偏不倚、无过无不及的人生哲学。',
+    content: `天命之谓性，率性之谓道，修道之谓教。道也者，不可须臾离也，可离非道也。是故君子戒慎乎其所不睹，恐惧乎其所不闻。莫见乎隐，莫显乎微，故君子慎其独也。\n\n喜怒哀乐之未发，谓之中；发而皆中节，谓之和。中也者，天下之大本也；和也者，天下之达道也。致中和，天地位焉，万物育焉。\n\n仲尼曰："君子中庸，小人反中庸。君子之中庸也，君子而时中；小人之反中庸也，小人而无忌惮也。"\n\n子曰："中庸其至矣乎！民鲜能久矣。"`
+  },
+  {
+    id: 'b7', title: '孟子', author: '孟子及其弟子', category: '经部',
+    price: 0, coverType:2,
+    desc: '记录孟子言行的儒家经典，主张"性善论"与"仁政"学说，与《论语》并称"论孟"。',
+    content: `梁惠王章句上\n\n孟子见梁惠王。王曰："叟，不远千里而来，亦将有以利吾国乎？"\n孟子对曰："王何必曰利？亦有仁义而已矣。"\n\n老吾老，以及人之老；幼吾幼，以及人之幼。天下可运于掌。\n\n公孙丑章句上\n\n"敢问夫子恶乎长？"曰："我知言，我善养吾浩然之气。"\n"敢问何谓浩然之气？"曰："难言也。其为气也，至大至刚，以直养而无害，则塞于天地之间。"\n\n告子章句上\n\n孟子曰："鱼，我所欲也；熊掌，亦我所欲也。二者不可得兼，舍鱼而取熊掌者也。生，亦我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也。"`
+  },
+  {
+    id: 'b8', title: '庄子', author: '庄子及其后学', category: '子部',
+    price: 0, coverType:3,
+    desc: '道家经典之一，以寓言说理，文风汪洋恣肆，充满哲学思辨与人生智慧。',
+    content: `逍遥游第一\n\n北冥有鱼，其名为鲲。鲲之大，不知其几千里也。化而为鸟，其名为鹏。鹏之背，不知其几千里也。怒而飞，其翼若垂天之云。是鸟也，海运则将徙于南冥。南冥者，天池也。\n\n齐物论第二\n\n南郭子綦隐机而坐，仰天而嘘，嗒焉似丧其耦。颜成子游立侍乎前，曰："何居乎？形固可使如槁木，而心固可使如死灰乎？今之隐机者，非昔之隐机者也。"\n\n养生主第三\n\n吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而已矣！为善无近名，为恶无近刑。缘督以为经，可以保身，可以全生，可以养亲，可以尽年。`
+  },
+  {
+    id: 'b9', title: '易经', author: '周文王、孔子等', category: '经部',
+    price: 0, coverType:4,
+    desc: '群经之首，大道之源。以阴阳八卦推演天地万物变化规律，是中国哲学的根本经典。',
+    content: `乾卦第一\n\n乾：元，亨，利，贞。\n《彖》曰：大哉乾元，万物资始，乃统天。云行雨施，品物流形。大明终始，六位时成，时乘六龙以御天。乾道变化，各正性命，保合太和，乃利贞。首出庶物，万国咸宁。\n《象》曰：天行健，君子以自强不息。\n\n坤卦第二\n\n坤：元，亨，利牝马之贞。君子有攸往，先迷后得主，利。西南得朋，东北丧朋。安贞吉。\n《象》曰：地势坤，君子以厚德载物。\n\n系辞上传\n\n一阴一阳之谓道。继之者善也，成之者性也。仁者见之谓之仁，知者见之谓之知。百姓日用而不知，故君子之道鲜矣。`
+  },
+  {
+    id: 'b10', title: '楚辞', author: '屈原、宋玉等', category: '集部',
+    price: 0, coverType:5,
+    desc: '中国浪漫主义文学源头，以《离骚》为代表的骚体诗歌，辞采瑰丽，情感深沉。',
+    content: `离骚（节选）\n\n帝高阳之苗裔兮，朕皇考曰伯庸。\n摄提贞于孟陬兮，惟庚寅吾以降。\n皇览揆余初度兮，肇锡余以嘉名：\n名余曰正则兮，字余曰灵均。\n\n纷吾既有此内美兮，又重之以修能。\n扈江离与辟芷兮，纫秋兰以为佩。\n汩余若将不及兮，恐年岁之不吾与。\n朝搴阰之木兰兮，夕揽洲之宿莽。\n\n日月忽其不淹兮，春与秋其代序。\n惟草木之零落兮，恐美人之迟暮。\n\n长太息以掩涕兮，哀民生之多艰。\n余虽好修姱以鞿羁兮，謇朝谇而夕替。\n\n亦余心之所善兮，虽九死其犹未悔。`
+  },
+  {
+    id: 'b11', title: '史记', author: '司马迁', category: '史部',
+    price: 0, coverType:1,
+    desc: '中国第一部纪传体通史，记载从黄帝到汉武帝三千余年历史，被鲁迅誉为"史家之绝唱，无韵之离骚"。',
+    content: `太史公自序（节选）\n\n太史公曰："先人有言：'自周公卒五百岁而有孔子。孔子卒后至于今五百岁，有能绍明世，正《易传》，继《春秋》，本《诗》《书》《礼》《乐》之际？'意在斯乎！意在斯乎！小子何敢让焉。"\n\n上大夫壶遂曰："昔孔子何为而作《春秋》哉？"太史公曰："余闻董生曰：'周道衰废，孔子为鲁司寇，诸侯害之，大夫壅之。孔子知言之不用，道之不行也，是非二百四十二年之中，以为天下仪表，贬天子，退诸侯，讨大夫，以达王事而已矣。'"\n\n报任安书（节选）\n\n古者富贵而名摩灭，不可胜记，唯倜傥非常之人称焉。盖文王拘而演《周易》；仲尼厄而作《春秋》；屈原放逐，乃赋《离骚》；左丘失明，厥有《国语》；孙子膑脚，《兵法》修列；不韦迁蜀，世传《吕览》；韩非囚秦，《说难》《孤愤》；《诗》三百篇，大抵圣贤发愤之所为作也。`
+  },
+  {
+    id: 'b12', title: '三字经', author: '王应麟', category: '蒙学',
+    price: 0, coverType:2,
+    desc: '中国传统启蒙读物，三字一句，朗朗上口，涵盖历史、天文、地理、道德等内容。',
+    content: `人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。\n昔孟母，择邻处。子不学，断机杼。\n窦燕山，有义方。教五子，名俱扬。\n养不教，父之过。教不严，师之惰。\n子不学，非所宜。幼不学，老何为。\n玉不琢，不成器。人不学，不知义。\n为人子，方少时。亲师友，习礼仪。\n香九龄，能温席。孝于亲，所当执。\n融四岁，能让梨。弟于长，宜先知。\n首孝弟，次见闻。知某数，识某文。`
+  },
+  {
+    id: 'b13', title: '弟子规', author: '李毓秀', category: '蒙学',
+    price: 0, coverType:3,
+    desc: '以《论语》"学而篇"为纲编写的蒙学经典，教导子弟在家、出外、待人接物与学习上应恪守的规范。',
+    content: `总叙\n\n弟子规，圣人训。首孝弟，次谨信。\n泛爱众，而亲仁。有余力，则学文。\n\n入则孝\n\n父母呼，应勿缓。父母命，行勿懒。\n父母教，须敬听。父母责，须顺承。\n冬则温，夏则凊。晨则省，昏则定。\n出必告，反必面。居有常，业无变。\n事虽小，勿擅为。苟擅为，子道亏。\n物虽小，勿私藏。苟私藏，亲心伤。\n\n出则弟\n\n兄道友，弟道恭。兄弟睦，孝在中。\n财物轻，怨何生。言语忍，忿自泯。\n或饮食，或坐走。长者先，幼者后。`
+  },
+  {
+    id: 'b14', title: '千字文', author: '周兴嗣', category: '蒙学',
+    price: 0, coverType:4,
+    desc: '以一千个不重复的汉字编成的四言韵文，对仗工整，条理清晰，为古代蒙学经典。',
+    content: `天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。\n寒来暑往，秋收冬藏。闰余成岁，律吕调阳。\n云腾致雨，露结为霜。金生丽水，玉出昆冈。\n剑号巨阙，珠称夜光。果珍李柰，菜重芥姜。\n海咸河淡，鳞潜羽翔。龙师火帝，鸟官人皇。\n始制文字，乃服衣裳。推位让国，有虞陶唐。\n吊民伐罪，周发殷汤。坐朝问道，垂拱平章。\n爱育黎首，臣伏戎羌。遐迩一体，率宾归王。\n鸣凤在竹，白驹食场。化被草木，赖及万方。`
+  },
+  {
+    id: 'b15', title: '菜根谭', author: '洪应明', category: '子部',
+    price: 0, coverType:5,
+    desc: '明代处世智慧格言集，融合儒释道三家思想，语言简练，意味深长，为修身养性必读之书。',
+    content: `修身\n\n欲做精金美玉的人品，定从烈火中煅来；思立掀天揭地的事功，须向薄冰上履过。\n\n一念错，便觉百行皆非，防之当如渡海浮囊，勿容一针之罅漏；万善全，始得一生无愧，修之当如凌云宝树，须假众木以撑持。\n\n处世\n\n涉世浅，点染亦浅；历事深，机械亦深。故君子与其练达，不若朴鲁；与其曲谨，不若疏狂。\n\n面前的田地要放得宽，使人无不平之叹；身后的惠泽要流得长，使人有不匮之思。\n\n评议\n\n富贵是无情之物，看得他重，他害你越大；贫贱是耐久之交，处得他好，他益你反深。`
+  },
+];
+
+const DEFAULT_VIDEOS = [
+  {
+    id: 'v1', title: '《论语》精讲 —— 孔子的人生智慧', category: '讲座',
+    thumbType: 1,
+    allowDonate: true, desc: '深入解读《论语》经典章句，感悟孔子思想的现代价值，学习儒家修身齐家之道。',
+    url: 'https://www.bilibili.com/video/BV1Nx41187pZ/', type: 'bilibili'
+  },
+  {
+    id: 'v2', title: '《道德经》的智慧 —— 道家哲学与现代生活', category: '讲座',
+    thumbType: 2,
+    allowDonate: true, desc: '系统讲解《道德经》核心思想，探索道家哲学在当代生活中的实际应用。',
+    url: 'https://www.bilibili.com/video/BV1Gx411y7fZ/', type: 'bilibili'
+  },
+  {
+    id: 'v3', title: '中国通史 —— 大型历史文化纪录片', category: '纪录片',
+    thumbType: 3,
+    allowDonate: true, desc: '全面展现中华文明从远古到近代的发展历程，气势恢宏，史料详实。',
+    url: 'https://www.bilibili.com/video/BV1sW411C7Ej/', type: 'bilibili'
+  },
+];
+
+/* ========== Init ========== */
+function init() {
+  // Load books
+  const savedBooks = localStorage.getItem(STORAGE_KEY_BOOKS);
+  if (savedBooks) {
+    try { state.books = JSON.parse(savedBooks); } catch(e) { state.books = []; }
+  }
+  if (!state.books.length) {
+    state.books = [...DEFAULT_BOOKS];
+    saveBooks();
+  }
+
+  // Load videos
+  const savedVideos = localStorage.getItem(STORAGE_KEY_VIDEOS);
+  if (savedVideos) {
+    try { state.videos = JSON.parse(savedVideos); } catch(e) { state.videos = []; }
+  }
+  if (!state.videos.length) {
+    state.videos = [...DEFAULT_VIDEOS];
+    saveVideos();
+  }
+
+  // Load purchases
+  const savedPurchases = localStorage.getItem(STORAGE_KEY_PURCHASES);
+  if (savedPurchases) {
+    try { state.purchasedBooks = JSON.parse(savedPurchases); } catch(e) { state.purchasedBooks = []; }
+  }
+
+  // Load QR codes
+  const savedQR = localStorage.getItem(STORAGE_KEY_QRCODES);
+  if (savedQR) {
+    try { state.qrCodes = JSON.parse(savedQR); } catch(e) { state.qrCodes = { wechat: '', alipay: '' }; }
+  }
+  renderQRSettings();
+
+  // Route
+  const hash = window.location.hash.replace('#', '') || 'home';
+  navigate(hash);
+
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#', '');
+    navigate(h || 'home');
+  });
+}
+
+function saveBooks() { localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(state.books)); }
+function saveVideos() { localStorage.setItem(STORAGE_KEY_VIDEOS, JSON.stringify(state.videos)); }
+function savePurchases() { localStorage.setItem(STORAGE_KEY_PURCHASES, JSON.stringify(state.purchasedBooks)); }
+
+/* ========== Navigation ========== */
+let _navigating = false;
+
+function navigate(page) {
+  if (_navigating) return;
+  _navigating = true;
+
+  state.currentPage = page;
+  window.location.hash = page;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+  const targetPage = document.getElementById('page-' + page);
+  if (targetPage) targetPage.classList.add('active');
+
+  const navLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+  if (navLink) navLink.classList.add('active');
+
+  if (page === 'books') renderBooks();
+  if (page === 'videos') renderVideos();
+  if (page === 'settings') renderQRSettings();
+
+  // Update mobile nav
+  document.querySelectorAll('.mobile-nav-item').forEach(m => m.classList.remove('active'));
+  const mobileItem = document.querySelector(`.mobile-nav-item[data-mpage="${page}"]`);
+  if (mobileItem) mobileItem.classList.add('active');
+
+  // Close mobile menu
+  document.getElementById('mainNav').classList.remove('open');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  setTimeout(() => { _navigating = false; }, 100);
+}
+
+function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+
+/* ========== Books ========== */
+let bookFilter = 'all';
+
+function setBookFilter(cat, el) {
+  bookFilter = cat;
+  document.querySelectorAll('#bookFilters .filter-tag').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderBooks();
+}
+
+function renderBooks() {
+  const grid = document.getElementById('bookGrid');
+  const search = (document.getElementById('bookSearch')?.value || '').toLowerCase();
+
+  let filtered = state.books;
+  if (bookFilter !== 'all') filtered = filtered.filter(b => b.category === bookFilter);
+  if (search) filtered = filtered.filter(b =>
+    b.title.toLowerCase().includes(search) ||
+    b.author.toLowerCase().includes(search) ||
+    b.desc.toLowerCase().includes(search)
+  );
+
+  let html = '';
+  filtered.forEach(book => {
+    const price = parseFloat(book.price) || 0;
+    const isPurchased = state.purchasedBooks.includes(book.id);
+    const isFree = price === 0;
+    const canRead = isFree || isPurchased;
+
+    let badgeHtml = '';
+    if (isFree) {
+      badgeHtml = '<span class="price-badge free">免费</span>';
+    } else if (isPurchased) {
+      badgeHtml = '<span class="price-badge purchased">已购</span>';
+    } else {
+      badgeHtml = '<span class="price-badge paid">¥' + price.toFixed(1) + '</span>';
+    }
+
+    let lockHtml = '';
+    if (!canRead) {
+      lockHtml = '<div class="lock-overlay"><span class="lock-icon">🔒</span></div>';
+    }
+
+    html += `
+    <div class="book-card" onclick="${canRead ? "openReader('" + book.id + "')" : "openPurchase('" + book.id + "')"}">
+      <div class="book-cover-wrapper">
+        <div class="book-cover type-${book.coverType || 1}">${book.title}</div>
+        ${badgeHtml}
+        ${lockHtml}
+      </div>
+      <div class="book-info">
+        <h3>${book.title}</h3>
+        <div class="author">${book.author} · ${book.category}</div>
+        <div class="desc">${book.desc}</div>
+      </div>
+      <div class="book-actions">
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); ${canRead ? "openReader('" + book.id + "')" : "openPurchase('" + book.id + "')"}">${canRead ? '阅读' : '购买阅读'}</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); confirmDeleteBook('${book.id}')" style="color:#c0392b;border-color:#e0c0c0;">删除</button>
+      </div>
+    </div>`;
+  });
+
+  // Upload card
+  html += `
+  <div class="upload-card" onclick="openBookUpload()">
+    <div class="plus">＋</div>
+    <div class="label">上传经典书籍</div>
+  </div>`;
+
+  grid.innerHTML = html;
+}
+
+/* ========== Videos ========== */
+let videoFilter = 'all';
+
+function setVideoFilter(cat, el) {
+  videoFilter = cat;
+  document.querySelectorAll('#videoFilters .filter-tag').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderVideos();
+}
+
+function renderVideos() {
+  const grid = document.getElementById('videoGrid');
+  const search = (document.getElementById('videoSearch')?.value || '').toLowerCase();
+
+  let filtered = state.videos;
+  if (videoFilter !== 'all') filtered = filtered.filter(v => v.category === videoFilter);
+  if (search) filtered = filtered.filter(v =>
+    v.title.toLowerCase().includes(search) ||
+    v.desc.toLowerCase().includes(search)
+  );
+
+  const icons = { '讲座': '🎙️', '纪录片': '🎥', '解读': '📖', '诗词': '📜', '其他': '🎬' };
+
+  let html = '';
+  filtered.forEach(video => {
+    html += `
+    <div class="video-card">
+      <div class="video-thumb type-${video.thumbType || 1}" onclick="openPlayer('${video.id}')">
+        <span style="font-size:52px;">${icons[video.category] || '🎬'}</span>
+        <div class="video-play">▶</div>
+      </div>
+      <div class="video-info" onclick="openPlayer('${video.id}')">
+        <h3>${video.title}</h3>
+        <div class="meta">${video.category}</div>
+        <div class="desc">${video.desc}</div>
+      </div>
+      <div class="book-actions">
+        <button class="btn btn-outline btn-sm" style="flex:1;text-align:center;justify-content:center;" onclick="event.stopPropagation(); openPlayer('${video.id}')">播放</button>
+        ${video.allowDonate !== false ? `<button class="btn btn-outline btn-sm" style="flex:1;text-align:center;justify-content:center;color:var(--gold);border-color:var(--gold-light);" onclick="event.stopPropagation(); openDonate('${video.id}')">打赏</button>` : ''}
+        <button class="btn btn-outline btn-sm" style="flex:1;text-align:center;justify-content:center;color:#c0392b;border-color:#e0c0c0;" onclick="event.stopPropagation(); confirmDeleteVideo('${video.id}')">删除</button>
+      </div>
+    </div>`;
+  });
+
+  html += `
+  <div class="upload-card" onclick="openVideoUpload()">
+    <div class="plus">＋</div>
+    <div class="label">添加经典视频</div>
+  </div>`;
+
+  grid.innerHTML = html;
+}
+
+/* ========== Reader ========== */
+function openReader(bookId) {
+  const book = state.books.find(b => b.id === bookId);
+  if (!book) return;
+  document.getElementById('readerBookTitle').textContent = '📖 ' + book.title;
+  document.getElementById('readerTitle').textContent = book.title;
+  document.getElementById('readerAuthor').textContent = book.author + ' · ' + book.category;
+  document.getElementById('readerContent').textContent = book.content || '（暂无内容）';
+  document.getElementById('readerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReader() {
+  document.getElementById('readerModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ========== Video Player ========== */
+let currentVideoId = null;
+
+function openPlayer(videoId) {
+  const video = state.videos.find(v => v.id === videoId);
+  if (!video) return;
+  currentVideoId = videoId;
+  document.getElementById('playerTitle').textContent = '🎬 ' + video.title;
+  document.getElementById('playerVTitle').textContent = video.title;
+  document.getElementById('playerVDesc').textContent = video.desc || '';
+  document.getElementById('playerDonateBtn').style.display = (video.allowDonate !== false) ? '' : 'none';
+  const container = document.getElementById('playerContainer');
+
+  let embedHtml = '';
+  if (video.type === 'bilibili' && video.url) {
+    const bvMatch = video.url.match(/BV[\w]+/);
+    const bvid = bvMatch ? bvMatch[0] : '';
+    if (bvid) {
+      embedHtml = `<iframe src="https://player.bilibili.com/player.html?bvid=${bvid}&page=1" allowfullscreen></iframe>`;
+    } else {
+      embedHtml = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;">无法解析B站链接，请确认链接格式</div>`;
+    }
+  } else if (video.type === 'youtube' && video.url) {
+    const vidMatch = video.url.match(/(?:v=|\/)([\w-]{11})/);
+    const vid = vidMatch ? vidMatch[1] : '';
+    if (vid) {
+      embedHtml = `<iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>`;
+    } else {
+      embedHtml = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;">无法解析YouTube链接，请确认链接格式</div>`;
+    }
+  } else if (video.type === 'direct' && video.url) {
+    embedHtml = `<video controls src="${video.url}" style="position:absolute;inset:0;width:100%;height:100%;"></video>`;
+  } else if (video.type === 'iframe' && video.url) {
+    embedHtml = video.url;
+  } else {
+    embedHtml = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;flex-direction:column;gap:8px;"><span style="font-size:40px;">🎬</span>暂无可播放的视频链接</div>`;
+  }
+
+  container.innerHTML = embedHtml;
+  document.getElementById('playerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePlayer() {
+  document.getElementById('playerModal').classList.remove('open');
+  document.getElementById('playerContainer').innerHTML = '';
+  document.body.style.overflow = '';
+  currentVideoId = null;
+}
+
+function donateCurrentVideo() {
+  if (currentVideoId) {
+    closePlayer();
+    openDonate(currentVideoId);
+  }
+}
+
+/* ========== QR Code Management ========== */
+function saveQRCodes() { localStorage.setItem(STORAGE_KEY_QRCODES, JSON.stringify(state.qrCodes)); }
+
+function uploadQR(type, input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { showToast('图片大小不能超过2MB'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    state.qrCodes[type] = e.target.result;
+    saveQRCodes();
+    renderQRSettings();
+    showToast(type === 'wechat' ? '微信收款码已保存' : '支付宝收款码已保存');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearQR(type) {
+  state.qrCodes[type] = '';
+  saveQRCodes();
+  renderQRSettings();
+  showToast('收款码已清除');
+}
+
+function renderQRSettings() {
+  ['wechat', 'alipay'].forEach(type => {
+    const box = document.getElementById(type + 'QrBox');
+    const label = document.getElementById(type + 'QrLabel');
+    const preview = document.getElementById(type + 'QrPreview');
+    if (!box || !label || !preview) return;
+    if (state.qrCodes[type]) {
+      box.classList.add('has-image');
+      preview.src = state.qrCodes[type];
+      preview.style.display = '';
+      label.textContent = '点击更换' + (type === 'wechat' ? '微信' : '支付宝') + '收款码';
+    } else {
+      box.classList.remove('has-image');
+      preview.style.display = 'none';
+      label.textContent = '点击上传' + (type === 'wechat' ? '微信' : '支付宝') + '收款码';
+    }
+  });
+}
+
+function getQRImage(type) {
+  return state.qrCodes[type] || '';
+}
+
+/* ========== Updated Payment Display ========== */
+function updatePaymentQR() {
+  const qrDisplay = document.getElementById('qrDisplay');
+  const image = payMethod === 'wechat' ? getQRImage('wechat') : getQRImage('alipay');
+  if (image) {
+    qrDisplay.innerHTML = '<img src="' + image + '" alt="收款码" class="qr-image">';
+  } else {
+    const icon = payMethod === 'wechat' ? '💚' : '💙';
+    const label = payMethod === 'wechat' ? '微信扫码支付' : '支付宝扫码支付';
+    qrDisplay.innerHTML = '<span class="icon">' + icon + '</span><span>' + label + '</span>';
+  }
+}
+
+function updateDonationQR() {
+  const qrDisplay = document.getElementById('donateQr');
+  const image = donatePayMethod === 'wechat' ? getQRImage('wechat') : getQRImage('alipay');
+  if (image) {
+    qrDisplay.innerHTML = '<img src="' + image + '" alt="收款码" class="qr-image">';
+  } else {
+    const icon = donatePayMethod === 'wechat' ? '💚' : '💙';
+    const label = donatePayMethod === 'wechat' ? '微信扫码支付' : '支付宝扫码支付';
+    qrDisplay.innerHTML = '<span class="icon">' + icon + '</span><span>' + label + '</span>';
+  }
+}
+
+/* ========== Price Toggle ========== */
+function togglePriceInput() {
+  const isPaid = document.getElementById('buIsPaid').checked;
+  document.getElementById('buPriceGroup').style.display = isPaid ? '' : 'none';
+}
+
+/* ========== Book Upload ========== */
+function openBookUpload() {
+  document.getElementById('bookUploadModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('buTitle').value = '';
+  document.getElementById('buAuthor').value = '';
+  document.getElementById('buContent').value = '';
+  document.getElementById('buDesc').value = '';
+  document.getElementById('buFile').value = '';
+  document.getElementById('buSourceType').value = 'file';
+  document.getElementById('buIsPaid').checked = false;
+  document.getElementById('buPrice').value = '9.90';
+  document.getElementById('buPriceGroup').style.display = 'none';
+  toggleBookSource();
+}
+
+function closeBookUpload() {
+  document.getElementById('bookUploadModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleBookSource() {
+  const type = document.getElementById('buSourceType').value;
+  document.getElementById('buFileGroup').style.display = type === 'file' ? '' : 'none';
+  document.getElementById('buTextGroup').style.display = type === 'text' ? '' : 'none';
+}
+
+function uploadBook() {
+  const title = document.getElementById('buTitle').value.trim();
+  const author = document.getElementById('buAuthor').value.trim() || '佚名';
+  const category = document.getElementById('buCategory').value;
+  const isPaid = document.getElementById('buIsPaid').checked;
+  const price = isPaid ? (parseFloat(document.getElementById('buPrice').value) || 9.90) : 0;
+  const desc = document.getElementById('buDesc').value.trim();
+  const sourceType = document.getElementById('buSourceType').value;
+
+  if (!title) { showToast('请输入书籍名称'); return; }
+
+  const coverTypes = [1,2,3,4,5];
+  const coverType = coverTypes[Math.floor(Math.random() * coverTypes.length)];
+
+  const handleContent = (content) => {
+    const newBook = {
+      id: 'b' + Date.now(),
+      title, author, category, coverType, price, desc,
+      content: content || '',
+    };
+    state.books.unshift(newBook);
+    saveBooks();
+    closeBookUpload();
+    if (state.currentPage === 'books') renderBooks();
+    showToast('《' + title + '》上传成功！');
+  };
+
+  if (sourceType === 'file') {
+    const fileInput = document.getElementById('buFile');
+    const file = fileInput.files[0];
+    if (!file) { showToast('请选择要上传的文件'); return; }
+    const reader = new FileReader();
+    reader.onload = function(e) { handleContent(e.target.result); };
+    reader.onerror = function() { showToast('文件读取失败，请重试'); };
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    const content = document.getElementById('buContent').value.trim();
+    if (!content) { showToast('请输入书籍内容'); return; }
+    handleContent(content);
+  }
+}
+
+/* ========== Video Upload ========== */
+function openVideoUpload() {
+  document.getElementById('videoUploadModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('vuTitle').value = '';
+  document.getElementById('vuUrl').value = '';
+  document.getElementById('vuDesc').value = '';
+  document.getElementById('vuLinkType').value = 'bilibili';
+  document.getElementById('vuAllowDonate').checked = true;
+  toggleVideoLinkHint();
+}
+
+function closeVideoUpload() {
+  document.getElementById('videoUploadModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleVideoLinkHint() {
+  const type = document.getElementById('vuLinkType').value;
+  const hints = {
+    'bilibili': '请输入B站视频的分享链接（如 https://www.bilibili.com/video/BV...）',
+    'youtube': '请输入YouTube视频链接（如 https://www.youtube.com/watch?v=...）',
+    'direct': '请输入视频文件的直接链接（如 .mp4 结尾的链接）',
+    'iframe': '请粘贴完整的 iframe 嵌入代码',
+  };
+  document.getElementById('vuLinkHint').textContent = hints[type] || '';
+}
+
+function uploadVideo() {
+  const title = document.getElementById('vuTitle').value.trim();
+  const category = document.getElementById('vuCategory').value;
+  const allowDonate = document.getElementById('vuAllowDonate').checked;
+  const type = document.getElementById('vuLinkType').value;
+  const url = document.getElementById('vuUrl').value.trim();
+  const desc = document.getElementById('vuDesc').value.trim();
+
+  if (!title) { showToast('请输入视频标题'); return; }
+  if (!url) { showToast('请输入视频链接或嵌入代码'); return; }
+
+  const thumbTypes = [1,2,3];
+  const thumbType = thumbTypes[Math.floor(Math.random() * thumbTypes.length)];
+
+  const newVideo = {
+    id: 'v' + Date.now(),
+    title, category, allowDonate, type, url, desc, thumbType,
+  };
+  state.videos.unshift(newVideo);
+  saveVideos();
+  closeVideoUpload();
+  if (state.currentPage === 'videos') renderVideos();
+  showToast('《' + title + '》添加成功！');
+}
+
+/* ========== Delete ========== */
+function confirmDeleteBook(id) {
+  const book = state.books.find(b => b.id === id);
+  if (!book) return;
+  state.pendingDelete = { type: 'book', id };
+  document.getElementById('confirmMsg').textContent = `确定要删除《${book.title}》吗？此操作不可撤销。`;
+  document.getElementById('confirmBtn').onclick = function() { deleteBook(id); };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+function deleteBook(id) {
+  state.books = state.books.filter(b => b.id !== id);
+  saveBooks();
+  closeConfirm();
+  if (state.currentPage === 'books') renderBooks();
+  showToast('书籍已删除');
+}
+
+function confirmDeleteVideo(id) {
+  const video = state.videos.find(v => v.id === id);
+  if (!video) return;
+  state.pendingDelete = { type: 'video', id };
+  document.getElementById('confirmMsg').textContent = `确定要删除《${video.title}》吗？此操作不可撤销。`;
+  document.getElementById('confirmBtn').onclick = function() { deleteVideo(id); };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+function deleteVideo(id) {
+  state.videos = state.videos.filter(v => v.id !== id);
+  saveVideos();
+  closeConfirm();
+  if (state.currentPage === 'videos') renderVideos();
+  showToast('视频已删除');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmModal').classList.remove('open');
+  state.pendingDelete = null;
+}
+
+/* ========== Toast ========== */
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => { toast.remove(); }, 2500);
+}
+
+/* ========== Purchase ========== */
+function openPurchase(bookId) {
+  const book = state.books.find(b => b.id === bookId);
+  if (!book) return;
+  state.pendingPurchaseId = bookId;
+  document.getElementById('purchaseTitle').textContent = book.title;
+  document.getElementById('purchaseAuthor').textContent = book.author + ' · ' + book.category;
+  const price = parseFloat(book.price) || 0;
+  document.getElementById('purchasePrice').textContent = '¥' + price.toFixed(1);
+  document.getElementById('purchaseStep1').style.display = '';
+  document.getElementById('purchaseStep2').style.display = 'none';
+  payMethod = 'wechat';
+  document.querySelectorAll('#purchaseBody .pay-tab').forEach(t => t.classList.remove('active'));
+  const firstTab = document.querySelector('#purchaseBody .pay-tab');
+  if (firstTab) firstTab.classList.add('active');
+  updatePaymentQR();
+  document.getElementById('purchaseModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePurchase() {
+  document.getElementById('purchaseModal').classList.remove('open');
+  document.body.style.overflow = '';
+  state.pendingPurchaseId = null;
+}
+
+let payMethod = 'wechat';
+function switchPayTab(method, el) {
+  payMethod = method;
+  document.querySelectorAll('#purchaseBody .pay-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  updatePaymentQR();
+}
+
+function simulatePayment() {
+  document.getElementById('purchaseStep1').style.display = 'none';
+  document.getElementById('purchaseStep2').style.display = '';
+}
+
+function openPurchasedBook() {
+  const bookId = state.pendingPurchaseId;
+  if (!bookId) return;
+  if (!state.purchasedBooks.includes(bookId)) {
+    state.purchasedBooks.push(bookId);
+    savePurchases();
+  }
+  closePurchase();
+  openReader(bookId);
+  showToast('购买成功！已解锁书籍阅读权限');
+}
+
+/* ========== Donation ========== */
+function openDonate(videoId) {
+  const video = state.videos.find(v => v.id === videoId);
+  if (!video) return;
+  state.pendingDonateId = videoId;
+  state.selectedDonateAmount = '5';
+  document.getElementById('donateTitle').textContent = '支持「' + video.title + '」';
+  document.getElementById('donateStep1').style.display = '';
+  document.getElementById('donateStep2').style.display = 'none';
+  // Reset selection
+  document.querySelectorAll('#donationGrid .donation-amount').forEach(d => d.classList.remove('selected'));
+  const firstAmount = document.querySelector('#donationGrid .donation-amount[data-amount="5"]');
+  if (firstAmount) firstAmount.classList.add('selected');
+  document.getElementById('customAmountRow').style.display = 'none';
+  document.getElementById('customAmount').value = '';
+  donatePayMethod = 'wechat';
+  document.querySelectorAll('#donateBody .pay-tab').forEach(t => t.classList.remove('active'));
+  const firstTab = document.querySelector('#donateBody .pay-tab');
+  if (firstTab) firstTab.classList.add('active');
+  updateDonationQR();
+  document.getElementById('donateModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDonate() {
+  document.getElementById('donateModal').classList.remove('open');
+  document.body.style.overflow = '';
+  state.pendingDonateId = null;
+}
+
+function selectAmount(amount, el) {
+  state.selectedDonateAmount = amount;
+  document.querySelectorAll('#donationGrid .donation-amount').forEach(d => d.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+  document.getElementById('customAmountRow').style.display = amount === 'custom' ? '' : 'none';
+}
+
+function updateCustomAmount() {
+  const val = document.getElementById('customAmount').value;
+  if (val) state.selectedDonateAmount = val;
+}
+
+let donatePayMethod = 'wechat';
+function switchDonateTab(method, el) {
+  donatePayMethod = method;
+  document.querySelectorAll('#donateBody .pay-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  updateDonationQR();
+}
+
+function confirmDonate() {
+  const amount = state.selectedDonateAmount === 'custom'
+    ? (document.getElementById('customAmount').value || '0')
+    : state.selectedDonateAmount;
+  document.getElementById('donateStep1').style.display = 'none';
+  document.getElementById('donateStep2').style.display = '';
+  document.getElementById('donateThankMsg').textContent = '您已成功打赏 ¥' + parseFloat(amount).toFixed(1) + '，心意满满，感恩有您！';
+}
+
+/* ========== Modal close on overlay click ========== */
+document.getElementById('readerModal').addEventListener('click', function(e) { if (e.target === this) closeReader(); });
+document.getElementById('playerModal').addEventListener('click', function(e) { if (e.target === this) closePlayer(); });
+document.getElementById('bookUploadModal').addEventListener('click', function(e) { if (e.target === this) closeBookUpload(); });
+document.getElementById('videoUploadModal').addEventListener('click', function(e) { if (e.target === this) closeVideoUpload(); });
+document.getElementById('confirmModal').addEventListener('click', function(e) { if (e.target === this) closeConfirm(); });
+document.getElementById('purchaseModal').addEventListener('click', function(e) { if (e.target === this) closePurchase(); });
+document.getElementById('donateModal').addEventListener('click', function(e) { if (e.target === this) closeDonate(); });
+
+/* ========== Keyboard shortcuts ========== */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeReader(); closePlayer(); closeBookUpload(); closeVideoUpload(); closeConfirm(); closePurchase(); closeDonate();
+  }
+});
+
+/* ========== Start ========== */
+init();
+</script>
+
+</body>
+</html>
