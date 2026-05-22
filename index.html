@@ -985,7 +985,370 @@ body {
   .features { padding: 32px 20px; }
 }
 
-/* ========== Original Responsive (merged above) ========== */
+/* ========== Copy Protection ========== */
+.protected-content {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.protected-content * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.protect-badge {
+  position: fixed;
+  bottom: 80px;
+  right: 16px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 10px;
+  z-index: 999;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+.admin-indicator {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  background: var(--red-primary);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 10px;
+  z-index: 999;
+  letter-spacing: 1px;
+  display: none;
+}
+
+/* ========== Comments ========== */
+.comment-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+.comment-section h4 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+}
+.comment-form {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.comment-form input {
+  flex: 1; min-width: 120px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  background: var(--bg-warm);
+  transition: var(--transition);
+}
+.comment-form input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201,169,110,0.1);
+}
+.comment-form button {
+  padding: 8px 16px;
+  background: var(--red-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.comment-form button:hover { background: var(--red-dark); }
+.comment-list { max-height: 300px; overflow-y: auto; }
+.comment-item {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+.comment-item:last-child { border-bottom: none; }
+.comment-item .c-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 4px;
+}
+.comment-item .c-author {
+  font-weight: 600; font-size: 13px; color: var(--ink);
+}
+.comment-item .c-time {
+  font-size: 11px; color: var(--ink-lighter);
+}
+.comment-item .c-content {
+  font-size: 13px; color: var(--ink-light); line-height: 1.6;
+}
+.comment-item .c-del {
+  font-size: 10px; color: #c0392b; cursor: pointer; background: none; border: none;
+  padding: 2px 6px; border-radius: 4px; transition: var(--transition);
+}
+.comment-item .c-del:hover { background: #fee; }
+
+/* ========== Mingli Page ========== */
+.mingli-tabs {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  padding: 0 0 24px; justify-content: center;
+}
+.mingli-tab {
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--ink-light);
+  transition: var(--transition);
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+.mingli-tab:hover { border-color: var(--gold); color: var(--gold); }
+.mingli-tab.active { background: var(--red-primary); color: #fff; border-color: var(--red-primary); }
+
+.mingli-panel { display: none; }
+.mingli-panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+/* Bazi Form */
+.bazi-form-card {
+  max-width: 600px; margin: 0 auto;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+}
+.bazi-form-card h3 {
+  font-family: var(--font-serif); font-size: 20px;
+  text-align: center; margin-bottom: 24px; letter-spacing: 2px;
+}
+.form-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.form-row .form-group { flex: 1; min-width: 120px; }
+.form-group select { width: 100%; }
+
+/* Bazi Chart Table */
+.bazi-result {
+  max-width: 700px; margin: 32px auto;
+}
+.bazi-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+}
+.bazi-table th, .bazi-table td {
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid var(--border-light);
+}
+.bazi-table th {
+  background: var(--red-primary);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+.bazi-table .pillar-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--red-dark);
+  background: var(--bg-warm);
+}
+.bazi-table .gan-zhi {
+  font-size: 28px;
+  font-weight: 900;
+  font-family: var(--font-serif);
+  color: var(--ink);
+  padding: 16px 8px;
+}
+.bazi-table .element-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.element-wood { background: #5a9a6a; }
+.element-fire { background: #c0392b; }
+.element-earth { background: #c9a96e; }
+.element-metal { background: #c0a060; }
+.element-water { background: #4a7a9a; }
+
+.bazi-analysis {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  line-height: 2;
+}
+.bazi-analysis h4 {
+  font-family: var(--font-serif);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.wuxing-bar {
+  display: flex; align-items: center; gap: 8px; margin: 6px 0;
+}
+.wuxing-bar .wuxing-label {
+  width: 30px; font-weight: 600; font-size: 14px; text-align: right;
+}
+.wuxing-bar .wuxing-fill {
+  height: 22px; border-radius: 11px; transition: width 0.6s ease;
+  min-width: 4px;
+}
+.wuxing-bar .wuxing-count { font-size: 12px; color: var(--ink-lighter); width: 24px; }
+
+.paid-overlay-bazi {
+  position: relative;
+}
+.paid-blur {
+  filter: blur(6px); pointer-events: none; user-select: none;
+}
+.paid-unlock-btn {
+  display: block; margin: 16px auto;
+}
+
+/* Naming */
+.naming-result-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin: 12px 0;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  text-align: center;
+}
+.naming-result-card .suggested-name {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--red-dark);
+  letter-spacing: 4px;
+  margin: 8px 0;
+}
+.naming-result-card .name-detail {
+  font-size: 13px; color: var(--ink-light); line-height: 1.8;
+}
+
+/* Feng Shui Cards */
+.fengshui-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding-bottom: 40px;
+}
+.fengshui-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.fengshui-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.fengshui-card .fs-icon { font-size: 36px; margin-bottom: 12px; }
+.fengshui-card h4 { font-family: var(--font-serif); font-size: 16px; margin-bottom: 8px; letter-spacing: 1px; }
+.fengshui-card p { font-size: 12px; color: var(--ink-lighter); line-height: 1.8; }
+.fengshui-detail {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+  line-height: 2.2;
+  font-size: 15px;
+}
+.fengshui-detail h3 { font-family: var(--font-serif); text-align: center; font-size: 22px; margin-bottom: 16px; letter-spacing: 2px; }
+
+/* Clothing */
+.clothing-today {
+  text-align: center;
+  padding: 40px 20px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.clothing-today .day-element {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  font-weight: 900;
+  margin: 16px 0;
+  letter-spacing: 4px;
+}
+.clothing-colors {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 20px 0;
+}
+.color-card {
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+  min-width: 80px;
+}
+.clothing-week {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px; margin-top: 24px;
+}
+.clothing-day {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+}
+
+/* Admin password modal */
+.admin-modal .form-group input {
+  font-size: 18px; letter-spacing: 4px; text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mingli-tabs { gap: 4px; }
+  .mingli-tab { padding: 8px 13px; font-size: 12px; }
+  .bazi-form-card { padding: 20px 14px; }
+  .bazi-table .gan-zhi { font-size: 22px; padding: 10px 4px; }
+  .bazi-table th, .bazi-table td { padding: 8px 4px; font-size: 11px; }
+  .fengshui-grid { grid-template-columns: 1fr; }
+  .clothing-week { grid-template-columns: repeat(4, 1fr); }
+  .naming-result-card .suggested-name { font-size: 24px; }
+}
+
+@media (max-width: 480px) {
+  .bazi-table .gan-zhi { font-size: 18px; padding: 8px 2px; }
+  .bazi-table th, .bazi-table td { padding: 6px 2px; font-size: 10px; }
+  .clothing-week { grid-template-columns: repeat(3, 1fr); }
+}
 </style>
 </head>
 <body>
