@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="仪贞书院——国学经典阅读与命理探索平台。提供八字排盘、起名取名、风水布局、穿衣搭配等传统命理工具，以及经典古籍在线阅读。">
-<meta name="keywords" content="八字排盘,起名取名,风水布局,国学经典,命理,周易,传统文化,四柱预测">
+<meta name="description" content="仪贞书院——国学经典阅读与命理探索平台。提供八字排盘、周易取名、风水布局、穿衣搭配等传统命理工具，VIP会员畅享全部功能，以及经典古籍在线阅读。">
+<meta name="keywords" content="八字排盘,周易取名,风水布局,国学经典,命理,周易,传统文化,四柱预测,VIP会员">
 <meta property="og:title" content="仪贞书院 —— 国学经典，薪火相传">
-<meta property="og:description" content="八字排盘·起名取名·风水布局·穿衣搭配。在线国学经典阅读与命理探索平台。">
+<meta property="og:description" content="八字排盘·周易取名·风水布局·穿衣搭配。VIP会员畅享全部命理功能，在线国学经典阅读平台。">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_CN">
 <meta name="theme-color" content="#b5343a">
@@ -2002,6 +2002,90 @@ body {
   .forecast-table th, .forecast-table td { padding: 4px 2px; }
   .pattern-badge { font-size: 15px; padding: 4px 16px; }
 }
+/* ========== Book Content Editor ========== */
+.book-edit-textarea { width: 100%; min-height: 400px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); font-family: var(--font-serif); font-size: 15px; line-height: 2; resize: vertical; background: var(--bg-warm); color: var(--ink); transition: var(--transition); }
+.book-edit-textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.12); background: #fff; }
+.char-counter { font-size: 12px; color: var(--ink-lighter); margin-top: 6px; text-align: right; }
+/* ========== VIP Membership ========== */
+.vip-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: linear-gradient(135deg, #f6d365, #fda085); color: #7c4a00; animation: vipGlow 3s ease-in-out infinite; }
+.vip-badge.gold { background: linear-gradient(135deg, #c9a96e, #e0c87d, #c9a96e); color: #5c3d00; }
+.vip-badge.platinum { background: linear-gradient(135deg, #a8c0ff, #c8d6ff); color: #1a237e; }
+.vip-badge.diamond { background: linear-gradient(135deg, #e8c5ff, #d4a5ff); color: #4a0072; }
+@keyframes vipGlow { 0%, 100% { box-shadow: 0 0 4px rgba(246,211,101,0.4); } 50% { box-shadow: 0 0 12px rgba(246,211,101,0.8); } }
+.vip-nav-link { position: relative; }
+.vip-nav-link .vip-badge { position: absolute; top: -6px; right: -18px; font-size: 9px; padding: 1px 5px; }
+/* VIP Page */
+.vip-page-wrap { max-width: 800px; margin: 0 auto; }
+.vip-auth-card, .vip-tier-card, .vip-status-card, .vip-admin-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.vip-tier-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-top: 16px; }
+.vip-tier-card { text-align: center; cursor: pointer; transition: var(--transition); position: relative; padding: 20px 16px; }
+.vip-tier-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); border-color: var(--gold); }
+.vip-tier-card.recommended { border-color: var(--gold); border-width: 2px; }
+.vip-tier-card.recommended::before { content: '推荐'; position: absolute; top: 8px; right: 8px; background: var(--gold); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+.vip-tier-card .tier-icon { font-size: 36px; margin-bottom: 8px; }
+.vip-tier-card .tier-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--ink); }
+.vip-tier-card .tier-price { font-size: 24px; font-weight: 700; color: var(--red-primary); margin-bottom: 2px; }
+.vip-tier-card .tier-period { font-size: 12px; color: var(--ink-lighter); margin-bottom: 8px; }
+.vip-tier-card .tier-save { font-size: 11px; color: var(--green, #4caf50); margin-bottom: 10px; }
+.vip-tier-card .tier-features { font-size: 12px; color: var(--ink-light); line-height: 1.8; }
+.vip-tier-card .tier-features li { list-style: none; }
+/* VIP Status */
+.vip-status-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.vip-status-icon { font-size: 48px; }
+.vip-status-info { flex: 1; }
+.vip-status-info .name { font-size: 18px; font-weight: 700; color: var(--ink); }
+.vip-status-info .tier { font-size: 14px; color: var(--gold); font-weight: 600; margin: 4px 0; }
+.vip-status-info .expiry { font-size: 13px; color: var(--ink-lighter); }
+.vip-progress { height: 6px; background: var(--bg-warm); border-radius: 3px; margin: 12px 0; overflow: hidden; }
+.vip-progress .fill { height: 100%; background: linear-gradient(90deg, #f6d365, #fda085); border-radius: 3px; transition: width 0.5s; }
+/* Admin Dashboard */
+.vip-admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.vip-stat-card { background: var(--bg-warm); padding: 16px; border-radius: var(--radius); text-align: center; }
+.vip-stat-card .stat-num { font-size: 28px; font-weight: 700; color: var(--ink); }
+.vip-stat-card .stat-label { font-size: 12px; color: var(--ink-lighter); margin-top: 4px; }
+.vip-user-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.vip-user-table th, .vip-user-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border-light); }
+.vip-user-table th { font-weight: 600; color: var(--ink-light); font-size: 11px; text-transform: uppercase; }
+/* Auth Form */
+.vip-form { max-width: 400px; }
+.vip-form .form-group { margin-bottom: 16px; }
+.vip-form label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.vip-form input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; font-family: var(--font-ui); background: var(--bg-warm); transition: var(--transition); box-sizing: border-box; }
+.vip-form input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.12); background: #fff; }
+.vip-form .form-actions { display: flex; gap: 10px; }
+.vip-form .form-toggle { text-align: center; font-size: 13px; color: var(--ink-lighter); margin-top: 12px; }
+.vip-form .form-toggle a { color: var(--gold); cursor: pointer; font-weight: 600; text-decoration: none; }
+/* Verification */
+.verify-section { margin-bottom: 12px; padding: 12px; background: var(--bg-warm); border-radius: var(--radius); border: 1px solid var(--border-light); }
+.verify-section-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+.verify-row { display: flex; gap: 8px; align-items: center; }
+.verify-row input { flex: 1; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; font-family: var(--font-ui); background: #fff; transition: var(--transition); }
+.verify-row input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.12); }
+.verify-row .btn-sm { font-size: 11px; padding: 8px 12px; flex-shrink: 0; }
+/* Purchase Modal */
+.vip-purchase-steps { display: flex; gap: 24px; margin-bottom: 20px; }
+.vip-purchase-steps .step { flex: 1; text-align: center; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-warm); }
+.vip-purchase-steps .step.active { border-color: var(--gold); background: #fff; }
+.vip-purchase-steps .step .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+.vip-purchase-steps .step .step-label { font-size: 13px; font-weight: 600; }
+.vip-purchase-steps .step .step-desc { font-size: 11px; color: var(--ink-lighter); margin-top: 4px; }
+.vip-qr-code { text-align: center; padding: 20px; }
+.vip-qr-code img { max-width: 200px; border-radius: var(--radius); }
+/* VIP Gate */
+.vip-gate-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10001; display: flex; align-items: center; justify-content: center; }
+.vip-gate-card { background: #fff; border-radius: 12px; padding: 32px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+.vip-gate-card .gate-icon { font-size: 48px; margin-bottom: 12px; }
+.vip-gate-card .gate-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+.vip-gate-card .gate-desc { font-size: 14px; color: var(--ink-light); line-height: 1.6; margin-bottom: 20px; }
+/* Responsive */
+@media (max-width: 768px) {
+  .vip-tier-cards { grid-template-columns: repeat(2, 1fr); }
+  .vip-purchase-steps { flex-direction: column; gap: 12px; }
+  .vip-admin-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .vip-tier-cards { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -2028,6 +2112,7 @@ body {
       <a href="#videos" class="nav-link" data-page="videos" onclick="navigate('videos')">经典视频</a>
       <a href="#mingli" class="nav-link" data-page="mingli" onclick="navigate('mingli')">🔮 命理</a>
       <a href="#about" class="nav-link" data-page="about" onclick="navigate('about')">关于本站</a>
+      <a href="#vip" class="nav-link" data-page="vip" onclick="navigate('vip')"><span id="vipNavBadge"></span>👑 VIP</a>
       <a href="#settings" class="nav-link" data-page="settings" onclick="navigate('settings')">⚙️ 设置</a>
     </nav>
   </div>
@@ -2274,18 +2359,32 @@ body {
     </div>
   </section>
 
+  <!-- VIP Page -->
+  <section class="page" id="page-vip">
+    <div class="container">
+      <div class="section-header">
+        <h2>👑 VIP会员中心</h2>
+        <p class="subtitle">解锁全部命理功能 · 尊享深度分析</p>
+        <div class="divider"></div>
+      </div>
+      <div class="vip-page-wrap" id="vipPageContent">
+        <!-- Dynamically rendered by renderVipPage() -->
+      </div>
+    </div>
+  </section>
+
   <!-- Mingli Page -->
   <section class="page" id="page-mingli">
     <div class="container">
       <div class="section-header">
         <h2>🔮 传统命理</h2>
-        <p class="subtitle">八字排盘 · 起名取名 · 风水布局 · 穿衣搭配</p>
+        <p class="subtitle">八字排盘 · 周易取名 · 风水布局 · 穿衣搭配</p>
         <div class="divider"></div>
       </div>
 
       <div class="mingli-tabs" id="mingliTabs">
         <button class="mingli-tab active" data-mtab="bazi" onclick="switchMingliTab('bazi', this)">📅 八字排盘</button>
-        <button class="mingli-tab" data-mtab="naming" onclick="switchMingliTab('naming', this)">📛 起名取名</button>
+        <button class="mingli-tab" data-mtab="naming" onclick="switchMingliTab('naming', this)">📛 周易取名</button>
         <button class="mingli-tab" data-mtab="fengshui" onclick="switchMingliTab('fengshui', this)">🏡 风水布局</button>
         <button class="mingli-tab" data-mtab="clothing" onclick="switchMingliTab('clothing', this)">👗 穿衣搭配</button>
       </div>
@@ -2344,35 +2443,67 @@ body {
       <!-- Panel: Naming -->
       <div class="mingli-panel" id="panel-naming">
         <div class="bazi-form-card">
-          <h3>请输入起名相关信息</h3>
+          <h3>📛 周易取名 · 姓名与八字分析</h3>
+          <p style="font-size:13px;color:var(--ink-lighter);text-align:center;margin-bottom:16px;">
+            源自《周易》《说文解字》《康熙字典》《三命通会》等25部经典，为您提供专业的姓名分析与取名建议。
+          </p>
+          <div class="form-row">
+            <div class="form-group">
+              <label>出生年份</label>
+              <select id="namingYear"></select>
+            </div>
+            <div class="form-group">
+              <label>出生月份</label>
+              <select id="namingMonth"></select>
+            </div>
+            <div class="form-group">
+              <label>出生日期</label>
+              <select id="namingDay"></select>
+            </div>
+            <div class="form-group">
+              <label>出生时辰</label>
+              <select id="namingHour">
+                <option value="0">子时 (23:00-01:00)</option>
+                <option value="1">丑时 (01:00-03:00)</option>
+                <option value="2">寅时 (03:00-05:00)</option>
+                <option value="3">卯时 (05:00-07:00)</option>
+                <option value="4">辰时 (07:00-09:00)</option>
+                <option value="5">巳时 (09:00-11:00)</option>
+                <option value="6">午时 (11:00-13:00)</option>
+                <option value="7">未时 (13:00-15:00)</option>
+                <option value="8">申时 (15:00-17:00)</option>
+                <option value="9">酉时 (17:00-19:00)</option>
+                <option value="10">戌时 (19:00-21:00)</option>
+                <option value="11">亥时 (21:00-23:00)</option>
+              </select>
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label>姓氏</label>
-              <input type="text" id="nameSurname" placeholder="请输入姓氏" maxlength="2" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font-sans);background:var(--bg-warm);">
+              <input type="text" id="namingSurname" placeholder="请输入姓氏" maxlength="2" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font-sans);background:var(--bg-warm);">
             </div>
             <div class="form-group">
               <label>性别</label>
-              <select id="nameGender">
+              <select id="namingGender">
                 <option value="male">男</option>
                 <option value="female">女</option>
               </select>
             </div>
-          </div>
-          <div class="form-group">
-            <label>需要补足的五行（可多选）</label>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;font-family:var(--font-sans);" id="namingElWood"><input type="checkbox" value="木" onchange="toggleNamingEl(this)"> 🌿 木</label>
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;font-family:var(--font-sans);" id="namingElFire"><input type="checkbox" value="火" onchange="toggleNamingEl(this)"> 🔥 火</label>
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;font-family:var(--font-sans);" id="namingElEarth"><input type="checkbox" value="土" onchange="toggleNamingEl(this)"> ⛰️ 土</label>
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;font-family:var(--font-sans);" id="namingElMetal"><input type="checkbox" value="金" onchange="toggleNamingEl(this)"> 💎 金</label>
-              <label style="display:flex;align-items:center;gap:4px;cursor:pointer;padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:13px;font-family:var(--font-sans);" id="namingElWater"><input type="checkbox" value="水" onchange="toggleNamingEl(this)"> 💧 水</label>
+            <div class="form-group">
+              <label>当前姓名（用于分析）</label>
+              <input type="text" id="namingCurrentName" placeholder="请输入您的姓名" maxlength="5" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font-sans);background:var(--bg-warm);">
             </div>
           </div>
-          <div style="text-align:center;margin-top:12px;">
-            <button class="btn btn-primary" onclick="generateNames()">✨ 生成推荐名字</button>
+          <div style="text-align:center;margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="analyzeName()">🔍 姓名分析</button>
+            <button class="btn btn-gold" onclick="generateNamesV2()">✨ 生成推荐名字</button>
           </div>
+          <p style="text-align:center;font-size:11px;color:var(--ink-lighter);margin-top:8px;">
+            ⚠️ 以上内容为传统民俗文化参考，仅供研究交流。
+          </p>
         </div>
-        <div id="namingResult" style="max-width:600px;margin:16px auto;"></div>
+        <div id="namingResult" style="max-width:700px;margin:16px auto;"></div>
       </div>
 
       <!-- Panel: Feng Shui -->
@@ -2396,6 +2527,7 @@ body {
     <button class="mobile-nav-item" data-mpage="books" onclick="navigate('books')"><span class="icon">📚</span>书籍</button>
     <button class="mobile-nav-item" data-mpage="videos" onclick="navigate('videos')"><span class="icon">🎬</span>视频</button>
     <button class="mobile-nav-item" data-mpage="mingli" onclick="navigate('mingli')"><span class="icon">🔮</span>命理</button>
+    <button class="mobile-nav-item" data-mpage="vip" onclick="navigate('vip')"><span class="icon">👑</span>VIP</button>
     <button class="mobile-nav-item" data-mpage="settings" onclick="navigate('settings')"><span class="icon">⚙️</span>设置</button>
   </div>
 </nav>
@@ -2417,6 +2549,7 @@ body {
         <button class="reader-tool-btn" onclick="changeFontSize(1)" title="放大字体">A+</button>
         <button class="reader-tool-btn" id="themeBtn" onclick="cycleTheme()" title="切换主题" style="font-size:14px;">☀</button>
         <button class="reader-tool-btn" id="tocToggleBtn" onclick="toggleTOC()" title="目录">☰</button>
+        <button class="reader-tool-btn" id="editContentBtn" onclick="openBookEditor(currentReaderBookId)" title="编辑内容" style="font-size:14px;display:none;">✎</button>
       </div>
       <button class="modal-close" onclick="closeReader()">✕</button>
     </div>
@@ -2700,6 +2833,26 @@ body {
   </div>
 </div>
 
+<!-- ========== Book Edit Modal ========== -->
+<div class="modal-overlay" id="bookEditModal">
+  <div class="modal" style="max-width:700px;">
+    <div class="modal-header">
+      <h3>编辑书籍内容</h3>
+      <button class="modal-close" onclick="closeBookEditor()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--ink-lighter);font-size:13px;margin-bottom:8px;">内容将以纯文本形式原样呈现，保留原始段落格式。</p>
+      <textarea id="bookEditContent" class="book-edit-textarea" placeholder="请输入或编辑书籍内容..."></textarea>
+      <div class="char-counter" id="bookEditCharCount">字数：0</div>
+      <div class="form-actions" style="margin-top:12px;">
+        <button class="btn btn-outline btn-sm" id="bookEditResetBtn" style="color:#d32f2f;border-color:#d32f2f;display:none;" onclick="resetBookEdit()">恢复默认</button>
+        <button class="btn btn-outline btn-sm" onclick="closeBookEditor()">取消</button>
+        <button class="btn btn-primary btn-sm" onclick="saveBookEdit()">保存审稿</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ========== Feng Shui Detail Modal ========== -->
 <div class="modal-overlay" id="fengshuiModal">
   <div class="modal">
@@ -2766,9 +2919,23 @@ body {
   </div>
 </div>
 
+<!-- ========== VIP Purchase Modal ========== -->
+<div class="modal-overlay" id="vipPurchaseModal">
+  <div class="modal" style="max-width:500px;">
+    <div class="modal-header">
+      <h3>👑 开通VIP会员</h3>
+      <button class="modal-close" onclick="closeVipPurchase()">✕</button>
+    </div>
+    <div class="modal-body" id="vipPurchaseBody">
+      <!-- Dynamically rendered -->
+    </div>
+  </div>
+</div>
+
 <!-- Toast Container -->
 <div id="toastContainer"></div>
 
+<script src="_zhouyi.js"></script>
 <script>
 /* ========== App State ========== */
 const STORAGE_KEY_BOOKS = 'yizhen_books';
@@ -2779,6 +2946,13 @@ const STORAGE_KEY_READER_PREFS = 'yizhen_reader_prefs';
 const STORAGE_KEY_CONTACT_INFO = 'yizhen_contact_info';
 const STORAGE_KEY_MESSAGES = 'yizhen_messages';
 const STORAGE_KEY_PAYMENT_ENABLED = 'yizhen_payment_enabled';
+const STORAGE_KEY_REVIEWED_CONTENT = 'yizhen_reviewed_content';
+const STORAGE_KEY_USERS = 'yizhen_users';
+const STORAGE_KEY_CURRENT_USER = 'yizhen_current_user';
+const STORAGE_KEY_USAGE_STATS = 'yizhen_usage_stats';
+const STORAGE_KEY_VIP_PRICING = 'yizhen_vip_pricing';
+const STORAGE_KEY_VIP_PURCHASES = 'yizhen_vip_purchases';
+const STORAGE_KEY_VERIFY_CODES = 'yizhen_verify_codes';
 
 function isPaymentEnabled() {
   return localStorage.getItem(STORAGE_KEY_PAYMENT_ENABLED) !== '0';
@@ -2792,6 +2966,13 @@ let state = {
   qrCodes: { wechat: '', alipay: '' },
   contactInfo: { wechat: '', email: '', phone: '', other: '' },
   messages: [],
+  reviewedContent: {},
+  currentUser: null,
+  isLoggedIn: false,
+  usageStats: { bazi: 0, naming: 0, fengshui: 0, clothing: 0 },
+  vipPricing: [],
+  vipPurchases: [],
+  verifyCodes: {},
   pendingPurchaseId: null,
   pendingDonateId: null,
   selectedDonateAmount: '5',
@@ -2800,94 +2981,10 @@ let state = {
 /* ========== Default Data ========== */
 const DEFAULT_BOOKS = [
   {
-    id: 'b1', title: '论语', author: '孔子及其弟子', category: '经部',
+    id: 'b1', title: '周易', author: '周文王、孔子等', category: '经部',
     price: 0, coverType:1, status: 'approved',
-    desc: '儒家经典，记录孔子及其弟子的言行，集中体现了孔子的政治主张、伦理思想、道德观念及教育原则。',
-    content: `学而篇第一\n\n子曰："学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知而不愠，不亦君子乎？"\n\n有子曰："其为人也孝弟，而好犯上者，鲜矣；不好犯上，而好作乱者，未之有也。君子务本，本立而道生。孝弟也者，其为仁之本与！"\n\n子曰："巧言令色，鲜矣仁！"\n\n曾子曰："吾日三省吾身：为人谋而不忠乎？与朋友交而不信乎？传不习乎？"\n\n为政篇第二\n\n子曰："为政以德，譬如北辰，居其所而众星共之。"\n\n子曰："《诗》三百，一言以蔽之，曰：'思无邪'。"\n\n子曰："道之以政，齐之以刑，民免而无耻；道之以德，齐之以礼，有耻且格。"\n\n八佾篇第三\n\n孔子谓季氏："八佾舞于庭，是可忍也，孰不可忍也？"\n\n子曰："人而不仁，如礼何？人而不仁，如乐何？"\n\n里仁篇第四\n\n子曰："里仁为美。择不处仁，焉得知？"\n\n子曰："不仁者不可以久处约，不可以长处乐。仁者安仁，知者利仁。"\n\n子曰："唯仁者能好人，能恶人。"\n\n子曰："苟志于仁矣，无恶也。"`
-  },
-  {
-    id: 'b2', title: '道德经', author: '老子', category: '子部',
-    price: 0, coverType:2, status: 'approved',
-    desc: '道家哲学经典，以"道"为核心，阐述宇宙万物运行规律与处世智慧，被誉为"万经之王"。',
-    content: `第一章\n\n道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常有欲，以观其徼。此两者同出而异名，同谓之玄。玄之又玄，众妙之门。\n\n第二章\n\n天下皆知美之为美，斯恶已；皆知善之为善，斯不善已。故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。是以圣人处无为之事，行不言之教。万物作焉而不辞，生而不有，为而不恃，功成而弗居。夫唯弗居，是以不去。\n\n第八章\n\n上善若水。水善利万物而不争，处众人之所恶，故几于道。居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。夫唯不争，故无尤。\n\n第三十三章\n\n知人者智，自知者明。胜人者有力，自胜者强。知足者富，强行者有志。不失其所者久，死而不亡者寿。`
-  },
-  {
-    id: 'b3', title: '诗经', author: '佚名（周代采集）', category: '经部',
-    price: 0, coverType:3, status: 'approved',
-    desc: '中国最早的诗歌总集，收录西周初年至春秋中叶的诗歌305篇，分为风、雅、颂三部分。',
-    content: `关雎（周南）\n\n关关雎鸠，在河之洲。窈窕淑女，君子好逑。\n参差荇菜，左右流之。窈窕淑女，寤寐求之。\n求之不得，寤寐思服。悠哉悠哉，辗转反侧。\n参差荇菜，左右采之。窈窕淑女，琴瑟友之。\n参差荇菜，左右芼之。窈窕淑女，钟鼓乐之。\n\n蒹葭（秦风）\n\n蒹葭苍苍，白露为霜。所谓伊人，在水一方。\n溯洄从之，道阻且长。溯游从之，宛在水中央。\n蒹葭萋萋，白露未晞。所谓伊人，在水之湄。\n溯洄从之，道阻且跻。溯游从之，宛在水中坻。\n\n桃夭（周南）\n\n桃之夭夭，灼灼其华。之子于归，宜其室家。\n桃之夭夭，有蕡其实。之子于归，宜其家室。\n桃之夭夭，其叶蓁蓁。之子于归，宜其家人。`
-  },
-  {
-    id: 'b4', title: '孙子兵法', author: '孙武', category: '子部',
-    price: 0, coverType:4, status: 'approved',
-    desc: '中国现存最早的兵书，被誉为"兵学圣典"，其战略思想影响深远，广泛应用于军事、商业等领域。',
-    content: `始计第一\n\n孙子曰：兵者，国之大事，死生之地，存亡之道，不可不察也。\n故经之以五事，校之以计，而索其情：一曰道，二曰天，三曰地，四曰将，五曰法。道者，令民与上同意，可与之死，可与之生，而不畏危也。天者，阴阳、寒暑、时制也。地者，远近、险易、广狭、死生也。将者，智、信、仁、勇、严也。法者，曲制、官道、主用也。\n\n作战第二\n\n孙子曰：凡用兵之法，驰车千驷，革车千乘，带甲十万，千里馈粮。则内外之费，宾客之用，胶漆之材，车甲之奉，日费千金，然后十万之师举矣。\n\n谋攻第三\n\n孙子曰：夫用兵之法，全国为上，破国次之；全军为上，破军次之。是故百战百胜，非善之善者也；不战而屈人之兵，善之善者也。故上兵伐谋，其次伐交，其次伐兵，其下攻城。\n\n知彼知己，百战不殆；不知彼而知己，一胜一负；不知彼不知己，每战必败。`
-  },
-  {
-    id: 'b5', title: '大学', author: '曾子', category: '经部',
-    price: 0, coverType:5, status: 'approved',
-    desc: '"四书"之首，论述儒家修身齐家治国平天下的思想体系，为古人入德之门。',
-    content: `大学之道，在明明德，在亲民，在止于至善。知止而后有定，定而后能静，静而后能安，安而后能虑，虑而后能得。物有本末，事有终始，知所先后，则近道矣。\n\n古之欲明明德于天下者，先治其国；欲治其国者，先齐其家；欲齐其家者，先修其身；欲修其身者，先正其心；欲正其心者，先诚其意；欲诚其意者，先致其知；致知在格物。\n\n物格而后知至，知至而后意诚，意诚而后心正，心正而后身修，身修而后家齐，家齐而后国治，国治而后天下平。\n\n自天子以至于庶人，一是皆以修身为本。其本乱而末治者否矣。其所厚者薄，而其所薄者厚，未之有也。此谓知本，此谓知之至也。`
-  },
-  {
-    id: 'b6', title: '中庸', author: '子思', category: '经部',
-    price: 0, coverType:1, status: 'approved',
-    desc: '"四书"之一，阐述儒家中庸之道，主张不偏不倚、无过无不及的人生哲学。',
-    content: `天命之谓性，率性之谓道，修道之谓教。道也者，不可须臾离也，可离非道也。是故君子戒慎乎其所不睹，恐惧乎其所不闻。莫见乎隐，莫显乎微，故君子慎其独也。\n\n喜怒哀乐之未发，谓之中；发而皆中节，谓之和。中也者，天下之大本也；和也者，天下之达道也。致中和，天地位焉，万物育焉。\n\n仲尼曰："君子中庸，小人反中庸。君子之中庸也，君子而时中；小人之反中庸也，小人而无忌惮也。"\n\n子曰："中庸其至矣乎！民鲜能久矣。"`
-  },
-  {
-    id: 'b7', title: '孟子', author: '孟子及其弟子', category: '经部',
-    price: 0, coverType:2, status: 'approved',
-    desc: '记录孟子言行的儒家经典，主张"性善论"与"仁政"学说，与《论语》并称"论孟"。',
-    content: `梁惠王章句上\n\n孟子见梁惠王。王曰："叟，不远千里而来，亦将有以利吾国乎？"\n孟子对曰："王何必曰利？亦有仁义而已矣。"\n\n老吾老，以及人之老；幼吾幼，以及人之幼。天下可运于掌。\n\n公孙丑章句上\n\n"敢问夫子恶乎长？"曰："我知言，我善养吾浩然之气。"\n"敢问何谓浩然之气？"曰："难言也。其为气也，至大至刚，以直养而无害，则塞于天地之间。"\n\n告子章句上\n\n孟子曰："鱼，我所欲也；熊掌，亦我所欲也。二者不可得兼，舍鱼而取熊掌者也。生，亦我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也。"`
-  },
-  {
-    id: 'b8', title: '庄子', author: '庄子及其后学', category: '子部',
-    price: 0, coverType:3, status: 'approved',
-    desc: '道家经典之一，以寓言说理，文风汪洋恣肆，充满哲学思辨与人生智慧。',
-    content: `逍遥游第一\n\n北冥有鱼，其名为鲲。鲲之大，不知其几千里也。化而为鸟，其名为鹏。鹏之背，不知其几千里也。怒而飞，其翼若垂天之云。是鸟也，海运则将徙于南冥。南冥者，天池也。\n\n齐物论第二\n\n南郭子綦隐机而坐，仰天而嘘，嗒焉似丧其耦。颜成子游立侍乎前，曰："何居乎？形固可使如槁木，而心固可使如死灰乎？今之隐机者，非昔之隐机者也。"\n\n养生主第三\n\n吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而已矣！为善无近名，为恶无近刑。缘督以为经，可以保身，可以全生，可以养亲，可以尽年。`
-  },
-  {
-    id: 'b9', title: '易经', author: '周文王、孔子等', category: '经部',
-    price: 0, coverType:4, status: 'approved',
-    desc: '群经之首，大道之源。以阴阳八卦推演天地万物变化规律，是中国哲学的根本经典。',
-    content: `乾卦第一\n\n乾：元，亨，利，贞。\n《彖》曰：大哉乾元，万物资始，乃统天。云行雨施，品物流形。大明终始，六位时成，时乘六龙以御天。乾道变化，各正性命，保合太和，乃利贞。首出庶物，万国咸宁。\n《象》曰：天行健，君子以自强不息。\n\n坤卦第二\n\n坤：元，亨，利牝马之贞。君子有攸往，先迷后得主，利。西南得朋，东北丧朋。安贞吉。\n《象》曰：地势坤，君子以厚德载物。\n\n系辞上传\n\n一阴一阳之谓道。继之者善也，成之者性也。仁者见之谓之仁，知者见之谓之知。百姓日用而不知，故君子之道鲜矣。`
-  },
-  {
-    id: 'b10', title: '楚辞', author: '屈原、宋玉等', category: '集部',
-    price: 0, coverType:5, status: 'approved',
-    desc: '中国浪漫主义文学源头，以《离骚》为代表的骚体诗歌，辞采瑰丽，情感深沉。',
-    content: `离骚（节选）\n\n帝高阳之苗裔兮，朕皇考曰伯庸。\n摄提贞于孟陬兮，惟庚寅吾以降。\n皇览揆余初度兮，肇锡余以嘉名：\n名余曰正则兮，字余曰灵均。\n\n纷吾既有此内美兮，又重之以修能。\n扈江离与辟芷兮，纫秋兰以为佩。\n汩余若将不及兮，恐年岁之不吾与。\n朝搴阰之木兰兮，夕揽洲之宿莽。\n\n日月忽其不淹兮，春与秋其代序。\n惟草木之零落兮，恐美人之迟暮。\n\n长太息以掩涕兮，哀民生之多艰。\n余虽好修姱以鞿羁兮，謇朝谇而夕替。\n\n亦余心之所善兮，虽九死其犹未悔。`
-  },
-  {
-    id: 'b11', title: '史记', author: '司马迁', category: '史部',
-    price: 0, coverType:1, status: 'approved',
-    desc: '中国第一部纪传体通史，记载从黄帝到汉武帝三千余年历史，被鲁迅誉为"史家之绝唱，无韵之离骚"。',
-    content: `太史公自序（节选）\n\n太史公曰："先人有言：'自周公卒五百岁而有孔子。孔子卒后至于今五百岁，有能绍明世，正《易传》，继《春秋》，本《诗》《书》《礼》《乐》之际？'意在斯乎！意在斯乎！小子何敢让焉。"\n\n上大夫壶遂曰："昔孔子何为而作《春秋》哉？"太史公曰："余闻董生曰：'周道衰废，孔子为鲁司寇，诸侯害之，大夫壅之。孔子知言之不用，道之不行也，是非二百四十二年之中，以为天下仪表，贬天子，退诸侯，讨大夫，以达王事而已矣。'"\n\n报任安书（节选）\n\n古者富贵而名摩灭，不可胜记，唯倜傥非常之人称焉。盖文王拘而演《周易》；仲尼厄而作《春秋》；屈原放逐，乃赋《离骚》；左丘失明，厥有《国语》；孙子膑脚，《兵法》修列；不韦迁蜀，世传《吕览》；韩非囚秦，《说难》《孤愤》；《诗》三百篇，大抵圣贤发愤之所为作也。`
-  },
-  {
-    id: 'b12', title: '三字经', author: '王应麟', category: '蒙学',
-    price: 0, coverType:2, status: 'approved',
-    desc: '中国传统启蒙读物，三字一句，朗朗上口，涵盖历史、天文、地理、道德等内容。',
-    content: `人之初，性本善。性相近，习相远。\n苟不教，性乃迁。教之道，贵以专。\n昔孟母，择邻处。子不学，断机杼。\n窦燕山，有义方。教五子，名俱扬。\n养不教，父之过。教不严，师之惰。\n子不学，非所宜。幼不学，老何为。\n玉不琢，不成器。人不学，不知义。\n为人子，方少时。亲师友，习礼仪。\n香九龄，能温席。孝于亲，所当执。\n融四岁，能让梨。弟于长，宜先知。\n首孝弟，次见闻。知某数，识某文。`
-  },
-  {
-    id: 'b13', title: '弟子规', author: '李毓秀', category: '蒙学',
-    price: 0, coverType:3, status: 'approved',
-    desc: '以《论语》"学而篇"为纲编写的蒙学经典，教导子弟在家、出外、待人接物与学习上应恪守的规范。',
-    content: `总叙\n\n弟子规，圣人训。首孝弟，次谨信。\n泛爱众，而亲仁。有余力，则学文。\n\n入则孝\n\n父母呼，应勿缓。父母命，行勿懒。\n父母教，须敬听。父母责，须顺承。\n冬则温，夏则凊。晨则省，昏则定。\n出必告，反必面。居有常，业无变。\n事虽小，勿擅为。苟擅为，子道亏。\n物虽小，勿私藏。苟私藏，亲心伤。\n\n出则弟\n\n兄道友，弟道恭。兄弟睦，孝在中。\n财物轻，怨何生。言语忍，忿自泯。\n或饮食，或坐走。长者先，幼者后。`
-  },
-  {
-    id: 'b14', title: '千字文', author: '周兴嗣', category: '蒙学',
-    price: 0, coverType:4, status: 'approved',
-    desc: '以一千个不重复的汉字编成的四言韵文，对仗工整，条理清晰，为古代蒙学经典。',
-    content: `天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。\n寒来暑往，秋收冬藏。闰余成岁，律吕调阳。\n云腾致雨，露结为霜。金生丽水，玉出昆冈。\n剑号巨阙，珠称夜光。果珍李柰，菜重芥姜。\n海咸河淡，鳞潜羽翔。龙师火帝，鸟官人皇。\n始制文字，乃服衣裳。推位让国，有虞陶唐。\n吊民伐罪，周发殷汤。坐朝问道，垂拱平章。\n爱育黎首，臣伏戎羌。遐迩一体，率宾归王。\n鸣凤在竹，白驹食场。化被草木，赖及万方。`
-  },
-  {
-    id: 'b15', title: '菜根谭', author: '洪应明', category: '子部',
-    price: 0, coverType:5, status: 'approved',
-    desc: '明代处世智慧格言集，融合儒释道三家思想，语言简练，意味深长，为修身养性必读之书。',
-    content: `修身\n\n欲做精金美玉的人品，定从烈火中煅来；思立掀天揭地的事功，须向薄冰上履过。\n\n一念错，便觉百行皆非，防之当如渡海浮囊，勿容一针之罅漏；万善全，始得一生无愧，修之当如凌云宝树，须假众木以撑持。\n\n处世\n\n涉世浅，点染亦浅；历事深，机械亦深。故君子与其练达，不若朴鲁；与其曲谨，不若疏狂。\n\n面前的田地要放得宽，使人无不平之叹；身后的惠泽要流得长，使人有不匮之思。\n\n评议\n\n富贵是无情之物，看得他重，他害你越大；贫贱是耐久之交，处得他好，他益你反深。`
+    desc: '群经之首，大道之源。六十四卦推演天地万物变化，系辞说卦序卦杂卦各传完备，是中国哲学的根本经典。',
+    content: typeof ZHOUYI_CONTENT !== 'undefined' ? ZHOUYI_CONTENT : '周易内容加载中...'
   },
 ];
 
@@ -2912,6 +3009,898 @@ const DEFAULT_VIDEOS = [
   },
 ];
 
+/* ========== VIP Membership System ========== */
+const DEFAULT_VIP_PRICING = [
+  { id: 'monthly', name: '月度VIP', duration: 1, unit: '月', price: 29.90, savings: 0, icon: '🌙', color: '#4a7a9a' },
+  { id: 'quarterly', name: '季度VIP', duration: 3, unit: '月', price: 79.90, savings: 10, icon: '⭐', color: '#c9a96e' },
+  { id: 'semiannual', name: '半年VIP', duration: 6, unit: '月', price: 139.90, savings: 40, icon: '💎', color: '#c0392b' },
+  { id: 'annual', name: '年度VIP', duration: 12, unit: '月', price: 239.90, savings: 120, icon: '👑', color: '#b5343a' },
+];
+
+function loadVipPricing() {
+  try { state.vipPricing = JSON.parse(localStorage.getItem(STORAGE_KEY_VIP_PRICING)) || [...DEFAULT_VIP_PRICING]; }
+  catch(e) { state.vipPricing = [...DEFAULT_VIP_PRICING]; }
+}
+function saveVipPricing(pricing) { localStorage.setItem(STORAGE_KEY_VIP_PRICING, JSON.stringify(pricing)); }
+
+function loadUsers() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY_USERS)) || {}; } catch(e) { return {}; } }
+function saveUsers(users) { localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users)); }
+
+function loadCurrentUser() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_CURRENT_USER)); } catch(e) { return null; }
+}
+function saveCurrentUser(user) {
+  if (user) { localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(user)); }
+  else { localStorage.removeItem(STORAGE_KEY_CURRENT_USER); }
+  state.currentUser = user;
+  state.isLoggedIn = !!user;
+}
+
+function loadUsageStats() {
+  try { state.usageStats = JSON.parse(localStorage.getItem(STORAGE_KEY_USAGE_STATS)) || { bazi: 0, naming: 0, fengshui: 0, clothing: 0, vipPurchases: 0 }; }
+  catch(e) { state.usageStats = { bazi: 0, naming: 0, fengshui: 0, clothing: 0, vipPurchases: 0 }; }
+}
+function saveUsageStats(stats) { localStorage.setItem(STORAGE_KEY_USAGE_STATS, JSON.stringify(stats)); state.usageStats = stats; }
+
+function loadVipPurchases() {
+  try { state.vipPurchases = JSON.parse(localStorage.getItem(STORAGE_KEY_VIP_PURCHASES)) || []; }
+  catch(e) { state.vipPurchases = []; }
+}
+function saveVipPurchases(purchases) { localStorage.setItem(STORAGE_KEY_VIP_PURCHASES, JSON.stringify(purchases)); state.vipPurchases = purchases; }
+
+function isUserVip() {
+  if (!state.currentUser) return false;
+  if (!state.currentUser.vipExpiry) return false;
+  const expiry = new Date(state.currentUser.vipExpiry).getTime();
+  if (Date.now() > expiry) {
+    state.currentUser.vipTier = 'none';
+    state.currentUser.vipExpiry = null;
+    const users = loadUsers();
+    if (users[state.currentUser.username]) {
+      users[state.currentUser.username].vipTier = 'none';
+      users[state.currentUser.username].vipExpiry = null;
+      saveUsers(users);
+    }
+    saveCurrentUser(state.currentUser);
+    return false;
+  }
+  return state.currentUser.vipTier && state.currentUser.vipTier !== 'none';
+}
+
+function getVipDaysRemaining() {
+  if (!state.currentUser || !state.currentUser.vipExpiry) return 0;
+  return Math.max(0, Math.ceil((new Date(state.currentUser.vipExpiry).getTime() - Date.now()) / 86400000));
+}
+
+function getVipTierInfo() {
+  if (!isUserVip()) return null;
+  const tier = state.vipPricing.find(t => t.id === state.currentUser.vipTier);
+  return tier || null;
+}
+
+function generateVerifyCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function loadVerifyCodes() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_VERIFY_CODES)) || {}; } catch(e) { return {}; }
+}
+
+function saveVerifyCodes(codes) {
+  localStorage.setItem(STORAGE_KEY_VERIFY_CODES, JSON.stringify(codes));
+}
+
+function sendPhoneCode(phone) {
+  if (!phone || !/^1[3-9]\d{9}$/.test(phone)) { showToast('请输入有效的手机号'); return false; }
+  const code = generateVerifyCode();
+  const codes = loadVerifyCodes();
+  codes['phone_' + phone] = { code, expires: Date.now() + 300000, attempts: 0 };
+  saveVerifyCodes(codes);
+  // 模拟：实际项目中通过短信网关发送
+  showToast('验证码已发送至 ' + phone + '（演示码：' + code + '）', 5000);
+  console.log('📱 手机验证码 [' + phone + ']: ' + code);
+  return true;
+}
+
+function sendEmailCode(email) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('请输入有效的邮箱地址'); return false; }
+  const code = generateVerifyCode();
+  const codes = loadVerifyCodes();
+  codes['email_' + email] = { code, expires: Date.now() + 600000, attempts: 0 };
+  saveVerifyCodes(codes);
+  showToast('验证码已发送至 ' + email + '（演示码：' + code + '）', 5000);
+  console.log('📧 邮箱验证码 [' + email + ']: ' + code);
+  return true;
+}
+
+function verifyCode(target, code) {
+  if (!code) { showToast('请输入验证码'); return false; }
+  const codes = loadVerifyCodes();
+  const entry = codes[target];
+  if (!entry) { showToast('请先获取验证码'); return false; }
+  if (Date.now() > entry.expires) { showToast('验证码已过期（5分钟有效），请重新获取'); return false; }
+  if (entry.attempts >= 5) { showToast('验证码尝试次数过多，请重新获取'); return false; }
+  if (entry.code !== code) {
+    entry.attempts++;
+    saveVerifyCodes(codes);
+    showToast('验证码错误，还剩 ' + (5 - entry.attempts) + ' 次机会');
+    return false;
+  }
+  // 验证通过，清除验证码
+  delete codes[target];
+  saveVerifyCodes(codes);
+  return true;
+}
+
+function registerUser(username, password, phone, email) {
+  if (!username || username.length < 2) { showToast('用户名至少2个字符'); return false; }
+  if (!password || password.length < 4) { showToast('密码至少4个字符'); return false; }
+  const users = loadUsers();
+  if (users[username]) { showToast('用户名已存在'); return false; }
+  const hash = btoa(password + 'yizhen_salt_2026');
+  const phoneVerified = !!phone;
+  const emailVerified = !!email;
+  users[username] = {
+    password: hash, createdAt: new Date().toISOString(),
+    vipTier: 'none', vipExpiry: null, purchaseHistory: [],
+    phone: phone || '', email: email || '',
+    phoneVerified, emailVerified
+  };
+  saveUsers(users);
+  showToast('注册成功，请登录');
+  return true;
+}
+
+function loginUser(username, password) {
+  if (!username || !password) { showToast('请输入用户名和密码'); return false; }
+  const users = loadUsers();
+  const user = users[username];
+  if (!user) { showToast('用户名不存在'); return false; }
+  const hash = btoa(password + 'yizhen_salt_2026');
+  if (user.password !== hash) { showToast('密码错误'); return false; }
+  const currentUser = { username, vipTier: user.vipTier, vipExpiry: user.vipExpiry, createdAt: user.createdAt };
+  saveCurrentUser(currentUser);
+  if (user.vipExpiry && new Date(user.vipExpiry).getTime() < Date.now()) {
+    currentUser.vipTier = 'none';
+    currentUser.vipExpiry = null;
+    saveCurrentUser(currentUser);
+  }
+  showToast('登录成功');
+  updateVipBadge();
+  if (state.currentPage === 'vip') renderVipPage();
+  return true;
+}
+
+function logoutUser() {
+  saveCurrentUser(null);
+  updateVipBadge();
+  showToast('已退出登录');
+  if (state.currentPage === 'vip') renderVipPage();
+}
+
+function resetPassword(username, newPassword, target, code) {
+  if (!username || !newPassword) { showToast('请填写用户名和新密码'); return false; }
+  if (newPassword.length < 6) { showToast('新密码至少6字符'); return false; }
+  if (!verifyCode(target, code)) return false;
+  const users = loadUsers();
+  if (!users[username]) { showToast('用户名不存在'); return false; }
+  users[username].password = btoa(newPassword + 'yizhen_salt_2026');
+  saveUsers(users);
+  showToast('密码重置成功，请登录');
+  state._vipAuthMode = 'login';
+  renderVipPage();
+  return true;
+}
+
+function changePassword(oldPassword, newPassword) {
+  if (!state.currentUser) { showToast('请先登录'); return false; }
+  if (!oldPassword || !newPassword) { showToast('请填写旧密码和新密码'); return false; }
+  if (newPassword.length < 6) { showToast('新密码至少6字符'); return false; }
+  const users = loadUsers();
+  const user = users[state.currentUser.username];
+  const oldHash = btoa(oldPassword + 'yizhen_salt_2026');
+  if (user.password !== oldHash) { showToast('旧密码错误'); return false; }
+  users[state.currentUser.username].password = btoa(newPassword + 'yizhen_salt_2026');
+  saveUsers(users);
+  showToast('密码修改成功');
+  return true;
+}
+
+function changePasswordByPhone(newPassword, target, code) {
+  if (!state.currentUser) { showToast('请先登录'); return false; }
+  if (!newPassword) { showToast('请填写新密码'); return false; }
+  if (newPassword.length < 6) { showToast('新密码至少6字符'); return false; }
+  if (!verifyCode(target, code)) return false;
+  const users = loadUsers();
+  users[state.currentUser.username].password = btoa(newPassword + 'yizhen_salt_2026');
+  saveUsers(users);
+  showToast('密码修改成功');
+  return true;
+}
+
+function showChangePasswordForm() {
+  const container = document.getElementById('vipPageContent');
+  if (!container) return;
+  var users = loadUsers();
+  var user = state.currentUser ? users[state.currentUser.username] : null;
+  var hasPhone = user && user.phone;
+  var phoneMask = hasPhone ? user.phone.slice(0, 3) + '****' + user.phone.slice(-4) : '';
+  container.innerHTML = `
+    <div class="vip-auth-card">
+      <h3 style="margin-bottom:4px;">🔒 修改密码</h3>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:20px;">通过旧密码或手机验证码修改</p>
+      <div class="vip-form">
+        <div class="form-group">
+          <label>旧密码</label>
+          <input type="password" id="chgOldPassword" placeholder="输入旧密码（或留空用手机验证）" maxlength="20" autocomplete="current-password">
+        </div>
+        <div class="form-group">
+          <label>新密码</label>
+          <input type="password" id="chgNewPassword" placeholder="请输入新密码（6-20字符）" maxlength="20" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>确认新密码</label>
+          <input type="password" id="chgNewPassword2" placeholder="请再次输入新密码" maxlength="20" autocomplete="new-password">
+        </div>
+        ${hasPhone ? `
+        <div class="verify-section">
+          <div class="verify-section-title">📱 或通过绑定手机验证 <span style="font-size:11px;color:var(--ink-lighter);">${phoneMask}</span></div>
+          <div class="verify-row">
+            <button class="btn btn-outline btn-sm" id="chgSendPhoneBtn" style="white-space:nowrap;">发送验证码到手机</button>
+            <span id="chgPhoneStatus" style="font-size:11px;"></span>
+          </div>
+          <div class="verify-row" style="margin-top:6px;">
+            <input type="text" id="chgPhoneCode" placeholder="请输入短信验证码" maxlength="6" autocomplete="one-time-code" style="flex:1;">
+          </div>
+        </div>` : ''}
+        <div class="form-actions" style="gap:8px;">
+          <button class="btn btn-primary" style="flex:1;" id="chgSubmitBtn">确认修改</button>
+          <button class="btn btn-outline" onclick="renderVipPage()">取消</button>
+        </div>
+      </div>
+    </div>`;
+  if (hasPhone) {
+    document.getElementById('chgSendPhoneBtn').addEventListener('click', function() {
+      if (sendPhoneCode(user.phone)) {
+        document.getElementById('chgPhoneStatus').textContent = '已发送';
+        document.getElementById('chgPhoneStatus').style.color = 'var(--green,#4caf50)';
+      }
+    });
+  }
+  document.getElementById('chgSubmitBtn').addEventListener('click', function() {
+    var oldPw = document.getElementById('chgOldPassword').value;
+    var newPw = document.getElementById('chgNewPassword').value;
+    var newPw2 = document.getElementById('chgNewPassword2').value;
+    if (newPw !== newPw2) { showToast('两次新密码输入不一致'); return; }
+    var phoneCodeEl = document.getElementById('chgPhoneCode');
+    var phoneCode = phoneCodeEl ? phoneCodeEl.value.trim() : '';
+    if (oldPw) {
+      if (changePassword(oldPw, newPw)) renderVipPage();
+    } else if (phoneCode && hasPhone) {
+      if (changePasswordByPhone(newPw, 'phone_' + user.phone, phoneCode)) renderVipPage();
+    } else {
+      showToast('请输入旧密码或通过手机验证码修改');
+    }
+  });
+}
+
+function incrementUsageStat(feature) {
+  const stats = { ...state.usageStats };
+  if (stats[feature] !== undefined) { stats[feature]++; }
+  else { stats[feature] = 1; }
+  saveUsageStats(stats);
+}
+
+/* ========== VIP Page Render ========== */
+function renderVipPage() {
+  const container = document.getElementById('vipPageContent');
+  if (!container) return;
+  if (isAdmin()) {
+    renderVipAdminDashboard(container);
+    return;
+  }
+  if (!state.isLoggedIn) {
+    renderVipAuth(container);
+    return;
+  }
+  if (isUserVip()) {
+    renderVipActiveStatus(container);
+    return;
+  }
+  renderVipTiers(container);
+}
+
+function renderVipAuth(container) {
+  const isRegister = state._vipAuthMode === 'register';
+  const isForgot = state._vipAuthMode === 'forgot';
+
+  if (isForgot) {
+    container.innerHTML = `
+    <div class="vip-auth-card">
+      <h3 style="margin-bottom:4px;">🔑 忘记密码</h3>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:20px;">通过注册时绑定的手机或邮箱重置密码</p>
+      <div class="vip-form">
+        <div class="form-group">
+          <label>用户名</label>
+          <input type="text" id="vipAuthUsername" placeholder="请输入您的用户名" maxlength="20" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label>新密码</label>
+          <input type="password" id="vipAuthPassword" placeholder="请输入新密码（6-20字符）" maxlength="20" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>确认新密码</label>
+          <input type="password" id="vipAuthPassword2" placeholder="请再次输入新密码" maxlength="20" autocomplete="new-password">
+        </div>
+        <div class="verify-section">
+          <div class="verify-section-title">📱 手机验证 <span style="font-size:11px;color:var(--ink-lighter);font-weight:400;">（使用注册时绑定的手机）</span></div>
+          <div class="verify-row">
+            <input type="tel" id="vipAuthPhone" placeholder="请输入注册时的手机号" maxlength="11" autocomplete="tel" style="flex:1;">
+            <button class="btn btn-outline btn-sm" id="sendPhoneBtn" style="white-space:nowrap;">发送验证码</button>
+          </div>
+          <div class="verify-row" style="margin-top:6px;">
+            <input type="text" id="vipAuthPhoneCode" placeholder="请输入短信验证码" maxlength="6" autocomplete="one-time-code" style="flex:1;">
+            <span id="phoneCodeStatus" style="font-size:11px;min-width:60px;text-align:right;"></span>
+          </div>
+        </div>
+        <div class="verify-section">
+          <div class="verify-section-title">📧 邮箱验证 <span style="font-size:11px;color:var(--ink-lighter);font-weight:400;">（使用注册时绑定的邮箱）</span></div>
+          <div class="verify-row">
+            <input type="email" id="vipAuthEmail" placeholder="请输入注册时的邮箱" autocomplete="email" style="flex:1;">
+            <button class="btn btn-outline btn-sm" id="sendEmailBtn" style="white-space:nowrap;">发送验证码</button>
+          </div>
+          <div class="verify-row" style="margin-top:6px;">
+            <input type="text" id="vipAuthEmailCode" placeholder="请输入邮箱验证码" maxlength="6" autocomplete="one-time-code" style="flex:1;">
+            <span id="emailCodeStatus" style="font-size:11px;min-width:60px;text-align:right;"></span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ink-lighter);text-align:center;margin:4px 0;">使用手机或邮箱任一方式验证即可</p>
+        <div class="form-actions">
+          <button class="btn btn-primary" style="flex:1;" id="vipAuthSubmitBtn">重置密码</button>
+        </div>
+        <div class="form-toggle">
+          <a onclick="state._vipAuthMode='login';renderVipPage();">← 返回登录</a>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('sendPhoneBtn').addEventListener('click', function() {
+      var phone = document.getElementById('vipAuthPhone').value.trim();
+      var username = document.getElementById('vipAuthUsername').value.trim();
+      if (!username) { showToast('请先输入用户名'); return; }
+      var users = loadUsers();
+      if (!users[username]) { showToast('用户名不存在'); return; }
+      if (!users[username].phone) { showToast('该账号未绑定手机，请使用邮箱验证'); return; }
+      if (phone && phone !== users[username].phone) { showToast('手机号与注册时不一致'); return; }
+      if (sendPhoneCode(users[username].phone)) {
+        document.getElementById('phoneCodeStatus').textContent = '已发送';
+        document.getElementById('phoneCodeStatus').style.color = 'var(--green,#4caf50)';
+      }
+    });
+    document.getElementById('sendEmailBtn').addEventListener('click', function() {
+      var email = document.getElementById('vipAuthEmail').value.trim();
+      var username = document.getElementById('vipAuthUsername').value.trim();
+      if (!username) { showToast('请先输入用户名'); return; }
+      var users = loadUsers();
+      if (!users[username]) { showToast('用户名不存在'); return; }
+      if (!users[username].email) { showToast('该账号未绑定邮箱，请使用手机验证'); return; }
+      if (email && email !== users[username].email) { showToast('邮箱与注册时不一致'); return; }
+      if (sendEmailCode(users[username].email)) {
+        document.getElementById('emailCodeStatus').textContent = '已发送';
+        document.getElementById('emailCodeStatus').style.color = 'var(--green,#4caf50)';
+      }
+    });
+    document.getElementById('vipAuthSubmitBtn').addEventListener('click', function() {
+      var username = document.getElementById('vipAuthUsername').value.trim();
+      var newPw = document.getElementById('vipAuthPassword').value;
+      var newPw2 = document.getElementById('vipAuthPassword2').value;
+      if (!username) { showToast('请输入用户名'); return; }
+      if (!newPw || newPw.length < 6) { showToast('新密码至少6字符'); return; }
+      if (newPw !== newPw2) { showToast('两次新密码输入不一致'); return; }
+      var users = loadUsers();
+      if (!users[username]) { showToast('用户名不存在'); return; }
+      var phone = document.getElementById('vipAuthPhone').value.trim();
+      var email = document.getElementById('vipAuthEmail').value.trim();
+      var phoneCode = document.getElementById('vipAuthPhoneCode').value.trim();
+      var emailCode = document.getElementById('vipAuthEmailCode').value.trim();
+      var boundPhone = users[username].phone;
+      var boundEmail = users[username].email;
+      if (!boundPhone && !boundEmail) { showToast('该账号未绑定手机或邮箱，无法重置密码'); return; }
+      // Try phone first, then email
+      if (boundPhone && phoneCode) {
+        if (phone && phone !== boundPhone) { showToast('手机号与注册时不一致'); return; }
+        if (!resetPassword(username, newPw, 'phone_' + boundPhone, phoneCode)) return;
+      } else if (boundEmail && emailCode) {
+        if (email && email !== boundEmail) { showToast('邮箱与注册时不一致'); return; }
+        if (!resetPassword(username, newPw, 'email_' + boundEmail, emailCode)) return;
+      } else if (boundPhone && !phoneCode) {
+        showToast('请输入手机验证码');
+      } else if (boundEmail && !emailCode) {
+        showToast('请输入邮箱验证码');
+      } else {
+        showToast('请通过绑定的手机或邮箱获取验证码');
+      }
+    });
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="vip-auth-card">
+      <h3 style="margin-bottom:4px;">${isRegister ? '注册账号' : '登录账号'}</h3>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:20px;">${isRegister ? '创建账号以开通VIP会员 · 手机或邮箱验证' : '登录后管理您的VIP会员'}</p>
+      <div class="vip-form">
+        <div class="form-group">
+          <label>用户名</label>
+          <input type="text" id="vipAuthUsername" placeholder="请输入用户名（4-20字符）" maxlength="20" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password" id="vipAuthPassword" placeholder="请输入密码（6-20字符）" maxlength="20" autocomplete="${isRegister ? 'new-password' : 'current-password'}">
+        </div>
+        ${isRegister ? `
+        <div class="form-group">
+          <label>确认密码</label>
+          <input type="password" id="vipAuthPassword2" placeholder="请再次输入密码" maxlength="20" autocomplete="new-password">
+        </div>
+        <div class="verify-section">
+          <div class="verify-section-title">📱 手机验证 <span style="font-size:11px;color:var(--ink-lighter);font-weight:400;">（选填）</span></div>
+          <div class="verify-row">
+            <input type="tel" id="vipAuthPhone" placeholder="请输入手机号" maxlength="11" autocomplete="tel" style="flex:1;">
+            <button class="btn btn-outline btn-sm" id="sendPhoneBtn" style="white-space:nowrap;">发送验证码</button>
+          </div>
+          <div class="verify-row" style="margin-top:6px;">
+            <input type="text" id="vipAuthPhoneCode" placeholder="请输入短信验证码" maxlength="6" autocomplete="one-time-code" style="flex:1;">
+            <span id="phoneCodeStatus" style="font-size:11px;min-width:60px;text-align:right;"></span>
+          </div>
+        </div>
+        <div class="verify-section">
+          <div class="verify-section-title">📧 邮箱验证 <span style="font-size:11px;color:var(--ink-lighter);font-weight:400;">（选填）</span></div>
+          <div class="verify-row">
+            <input type="email" id="vipAuthEmail" placeholder="请输入邮箱地址" autocomplete="email" style="flex:1;">
+            <button class="btn btn-outline btn-sm" id="sendEmailBtn" style="white-space:nowrap;">发送验证码</button>
+          </div>
+          <div class="verify-row" style="margin-top:6px;">
+            <input type="text" id="vipAuthEmailCode" placeholder="请输入邮箱验证码" maxlength="6" autocomplete="one-time-code" style="flex:1;">
+            <span id="emailCodeStatus" style="font-size:11px;min-width:60px;text-align:right;"></span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ink-lighter);text-align:center;margin:4px 0;">至少完成一项验证即可注册</p>
+        ` : ''}
+        <div class="form-actions">
+          <button class="btn btn-primary" style="flex:1;" id="vipAuthSubmitBtn">${isRegister ? '注册' : '登录'}</button>
+        </div>
+        <div class="form-toggle">
+          ${isRegister ? '已有账号？<a onclick="state._vipAuthMode=\'login\';renderVipPage();">立即登录</a>' : '没有账号？<a onclick="state._vipAuthMode=\'register\';renderVipPage();">免费注册</a><br><a onclick="state._vipAuthMode=\'forgot\';renderVipPage();" style="font-size:12px;">忘记密码？</a>'}
+        </div>
+      </div>
+    </div>`;
+  // Bind send-code buttons
+  if (isRegister) {
+    document.getElementById('sendPhoneBtn').addEventListener('click', function() {
+      const phone = document.getElementById('vipAuthPhone').value.trim();
+      if (sendPhoneCode(phone)) {
+        document.getElementById('phoneCodeStatus').textContent = '已发送';
+        document.getElementById('phoneCodeStatus').style.color = 'var(--green,#4caf50)';
+      }
+    });
+    document.getElementById('sendEmailBtn').addEventListener('click', function() {
+      const email = document.getElementById('vipAuthEmail').value.trim();
+      if (sendEmailCode(email)) {
+        document.getElementById('emailCodeStatus').textContent = '已发送';
+        document.getElementById('emailCodeStatus').style.color = 'var(--green,#4caf50)';
+      }
+    });
+  }
+  document.getElementById('vipAuthSubmitBtn').addEventListener('click', function() {
+    const username = document.getElementById('vipAuthUsername').value.trim();
+    const password = document.getElementById('vipAuthPassword').value;
+    if (!username || username.length < 2) { showToast('请输入有效的用户名（至少2字符）'); return; }
+    if (!password || password.length < 6) { showToast('密码至少6字符'); return; }
+    if (isRegister) {
+      const password2 = document.getElementById('vipAuthPassword2').value;
+      if (password !== password2) { showToast('两次密码输入不一致'); return; }
+      const phone = document.getElementById('vipAuthPhone').value.trim();
+      const email = document.getElementById('vipAuthEmail').value.trim();
+      const phoneCode = document.getElementById('vipAuthPhoneCode').value.trim();
+      const emailCode = document.getElementById('vipAuthEmailCode').value.trim();
+      // 至少填写一项联系方式和对应验证码
+      const hasPhone = phone && phoneCode;
+      const hasEmail = email && emailCode;
+      if (!phone && !email) { showToast('请至少填写手机号或邮箱'); return; }
+      if (phone && !phoneCode) { showToast('请输入手机验证码'); return; }
+      if (email && !emailCode) { showToast('请输入邮箱验证码'); return; }
+      // 验证手机验证码
+      let phoneOk = true, emailOk = true;
+      if (hasPhone) phoneOk = verifyCode('phone_' + phone, phoneCode);
+      if (!phoneOk) return;
+      if (hasEmail) emailOk = verifyCode('email_' + email, emailCode);
+      if (!emailOk) return;
+      if (registerUser(username, password, phone || null, email || null)) {
+        loginUser(username, password);
+        renderVipPage();
+      }
+    } else {
+      if (loginUser(username, password)) { renderVipPage(); }
+    }
+  });
+}
+
+function renderVipTiers(container) {
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  container.innerHTML = `
+    <div class="vip-auth-card" style="background:linear-gradient(135deg, #fef9e7, #fff);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div>
+          <span style="font-weight:700;font-size:16px;">👤 ${escHtml(state.currentUser.username)}</span>
+          <span style="font-size:12px;color:var(--ink-lighter);margin-left:8px;">普通用户</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline btn-sm" onclick="showChangePasswordForm()">修改密码</button>
+          <button class="btn btn-outline btn-sm" onclick="logoutUser()">退出登录</button>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-lighter);">开通VIP会员，解锁全部命理深度分析功能</p>
+    </div>
+    <h3 style="margin:20px 0 4px;">选择会员套餐</h3>
+    <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:16px;">所有套餐享有相同功能权限，仅时长不同</p>
+    <div class="vip-tier-cards">
+      ${tiers.map((t, i) => `
+        <div class="vip-tier-card${i === tiers.length - 1 ? ' recommended' : ''}" onclick="openVipPurchase('${t.id}')">
+          <div class="tier-icon">${t.icon || '👑'}</div>
+          <div class="tier-name">${t.name}</div>
+          <div class="tier-price">¥${t.price.toFixed(2)}</div>
+          <div class="tier-period">/${t.period}</div>
+          ${t.save ? `<div class="tier-save">省¥${t.save.toFixed(2)}</div>` : ''}
+          <ul class="tier-features">
+            <li>✅ 八字深度排盘</li>
+            <li>✅ 周易取名分析</li>
+            <li>✅ 风水布局详解</li>
+            <li>✅ 穿衣搭配指南</li>
+            <li>✅ 无限次使用</li>
+          </ul>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+function renderVipActiveStatus(container) {
+  const user = state.currentUser;
+  const tier = getVipTierInfo();
+  const daysRemaining = getVipDaysRemaining();
+  const totalDays = tier ? (tier.id === 'monthly' ? 30 : tier.id === 'quarterly' ? 90 : tier.id === 'semiannual' ? 180 : 365) : 30;
+  const progressPct = Math.min(100, Math.max(0, ((totalDays - daysRemaining) / totalDays) * 100));
+  const expiryDate = user && user.vipExpiry ? new Date(user.vipExpiry).toLocaleDateString('zh-CN') : '未知';
+  container.innerHTML = `
+    <div class="vip-status-card" style="background:linear-gradient(135deg, #fef9e7, #fffdf0);border-color:var(--gold);">
+      <div class="vip-status-header">
+        <div class="vip-status-icon">${tier ? tier.icon : '👑'}</div>
+        <div class="vip-status-info">
+          <div class="name">${escHtml(user.username)}</div>
+          <div class="tier">${tier ? tier.name : 'VIP'} 会员</div>
+          <div class="expiry">到期日：${expiryDate}（剩余 ${daysRemaining} 天）</div>
+        </div>
+      </div>
+      <div class="vip-progress">
+        <div class="fill" style="width:${progressPct}%;"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn btn-primary btn-sm" onclick="openVipPurchase('${tier ? tier.id : 'monthly'}')">续费 / 升级</button>
+        <button class="btn btn-outline btn-sm" onclick="showChangePasswordForm()">修改密码</button>
+        <button class="btn btn-outline btn-sm" onclick="logoutUser()">退出登录</button>
+      </div>
+    </div>
+    <div class="vip-auth-card">
+      <h4>🎁 VIP专属权益</h4>
+      <ul style="line-height:2;font-size:14px;padding-left:16px;color:var(--ink-light);">
+        <li>✅ 八字排盘 — 完整十神/纳音/藏干/神煞分析</li>
+        <li>✅ 周易取名 — 六维姓名分析与智能推荐</li>
+        <li>✅ 风水布局 — 详细方位吉凶与化解方案</li>
+        <li>✅ 穿衣搭配 — 每日五行穿衣色彩指南</li>
+        <li>✅ 无广告 · 无限使用 · 优先支持</li>
+      </ul>
+    </div>`;
+}
+
+function renderVipAdminDashboard(container) {
+  const users = loadUsers();
+  const purchases = state.vipPurchases || [];
+  const usageStats = state.usageStats || {};
+  const activeVipCount = Object.values(users).filter(u => u.vipExpiry && new Date(u.vipExpiry) > new Date()).length;
+  const totalUsers = Object.keys(users).length;
+  const totalUsage = Object.values(usageStats).reduce((a, b) => a + b, 0);
+  const revenue = (purchases || []).reduce((sum, p) => sum + (p.price || 0), 0);
+  container.innerHTML = `
+    <div class="vip-admin-stats">
+      <div class="vip-stat-card"><div class="stat-num">${totalUsers}</div><div class="stat-label">注册用户</div></div>
+      <div class="vip-stat-card"><div class="stat-num">${activeVipCount}</div><div class="stat-label">活跃VIP</div></div>
+      <div class="vip-stat-card"><div class="stat-num">${totalUsage}</div><div class="stat-label">总使用次数</div></div>
+      <div class="vip-stat-card"><div class="stat-num">¥${revenue.toFixed(0)}</div><div class="stat-label">预估收入</div></div>
+    </div>
+    <div class="vip-admin-card">
+      <h4>📊 使用统计</h4>
+      <table class="vip-user-table"><thead><tr><th>功能</th><th>使用次数</th></tr></thead><tbody>
+        <tr><td>八字排盘</td><td>${usageStats.bazi || 0}</td></tr>
+        <tr><td>周易取名</td><td>${usageStats.naming || 0}</td></tr>
+        <tr><td>风水布局</td><td>${usageStats.fengshui || 0}</td></tr>
+        <tr><td>穿衣搭配</td><td>${usageStats.clothing || 0}</td></tr>
+      </tbody></table>
+    </div>
+    <div class="vip-admin-card">
+      <h4>👥 用户管理 (${totalUsers})</h4>
+      <div style="overflow-x:auto;">
+        <table class="vip-user-table"><thead><tr><th>用户名</th><th>VIP等级</th><th>到期日</th><th>状态</th><th>操作</th></tr></thead><tbody>
+        ${Object.entries(users).map(([uname, u]) => {
+          const isVip = u.vipExpiry && new Date(u.vipExpiry) > new Date();
+          const tier = isVip ? (getVipTierInfoForUser(u) || { name: 'VIP' }).name : '-';
+          const expiry = u.vipExpiry ? new Date(u.vipExpiry).toLocaleDateString('zh-CN') : '-';
+          return `<tr>
+            <td><strong>${escHtml(uname)}</strong></td>
+            <td>${tier}</td>
+            <td>${expiry}</td>
+            <td><span style="color:${isVip ? 'var(--green,#4caf50)' : 'var(--ink-lighter)'};font-weight:600;">${isVip ? '有效' : '未开通'}</span></td>
+            <td>${isVip ? `<button class="btn btn-outline btn-sm" style="font-size:11px;padding:2px 8px;" onclick="if(confirm('取消${escHtml(uname)}的VIP？')){deactivateVip('${escHtml(uname)}');renderVipPage();}">取消VIP</button>` : `<button class="btn btn-primary btn-sm" style="font-size:11px;padding:2px 8px;" onclick="showManualVipForm('${escHtml(uname)}')">开通VIP</button>`}</td>
+          </tr>`;
+        }).join('')}
+      </tbody></table></div>
+      <div id="manualVipForm" style="margin-top:12px;"></div>
+    </div>
+    ${revenue > 0 ? `
+    <div class="vip-admin-card">
+      <h4>💰 购买记录</h4>
+      <table class="vip-user-table"><thead><tr><th>用户</th><th>套餐</th><th>金额</th><th>时间</th></tr></thead><tbody>
+        ${(purchases || []).slice(-20).reverse().map(p => `<tr>
+          <td>${escHtml(p.username)}</td><td>${p.tierName || p.tierId}</td>
+          <td>¥${(p.price || 0).toFixed(2)}</td>
+          <td>${p.date ? new Date(p.date).toLocaleDateString('zh-CN') : '-'}</td>
+        </tr>`).join('')}
+      </tbody></table>
+    </div>` : ''}
+    <div class="vip-admin-card">
+      <h4>⚙️ VIP定价管理</h4>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">编辑后将立即生效</p>
+      <div id="pricingEditArea"></div>
+    </div>`;
+  // Render pricing editor
+  setTimeout(function() {
+    const area = document.getElementById('pricingEditArea');
+    if (!area) return;
+    const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+    area.innerHTML = tiers.map((t, i) => `
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;">
+        <span style="min-width:50px;font-weight:600;">${t.name}</span>
+        <span>¥</span><input type="number" id="editPrice_${i}" value="${t.price.toFixed(2)}" step="0.01" style="width:80px;padding:6px 8px;border:1px solid var(--border);border-radius:4px;text-align:center;">
+        <span style="font-size:12px;color:var(--ink-lighter);">/${t.period}</span>
+        <span style="font-size:11px;color:var(--ink-lighter);">省</span><input type="number" id="editSave_${i}" value="${(t.save || 0).toFixed(2)}" step="0.01" style="width:70px;padding:6px 8px;border:1px solid var(--border);border-radius:4px;text-align:center;">
+      </div>
+    `).join('') + `<button class="btn btn-primary btn-sm" style="margin-top:8px;" id="savePricingBtn">保存定价</button>`;
+    document.getElementById('savePricingBtn').addEventListener('click', function() {
+      const newTiers = tiers.map((t, i) => ({
+        ...t,
+        price: parseFloat(document.getElementById('editPrice_' + i).value) || t.price,
+        save: parseFloat(document.getElementById('editSave_' + i).value) || 0
+      }));
+      state.vipPricing = newTiers;
+      saveVipPricing(newTiers);
+      showToast('VIP定价已更新');
+    });
+  }, 0);
+}
+
+function getVipTierInfoForUser(user) {
+  if (!user || !user.vipExpiry) return null;
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  return tiers.find(t => t.id === user.vipTierId) || null;
+}
+
+function deactivateVip(username) {
+  const users = loadUsers();
+  if (users[username]) {
+    delete users[username].vipExpiry;
+    delete users[username].vipTierId;
+    saveUsers(users);
+  }
+  if (state.currentUser && state.currentUser.username === username) {
+    state.currentUser = { ...state.currentUser, vipExpiry: null, vipTierId: null };
+    saveCurrentUser(state.currentUser);
+  }
+  showToast('已取消 ' + username + ' 的VIP');
+}
+
+function showManualVipForm(username) {
+  const formEl = document.getElementById('manualVipForm');
+  if (!formEl) return;
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  formEl.innerHTML = `
+    <div style="border:1px solid var(--border);padding:12px;border-radius:var(--radius);background:var(--bg-warm);">
+      <strong style="font-size:13px;">手动为 ${escHtml(username)} 开通VIP</strong>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;">
+        <select id="manualTierSelect" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;">${tiers.map(t => `<option value="${t.id}">${t.name} ¥${t.price.toFixed(2)}</option>`).join('')}</select>
+        <button class="btn btn-primary btn-sm" onclick="activateVipManually('${escHtml(username)}')">确认开通</button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('manualVipForm').innerHTML=''">取消</button>
+      </div>
+    </div>`;
+}
+
+function activateVipManually(username) {
+  const tierId = document.getElementById('manualTierSelect').value;
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  const tier = tiers.find(t => t.id === tierId);
+  if (!tier) return;
+  const daysMap = { monthly: 30, quarterly: 90, semiannual: 180, annual: 365 };
+  const days = daysMap[tierId] || 30;
+  const expiry = new Date(Date.now() + days * 86400000).toISOString();
+  const users = loadUsers();
+  if (!users[username]) { showToast('用户不存在'); return; }
+  users[username].vipExpiry = expiry;
+  users[username].vipTierId = tierId;
+  saveUsers(users);
+  const purchase = { username, tierId, tierName: tier.name, price: tier.price, date: new Date().toISOString(), manual: true };
+  state.vipPurchases = [...(state.vipPurchases || []), purchase];
+  saveVipPurchases();
+  if (state.currentUser && state.currentUser.username === username) {
+    state.currentUser = { ...state.currentUser, vipExpiry: expiry, vipTierId: tierId };
+    saveCurrentUser(state.currentUser);
+  }
+  showToast(username + ' 已开通 ' + tier.name + ' VIP');
+  renderVipPage();
+}
+
+function updateVipBadge() {
+  const badge = document.getElementById('vipNavBadge');
+  if (!badge) return;
+  if (isUserVip()) {
+    const tier = getVipTierInfo();
+    badge.style.display = 'inline-flex';
+    badge.textContent = (tier ? tier.icon : '👑');
+    badge.className = 'vip-badge gold';
+  } else if (state.isLoggedIn) {
+    badge.style.display = 'inline-flex';
+    badge.textContent = '开通';
+    badge.className = 'vip-badge';
+  } else {
+    badge.style.display = 'none';
+    badge.textContent = '';
+    badge.className = 'vip-badge';
+  }
+}
+
+/* ========== VIP Purchase Modal ========== */
+let _vipPurchaseTierId = null;
+function openVipPurchase(tierId) {
+  _vipPurchaseTierId = tierId;
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  const tier = tiers.find(t => t.id === tierId) || tiers[0];
+  if (!tier) return;
+  const body = document.getElementById('vipPurchaseBody');
+  body.innerHTML = `
+    <div class="vip-purchase-steps">
+      <div class="step active" id="purchaseStep1">
+        <div class="step-num">1</div>
+        <div class="step-label">选择套餐</div>
+        <div class="step-desc">${tier.name} · ¥${tier.price.toFixed(2)}</div>
+      </div>
+      <div class="step" id="purchaseStep2">
+        <div class="step-num">2</div>
+        <div class="step-label">扫码支付</div>
+        <div class="step-desc">微信/支付宝</div>
+      </div>
+    </div>
+    <div id="purchaseStepContent">
+      <div class="vip-qr-code">
+        <p style="margin-bottom:12px;font-weight:600;">请扫描下方收款码支付 <span style="color:var(--red-primary);font-size:18px;">¥${tier.price.toFixed(2)}</span></p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+          ${getStoredQR('wechat') ? `<div style="text-align:center;"><img src="${getStoredQR('wechat')}" alt="微信收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💚 微信支付</p></div>` : '<div style="padding:20px;border:1px dashed var(--border);border-radius:8px;color:var(--ink-lighter);">微信收款码未设置</div>'}
+          ${getStoredQR('alipay') ? `<div style="text-align:center;"><img src="${getStoredQR('alipay')}" alt="支付宝收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💙 支付宝</p></div>` : ''}
+        </div>
+        ${!getStoredQR('wechat') && !getStoredQR('alipay') ? '<p style="text-align:center;margin-top:12px;color:var(--ink-lighter);font-size:13px;">请先在 <a href="#settings" style="color:var(--gold);" onclick="closeVipPurchase()">设置页面</a> 上传收款码</p>' : ''}
+        <button class="btn btn-primary" style="margin-top:16px;min-width:200px;" onclick="simulateVipPayment()" ${!getStoredQR('wechat') && !getStoredQR('alipay') ? 'disabled' : ''}>我已支付完成</button>
+        <p style="font-size:11px;color:var(--ink-lighter);margin-top:8px;">支付完成后请点击上方按钮，管理员将确认开通</p>
+      </div>
+    </div>`;
+  document.getElementById('vipPurchaseModal').classList.add('open');
+}
+
+function closeVipPurchase() {
+  document.getElementById('vipPurchaseModal').classList.remove('open');
+  _vipPurchaseTierId = null;
+}
+
+function simulateVipPayment() {
+  if (!_vipPurchaseTierId) return;
+  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  const tier = tiers.find(t => t.id === _vipPurchaseTierId);
+  if (!tier) return;
+  if (!state.currentUser || !state.currentUser.username) {
+    showToast('请先登录');
+    closeVipPurchase();
+    return;
+  }
+  const body = document.getElementById('purchaseStepContent');
+  document.getElementById('purchaseStep2').classList.add('active');
+  body.innerHTML = `
+    <div style="text-align:center;padding:20px;">
+      <div style="font-size:48px;margin-bottom:12px;">⏳</div>
+      <p style="font-weight:600;margin-bottom:8px;">支付确认中...</p>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:16px;">${tier.name} · ¥${tier.price.toFixed(2)} · 用户 ${escHtml(state.currentUser.username)}</p>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button class="btn btn-primary" onclick="confirmVipPayment()">✅ 管理员确认开通</button>
+        <button class="btn btn-outline" onclick="closeVipPurchase()">取消</button>
+      </div>
+      <p style="font-size:11px;color:var(--ink-lighter);margin-top:8px;">需管理员确认（ensureAdmin 守卫）</p>
+    </div>`;
+}
+
+function confirmVipPayment() {
+  ensureAdmin(function() {
+    if (!_vipPurchaseTierId) return;
+    const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+    const tier = tiers.find(t => t.id === _vipPurchaseTierId);
+    if (!tier) return;
+    const username = state.currentUser ? state.currentUser.username : null;
+    if (!username) { showToast('用户信息丢失'); return; }
+    const daysMap = { monthly: 30, quarterly: 90, semiannual: 180, annual: 365 };
+    const days = daysMap[_vipPurchaseTierId] || 30;
+    const expiry = new Date(Date.now() + days * 86400000).toISOString();
+    const users = loadUsers();
+    if (!users[username]) { showToast('用户不存在'); return; }
+    users[username].vipExpiry = expiry;
+    users[username].vipTierId = _vipPurchaseTierId;
+    saveUsers(users);
+    state.currentUser.vipExpiry = expiry;
+    state.currentUser.vipTierId = _vipPurchaseTierId;
+    saveCurrentUser(state.currentUser);
+    const purchase = {
+      username, tierId: _vipPurchaseTierId, tierName: tier.name,
+      price: tier.price, date: new Date().toISOString()
+    };
+    state.vipPurchases = [...(state.vipPurchases || []), purchase];
+    saveVipPurchases();
+    showToast('VIP已开通！欢迎成为' + tier.name + '会员');
+    closeVipPurchase();
+    updateVipBadge();
+    renderVipPage();
+  });
+}
+
+function getStoredQR(type) {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY_QRCODES)) || {};
+    return d[type] || null;
+  } catch(e) { return null; }
+}
+
+/* ========== Access Control ========== */
+function checkAccess(featureName) {
+  if (isAdmin()) return true;
+  if (isUserVip()) return true;
+  var featureLabels = { bazi: '八字排盘', naming: '周易取名', fengshui: '风水布局详解', clothing: '穿衣搭配详解' };
+  var label = featureLabels[featureName] || '此功能';
+  var gate = document.getElementById('vipGateOverlay');
+  if (!gate) {
+    gate = document.createElement('div');
+    gate.id = 'vipGateOverlay';
+    gate.className = 'vip-gate-overlay';
+    gate.innerHTML = '<div class="vip-gate-card">' +
+      '<div class="gate-icon">👑</div>' +
+      '<div class="gate-title">VIP专属功能</div>' +
+      '<div class="gate-desc" id="vipGateDesc"></div>' +
+      '<button class="btn btn-gold" style="margin-right:8px;" id="vipGateUpgradeBtn">开通VIP</button>' +
+      '<button class="btn btn-outline" onclick="closeVipGate()">以后再说</button>' +
+    '</div>';
+    document.body.appendChild(gate);
+    gate.addEventListener('click', function(e) { if (e.target === this) closeVipGate(); });
+  }
+  document.getElementById('vipGateDesc').textContent = '"' + label + '"为VIP会员专属功能。开通VIP即可畅享全部命理深度分析，月费仅需¥29.90起。';
+  var upgradeBtn = document.getElementById('vipGateUpgradeBtn');
+  upgradeBtn.onclick = function() { closeVipGate(); navigate('vip'); };
+  gate.style.display = 'flex';
+  return false;
+}
+
+function closeVipGate() {
+  var gate = document.getElementById('vipGateOverlay');
+  if (gate) gate.style.display = 'none';
+}
+
 /* ========== Init ========== */
 function init() {
   // Load books
@@ -2931,6 +3920,15 @@ function init() {
   }
   if (!state.videos.length) {
     state.videos = [...DEFAULT_VIDEOS];
+    saveVideos();
+  }
+  // Merge any new default videos
+  DEFAULT_VIDEOS.forEach(dv => {
+    if (!state.videos.find(v => v.id === dv.id)) {
+      state.videos.push(dv);
+    }
+  });
+  if (state.videos.length > (savedVideos ? JSON.parse(savedVideos).length : 0)) {
     saveVideos();
   }
 
@@ -2959,6 +3957,15 @@ function init() {
   const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
   if (savedMessages) { try { state.messages = JSON.parse(savedMessages); } catch(e) {} }
   updateContactBadge();
+  loadReviewedContent();
+
+  // Load VIP data
+  loadVipPricing();
+  loadUsageStats();
+  loadVipPurchases();
+  const savedUser = loadCurrentUser();
+  if (savedUser) { state.currentUser = savedUser; state.isLoggedIn = true; }
+  updateVipBadge();
 
   // Restore admin session
   if (isAdmin()) showAdminIndicator();
@@ -2974,6 +3981,8 @@ function init() {
 }
 
 function saveBooks() { try { localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(state.books)); } catch (e) { if (e.name === 'QuotaExceededError') showToast('存储空间不足，请清理旧数据'); } }
+function loadReviewedContent() { try { state.reviewedContent = JSON.parse(localStorage.getItem(STORAGE_KEY_REVIEWED_CONTENT)) || {}; } catch(e) { state.reviewedContent = {}; } }
+function saveReviewedContent() { try { localStorage.setItem(STORAGE_KEY_REVIEWED_CONTENT, JSON.stringify(state.reviewedContent)); } catch(e) { if (e.name === 'QuotaExceededError') showToast('存储空间不足，请清理旧数据'); } }
 function saveVideos() { try { localStorage.setItem(STORAGE_KEY_VIDEOS, JSON.stringify(state.videos)); } catch (e) { if (e.name === 'QuotaExceededError') showToast('存储空间不足，请清理旧数据'); } }
 function savePurchases() { try { localStorage.setItem(STORAGE_KEY_PURCHASES, JSON.stringify(state.purchasedBooks)); } catch (e) { if (e.name === 'QuotaExceededError') showToast('存储空间不足，请清理旧数据'); } }
 
@@ -3001,6 +4010,7 @@ function navigate(page) {
   if (page === 'videos') renderVideos();
   if (page === 'settings') { renderQRSettings(); initPaymentToggle(); renderSettingsContactInfo(); renderMessages(); }
   if (page === 'mingli') renderMingli();
+  if (page === 'vip') renderVipPage();
 
   // Update mobile nav
   document.querySelectorAll('.mobile-nav-item').forEach(m => m.classList.remove('active'));
@@ -3418,14 +4428,13 @@ function generateTOC(content) {
   const list = document.getElementById('tocList');
   if (!list) return;
   if (!content) { list.innerHTML = '<span style="font-size:12px;color:var(--ink-lighter);">暂无内容</span>'; return; }
-  const re = /^[  \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
+  const re = /^[ \t]*[^\n]+卦第[一二三四五六七八九十百千0-9]+|^[ \t]*(系辞[上下]传|说卦传|序卦传|杂卦传)|^[ \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
   const chapters = [];
   let m;
   while ((m = re.exec(content)) !== null) {
     chapters.push({ title: m[0].trim(), index: m.index });
   }
   if (chapters.length === 0) {
-    // Fallback: look for blank-line paragraphs as chapters
     const paras = content.split(/\n{2,}/);
     let idx = 0;
     paras.forEach(p => {
@@ -3435,12 +4444,11 @@ function generateTOC(content) {
       }
       idx = content.indexOf(p, idx) + p.length;
     });
-    // limit to reasonable count
-    if (chapters.length > 30) chapters.length = 30;
   }
   let html = '';
   chapters.forEach((ch, i) => {
-    html += `<div class="toc-link" onclick="scrollToChapter(${ch.index})" title="${escHtml(ch.title)}">${escHtml(ch.title.length > 18 ? ch.title.slice(0, 18) + '…' : ch.title)}</div>`;
+    const display = ch.title.length > 28 ? ch.title.slice(0, 28) + '…' : ch.title;
+    html += '<div class="toc-link" onclick="scrollToChapter(' + ch.index + ')" title="' + escHtml(ch.title) + '">' + escHtml(display) + '</div>';
   });
   list.innerHTML = html || '<span style="font-size:12px;color:var(--ink-lighter);">未找到章节</span>';
 }
@@ -3751,6 +4759,70 @@ function deleteBook(id) {
   showToast('书籍已删除');
 }
 
+/* ========== Book Content Editor ========== */
+let editingBookId = null;
+
+function openBookEditor(bookId) {
+  ensureAdmin(function() {
+    editingBookId = bookId;
+    var book = state.books.find(function(b) { return b.id === bookId; });
+    if (!book) return;
+    var content = state.reviewedContent[bookId] || book.content || '';
+    document.getElementById('bookEditContent').value = content;
+    document.getElementById('bookEditCharCount').textContent = '字数：' + content.length;
+    var resetBtn = document.getElementById('bookEditResetBtn');
+    if (resetBtn) resetBtn.style.display = state.reviewedContent[bookId] ? '' : 'none';
+    document.getElementById('bookEditModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('bookEditContent').oninput = function() {
+      document.getElementById('bookEditCharCount').textContent = '字数：' + this.value.length;
+    };
+  });
+}
+
+function closeBookEditor() {
+  document.getElementById('bookEditModal').classList.remove('open');
+  document.body.style.overflow = '';
+  editingBookId = null;
+}
+
+function saveBookEdit() {
+  if (!editingBookId) return;
+  var content = document.getElementById('bookEditContent').value;
+  var book = state.books.find(function(b) { return b.id === editingBookId; });
+  if (!book) return;
+  if (content === book.content) {
+    delete state.reviewedContent[editingBookId];
+  } else {
+    state.reviewedContent[editingBookId] = content;
+  }
+  saveReviewedContent();
+  closeBookEditor();
+  showToast('《' + book.title + '》内容已审稿');
+  if (currentReaderBookId === editingBookId) {
+    var displayContent = state.reviewedContent[editingBookId] || book.content || '';
+    if (editingBookId !== 'b2' && editingBookId !== 'b5') {
+      displayContent = displayContent.split('\n\n').map(function(p) {
+        if (p.trim().length > 30) return '　　' + p;
+        return p;
+      }).join('\n\n');
+    }
+    document.getElementById('readerContent').textContent = displayContent;
+    generateTOC(displayContent);
+  }
+}
+
+function resetBookEdit() {
+  if (!editingBookId) return;
+  delete state.reviewedContent[editingBookId];
+  saveReviewedContent();
+  var book = state.books.find(function(b) { return b.id === editingBookId; });
+  document.getElementById('bookEditContent').value = book ? book.content || '' : '';
+  document.getElementById('bookEditCharCount').textContent = '字数：' + (book ? book.content.length : 0);
+  document.getElementById('bookEditResetBtn').style.display = 'none';
+  showToast('已恢复默认内容');
+}
+
 function confirmDeleteVideo(id) {
   ensureAdmin(function() {
     const video = state.videos.find(v => v.id === id);
@@ -4001,11 +5073,13 @@ document.getElementById('donateModal').addEventListener('click', function(e) { i
 document.getElementById('fengshuiModal').addEventListener('click', function(e) { if (e.target === this) closeFengshui(); });
 document.getElementById('adminModal').addEventListener('click', function(e) { if (e.target === this) closeAdmin(); });
 document.getElementById('contactModal').addEventListener('click', function(e) { if (e.target === this) closeContact(); });
+document.getElementById('bookEditModal').addEventListener('click', function(e) { if (e.target === this) closeBookEditor(); });
+document.getElementById('vipPurchaseModal').addEventListener('click', function(e) { if (e.target === this) closeVipPurchase(); });
 
 /* ========== Keyboard shortcuts ========== */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    closeReader(); closePlayer(); closeBookUpload(); closeVideoUpload(); closeConfirm(); closePurchase(); closeDonate(); closeFengshui(); closeAdmin(); closeContact();
+    closeReader(); closePlayer(); closeBookUpload(); closeVideoUpload(); closeConfirm(); closePurchase(); closeDonate(); closeFengshui(); closeAdmin(); closeContact(); closeBookEditor(); closeVipPurchase();
   }
 });
 
@@ -4840,6 +5914,7 @@ function switchMingliTab(tab, el) {
   if (tab === 'bazi') initBaziForm();
   if (tab === 'fengshui') renderFengshuiCards();
   if (tab === 'clothing') renderClothing();
+  if (tab === 'naming') initNamingForm();
 }
 
 /* ========== Mingli: Bazi ========== */
@@ -4884,6 +5959,7 @@ function updateBaziDays() {
 }
 
 function calculateBazi() {
+  if (!checkAccess('bazi')) return;
   const year = parseInt(document.getElementById('baziYear').value);
   const month = parseInt(document.getElementById('baziMonth').value);
   const day = parseInt(document.getElementById('baziDay').value);
@@ -4891,6 +5967,7 @@ function calculateBazi() {
   const gender = document.getElementById('baziGender').value;
 
   if (!year || !month || !day) { showToast('请填写完整的出生信息'); return; }
+  incrementUsageStat('bazi');
 
   const yearP = getYearPillar(year);
   const monthP = getMonthPillar(year, month);
@@ -5386,79 +6463,832 @@ function toggleSubsection(titleEl) {
 }
 
 /* ========== Mingli: Naming ========== */
-const NAMING_CHARS = {
-  '木': { male: ['林','森','柏','松','枫','桐','桦','楠','棣','荣','柯','桓','栩','彬','楚'], female: ['兰','桂','梅','柳','杏','樱','槿','蓉','薇','萱','荔','菁','菲','芸','芷'] },
-  '火': { male: ['炎','焱','烨','煜','炜','炫','焕','照','煌','昕','晓','晖','晨','昊','晔'], female: ['丹','彤','霞','虹','婵','婉','灵','燕','宁','丽','妮','瑶','璇','璐','琰'] },
-  '土': { male: ['坤','垚','垣','城','培','基','堂','磊','圣','坚','宇','安','山','岳','峰'], female: ['岚','岩','屹','宛','怡','恩','依','韵','瑛','瑞','玮','瑜','宛','媛','娴'] },
-  '金': { male: ['金','鑫','钧','铭','锐','锋','铮','锦','锡','铠','铮','锟','钦','钰','镇'], female: ['钰','铃','银','锦','镜','珊','珍','玲','琴','琪','琳','瑞','璇','秀','秋'] },
-  '水': { male: ['泽','洋','浩','瀚','涛','涵','鸿','源','渊','润','潇','沐','洛','淳','海'], female: ['澜','漪','涵','溪','澜','沫','汐','漫','泓','淑','洁','清','滢','漩','淳'] },
-};
-
-function toggleNamingEl(el) {
-  // Update label styling when checked
-  const label = el.parentElement;
-  if (el.checked) {
-    label.style.background = 'rgba(181,52,58,0.08)';
-    label.style.borderColor = 'var(--red-primary)';
-  } else {
-    label.style.background = '';
-    label.style.borderColor = 'var(--border)';
+/* ========== Naming Form Init ========== */
+function initNamingForm() {
+  const yearSelect = document.getElementById('namingYear');
+  if (yearSelect && yearSelect.options.length === 0) {
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var yearHtml = '', monthHtml = '';
+    for (var y = 1900; y <= currentYear; y++) {
+      yearHtml += '<option value="' + y + '"' + (y === 1990 ? ' selected' : '') + '>' + y + ' 年</option>';
+    }
+    yearSelect.innerHTML = yearHtml;
+    for (var m = 1; m <= 12; m++) {
+      monthHtml += '<option value="' + m + '">' + m + ' 月</option>';
+    }
+    document.getElementById('namingMonth').innerHTML = monthHtml;
+    updateNamingDays();
+    yearSelect.addEventListener('change', updateNamingDays);
+    document.getElementById('namingMonth').addEventListener('change', updateNamingDays);
   }
 }
+function updateNamingDays() {
+  var year = parseInt(document.getElementById('namingYear').value) || 1990;
+  var month = parseInt(document.getElementById('namingMonth').value) || 1;
+  var daySelect = document.getElementById('namingDay');
+  var daysInMonth = new Date(year, month, 0).getDate();
+  var html = '';
+  for (var d = 1; d <= daysInMonth; d++) {
+    html += '<option value="' + d + '">' + d + ' 日</option>';
+  }
+  daySelect.innerHTML = html;
+}
 
-function generateNames() {
-  const surname = document.getElementById('nameSurname').value.trim();
-  const gender = document.getElementById('nameGender').value;
+/* ========== Zhouyi Naming Engine ========== */
+
+const NAMING_CHARS_V2 = {
+  '木': [
+    { char: '林', strokes: 8, meaning: '成材之林，生机勃勃', category: '自然', gender: 'unisex', source: '《说文》：平土有丛木曰林' },
+    { char: '森', strokes: 12, meaning: '林木茂盛，繁盛兴旺', category: '自然', gender: 'male', source: '《说文》：木多貌' },
+    { char: '柏', strokes: 9, meaning: '松柏长青，坚毅不屈', category: '德行', gender: 'male', source: '《论语》：岁寒然后知松柏之后凋也' },
+    { char: '松', strokes: 8, meaning: '苍松劲节，高尚坚贞', category: '德行', gender: 'male', source: '《诗经》：如松柏之茂' },
+    { char: '枫', strokes: 13, meaning: '丹枫迎秋，文采斐然', category: '自然', gender: 'unisex', source: '《楚辞》：湛湛江水兮上有枫' },
+    { char: '桐', strokes: 10, meaning: '梧桐栖凤，祥瑞高贵', category: '吉祥', gender: 'unisex', source: '《诗经》：凤凰鸣矣，于彼高冈，梧桐生矣' },
+    { char: '楠', strokes: 13, meaning: '楠木名贵，栋梁之材', category: '财富', gender: 'male', source: '《说文》：楠，梅也，南方之木' },
+    { char: '荣', strokes: 14, meaning: '欣欣向荣，繁盛兴旺', category: '吉祥', gender: 'unisex', source: '《尔雅》：木谓之华，草谓之荣' },
+    { char: '柯', strokes: 9, meaning: '执柯伐柯，中正之道', category: '德行', gender: 'male', source: '《诗经》：伐柯如何？匪斧不克' },
+    { char: '栩', strokes: 10, meaning: '栩栩如生，生机盎然', category: '文学', gender: 'unisex', source: '《庄子》：栩栩然蝴蝶也' },
+    { char: '彬', strokes: 11, meaning: '文质彬彬，然后君子', category: '德行', gender: 'male', source: '《论语》：文质彬彬，然后君子' },
+    { char: '楚', strokes: 13, meaning: '荆楚之材，杰出优秀', category: '智慧', gender: 'male', source: '《诗经》：翘翘错薪，言刈其楚' },
+    { char: '桂', strokes: 10, meaning: '蟾宫折桂，金榜题名', category: '吉祥', gender: 'unisex', source: '《楚辞》：桂栋兮兰橑' },
+    { char: '兰', strokes: 23, meaning: '芝兰玉树，君子之风', category: '德行', gender: 'female', source: '《孔子家语》：与善人居，如入芝兰之室' },
+    { char: '梅', strokes: 11, meaning: '寒梅傲雪，品格高洁', category: '德行', gender: 'female', source: '《诗经》：摽有梅，其实七兮' },
+    { char: '柳', strokes: 9, meaning: '杨柳依依，柔美多姿', category: '自然', gender: 'female', source: '《诗经》：昔我往矣，杨柳依依' },
+    { char: '樱', strokes: 21, meaning: '樱花烂漫，美丽高贵', category: '自然', gender: 'female', source: '礼记·月令》仲夏之月羞以含桃' },
+    { char: '萱', strokes: 15, meaning: '萱草忘忧，怡然自乐', category: '吉祥', gender: 'female', source: '《诗经》：焉得谖草，言树之背' },
+    { char: '蓉', strokes: 16, meaning: '芙蓉出水，清丽脱俗', category: '自然', gender: 'female', source: '《楚辞》：芙蓉始发，杂芰荷些' },
+    { char: '薇', strokes: 19, meaning: '采薇之志，高洁不屈', category: '德行', gender: 'female', source: '《诗经》：采薇采薇，薇亦作止' },
+    { char: '芸', strokes: 10, meaning: '芸香辟蠹，书香世家', category: '文学', gender: 'female', source: '《说文》：芸，芸香也，似苜蓿' },
+    { char: '芷', strokes: 7, meaning: '沅芷澧兰，香草美人', category: '自然', gender: 'female', source: '《楚辞》：沅有芷兮澧有兰' },
+    { char: '栋', strokes: 12, meaning: '栋梁之材，国之柱石', category: '德行', gender: 'male', source: '《说文》：栋，极也，屋檼也' },
+    { char: '楷', strokes: 13, meaning: '楷模典范，世之师表', category: '德行', gender: 'male', source: '《说文》：楷，木也，可以染绛' },
+    { char: '棋', strokes: 12, meaning: '琴棋书画，才艺双全', category: '智慧', gender: 'unisex', source: '《说文》：棋，博棋也' },
+    { char: '桦', strokes: 16, meaning: '白桦挺拔，正直光明', category: '自然', gender: 'male', source: '《玉篇》：桦，木皮可以为烛' },
+    { char: '蕊', strokes: 18, meaning: '花蕊芬芳，含苞待放', category: '自然', gender: 'female', source: '《说文》：蕊，聚也' },
+    { char: '菲', strokes: 14, meaning: '芳菲满园，才德兼备', category: '文学', gender: 'female', source: '《楚辞》：芳菲菲兮满堂' },
+    { char: '菁', strokes: 14, meaning: '菁华之秀，出类拔萃', category: '智慧', gender: 'unisex', source: '《诗经》：菁菁者莪，在彼中阿' },
+    { char: '茂', strokes: 11, meaning: '风华正茂，兴盛繁荣', category: '吉祥', gender: 'male', source: '《诗经》：如竹苞矣，如松茂矣' },
+    { char: '萌', strokes: 14, meaning: '万物萌生，新生希望', category: '自然', gender: 'female', source: '《礼记》：句者毕出，萌者尽达' },
+    { char: '莲', strokes: 17, meaning: '出淤泥不染，高洁清雅', category: '德行', gender: 'female', source: '《爱莲说》：出淤泥而不染，濯清涟而不妖' },
+    { char: '竹', strokes: 6, meaning: '虚怀若竹，气节凌云', category: '德行', gender: 'unisex', source: '《诗经》：瞻彼淇奥，绿竹猗猗' },
+    { char: '棠', strokes: 12, meaning: '甘棠遗爱，仁德流芳', category: '德行', gender: 'unisex', source: '《诗经》：蔽芾甘棠，勿翦勿伐' },
+    { char: '杏', strokes: 7, meaning: '杏林春暖，仁心仁术', category: '吉祥', gender: 'female', source: '《庄子》：孔子游乎缁帷之林，休坐乎杏坛之上' },
+    { char: '禾', strokes: 5, meaning: '嘉禾献瑞，五谷丰登', category: '吉祥', gender: 'unisex', source: '《说文》：禾，嘉谷也，二月始生' },
+    { char: '朴', strokes: 6, meaning: '抱朴守真，返璞归真', category: '德行', gender: 'male', source: '《道德经》：见素抱朴，少私寡欲' },
+    { char: '栩', strokes: 10, meaning: '栩栩如生，生机灵动', category: '文学', gender: 'unisex', source: '《庄子》：昔者庄周梦为蝴蝶，栩栩然蝴蝶也' },
+  ],
+  '火': [
+    { char: '炎', strokes: 8, meaning: '炎黄子孙，光耀四方', category: '吉祥', gender: 'male', source: '《说文》：炎，火光上也' },
+    { char: '烨', strokes: 16, meaning: '烨烨其华，光芒闪耀', category: '智慧', gender: 'unisex', source: '《诗经》：烨烨震电' },
+    { char: '煜', strokes: 13, meaning: '煜煜生辉，光芒照人', category: '吉祥', gender: 'male', source: '《说文》：煜，熠也' },
+    { char: '炜', strokes: 8, meaning: '炜煌之光，灿烂夺目', category: '吉祥', gender: 'male', source: '《说文》：炜，盛赤也' },
+    { char: '炫', strokes: 9, meaning: '炫彩夺目，才华出众', category: '智慧', gender: 'unisex', source: '《说文》：炫，燿燿也' },
+    { char: '焕', strokes: 11, meaning: '焕然一新，朝气蓬勃', category: '吉祥', gender: 'unisex', source: '《论语》：焕乎其有文章' },
+    { char: '照', strokes: 13, meaning: '普照四方，光明磊落', category: '德行', gender: 'male', source: '《诗经》：月出照兮，佼人燎兮' },
+    { char: '晨', strokes: 11, meaning: '晨光熹微，朝气蓬勃', category: '自然', gender: 'unisex', source: '《诗经》：夜如何其？夜乡晨' },
+    { char: '昕', strokes: 8, meaning: '昕昕旭日，黎明之光', category: '自然', gender: 'unisex', source: '《说文》：昕，旦明也，日将出也' },
+    { char: '晓', strokes: 16, meaning: '晓以大义，明理通达', category: '智慧', gender: 'unisex', source: '《说文》：晓，明也' },
+    { char: '昊', strokes: 8, meaning: '昊天罔极，广阔无垠', category: '自然', gender: 'male', source: '《诗经》：昊天罔极' },
+    { char: '晔', strokes: 16, meaning: '晔兮如华，光彩照人', category: '吉祥', gender: 'unisex', source: '《楚辞》：晔兮如华' },
+    { char: '丹', strokes: 4, meaning: '丹心赤诚，忠心耿耿', category: '德行', gender: 'unisex', source: '《诗经》：颜如渥丹' },
+    { char: '彤', strokes: 7, meaning: '彤管有炜，赤心热忱', category: '文学', gender: 'female', source: '《诗经》：彤管有炜，说怿女美' },
+    { char: '霞', strokes: 17, meaning: '霞光万道，锦绣前程', category: '自然', gender: 'female', source: '《楚辞》：吸飞泉之微液兮，怀琬琰之华英' },
+    { char: '虹', strokes: 9, meaning: '虹霓万丈，气象万千', category: '自然', gender: 'unisex', source: '《尔雅》：虹，螮蝀也' },
+    { char: '婵', strokes: 15, meaning: '婵娟美好，月色动人', category: '文学', gender: 'female', source: '《说文》：婵，婵娟也' },
+    { char: '婉', strokes: 11, meaning: '婉约柔美，和顺贤淑', category: '德行', gender: 'female', source: '《诗经》：有美一人，婉如清扬' },
+    { char: '灵', strokes: 24, meaning: '灵心慧性，聪慧过人', category: '智慧', gender: 'unisex', source: '《诗经》：灵雨既零' },
+    { char: '燕', strokes: 16, meaning: '燕燕于飞，自由优雅', category: '自然', gender: 'female', source: '《诗经》：燕燕于飞，差池其羽' },
+    { char: '宁', strokes: 14, meaning: '宁静致远，淡泊明志', category: '德行', gender: 'unisex', source: '《大学》：知止而后有定，定而后能静，静而后能安' },
+    { char: '丽', strokes: 19, meaning: '天生丽质，美好出众', category: '吉祥', gender: 'female', source: '《说文》：丽，旅行也，耦也' },
+    { char: '瑶', strokes: 15, meaning: '瑶台琼室，仙姿玉质', category: '吉祥', gender: 'female', source: '《楚辞》：望瑶台之偃蹇兮' },
+    { char: '璐', strokes: 17, meaning: '宝璐琼琚，珍贵如玉', category: '财富', gender: 'female', source: '《楚辞》：被明月兮珮宝璐' },
+    { char: '晨', strokes: 11, meaning: '晨曦初露，希望之光', category: '自然', gender: 'unisex', source: '《诗经》：夜如何其？夜乡晨' },
+    { char: '晖', strokes: 13, meaning: '春晖寸草，感恩之心', category: '德行', gender: 'unisex', source: '《说文》：晖，光也' },
+    { char: '明', strokes: 8, meaning: '明德惟馨，光明正大', category: '德行', gender: 'unisex', source: '《大学》：大学之道，在明明德' },
+    { char: '旭', strokes: 6, meaning: '旭日东升，朝气蓬勃', category: '自然', gender: 'male', source: '《说文》：旭，日旦出貌' },
+    { char: '昌', strokes: 8, meaning: '繁荣昌盛，兴旺发达', category: '吉祥', gender: 'male', source: '《说文》：昌，美言也，一曰日光' },
+    { char: '昂', strokes: 8, meaning: '昂首阔步，气宇轩昂', category: '德行', gender: 'male', source: '《说文》：昂，举也' },
+    { char: '畅', strokes: 14, meaning: '畅通无阻，一帆风顺', category: '吉祥', gender: 'unisex', source: '《说文》：畅，不生也，引申为通达' },
+    { char: '煌', strokes: 13, meaning: '辉煌灿烂，功成名就', category: '吉祥', gender: 'male', source: '《说文》：煌，煌煇也' },
+  ],
+  '土': [
+    { char: '坤', strokes: 8, meaning: '坤厚载物，德合无疆', category: '德行', gender: 'unisex', source: '《周易》：坤厚载物，德合无疆' },
+    { char: '垚', strokes: 9, meaning: '垚垚如山，高峻挺拔', category: '自然', gender: 'male', source: '《说文》：垚，土高也' },
+    { char: '垣', strokes: 9, meaning: '垣墙之固，稳重可靠', category: '德行', gender: 'male', source: '《说文》：垣，墙也' },
+    { char: '城', strokes: 10, meaning: '众志成城，坚不可摧', category: '德行', gender: 'male', source: '《说文》：城，以盛民也' },
+    { char: '培', strokes: 11, meaning: '培养人才，厚德载物', category: '德行', gender: 'male', source: '《礼记》：培植以时' },
+    { char: '基', strokes: 11, meaning: '基业长青，根深蒂固', category: '财富', gender: 'male', source: '《诗经》：乐只君子，邦家之基' },
+    { char: '堂', strokes: 11, meaning: '堂堂正正，光明磊落', category: '德行', gender: 'male', source: '《论语》：堂堂乎张也' },
+    { char: '圣', strokes: 13, meaning: '圣人之德，天下为公', category: '德行', gender: 'male', source: '《论语》：圣人，吾不得而见之矣' },
+    { char: '坚', strokes: 11, meaning: '坚韧不拔，意志坚定', category: '德行', gender: 'male', source: '《说文》：坚，刚也' },
+    { char: '宇', strokes: 6, meaning: '气宇轩昂，胸怀天下', category: '智慧', gender: 'male', source: '《说文》：宇，屋边也' },
+    { char: '安', strokes: 6, meaning: '安邦定国，长治久安', category: '吉祥', gender: 'unisex', source: '《大学》：安而后能虑' },
+    { char: '山', strokes: 3, meaning: '山高水长，仁者乐山', category: '自然', gender: 'male', source: '《论语》：仁者乐山' },
+    { char: '岳', strokes: 8, meaning: '五岳独尊，崇高伟大', category: '自然', gender: 'male', source: '《诗经》：崧高维岳，骏极于天' },
+    { char: '峰', strokes: 10, meaning: '登峰造极，成就非凡', category: '自然', gender: 'male', source: '《说文》：峰，山耑也' },
+    { char: '岚', strokes: 7, meaning: '山岚雾气，灵动缥缈', category: '自然', gender: 'female', source: '《说文》：岚，山气也' },
+    { char: '岩', strokes: 8, meaning: '坚定如岩，刚毅不屈', category: '德行', gender: 'male', source: '《说文》：岩，岸也' },
+    { char: '宛', strokes: 8, meaning: '宛转悠扬，温婉可人', category: '文学', gender: 'female', source: '《诗经》：溯游从之，宛在水中央' },
+    { char: '怡', strokes: 8, meaning: '怡然自得，和悦安详', category: '德行', gender: 'unisex', source: '《说文》：怡，和也' },
+    { char: '恩', strokes: 10, meaning: '恩泽广被，知恩图报', category: '德行', gender: 'unisex', source: '《说文》：恩，惠也' },
+    { char: '依', strokes: 8, meaning: '相依相伴，信赖可靠', category: '德行', gender: 'female', source: '《诗经》：依其在京' },
+    { char: '韵', strokes: 19, meaning: '韵味无穷，才情横溢', category: '文学', gender: 'female', source: '《说文》：韵，和也' },
+    { char: '瑛', strokes: 14, meaning: '玉瑛之光，晶莹剔透', category: '财富', gender: 'female', source: '《说文》：瑛，玉光也' },
+    { char: '瑞', strokes: 14, meaning: '瑞气祥云，吉祥如意', category: '吉祥', gender: 'unisex', source: '《说文》：瑞，以玉为信也' },
+    { char: '玮', strokes: 8, meaning: '玮器之才，珍奇宝贵', category: '财富', gender: 'unisex', source: '《说文》：玮，珍也' },
+    { char: '瑜', strokes: 14, meaning: '瑕不掩瑜，美玉无瑕', category: '德行', gender: 'unisex', source: '《礼记》：瑕不掩瑜，瑜不掩瑕' },
+    { char: '媛', strokes: 12, meaning: '名媛淑女，优雅大方', category: '德行', gender: 'female', source: '《说文》：媛，美女也' },
+    { char: '娴', strokes: 15, meaning: '娴静典雅，端庄大方', category: '德行', gender: 'female', source: '《说文》：娴，雅也' },
+    { char: '均', strokes: 7, meaning: '均平之德，公平正直', category: '德行', gender: 'male', source: '《诗经》：秉国之均' },
+    { char: '坦', strokes: 8, meaning: '坦荡君子，光明磊落', category: '德行', gender: 'male', source: '《论语》：君子坦荡荡' },
+    { char: '培', strokes: 11, meaning: '厚培其根，基础深厚', category: '智慧', gender: 'male', source: '《礼记》：培植以时' },
+    { char: '奎', strokes: 9, meaning: '奎星高照，文运昌盛', category: '吉祥', gender: 'male', source: '《尔雅》：奎，星名，主文昌' },
+    { char: '墨', strokes: 15, meaning: '翰墨飘香，文人雅士', category: '文学', gender: 'unisex', source: '《说文》：墨，书墨也' },
+    { char: '娴', strokes: 15, meaning: '娴于辞令，文雅端庄', category: '文学', gender: 'female', source: '《说文》：娴，雅也' },
+    { char: '斡', strokes: 14, meaning: '斡旋天地，调和四方', category: '智慧', gender: 'male', source: '《说文》：斡，蠡柄也，引申为运转' },
+  ],
+  '金': [
+    { char: '金', strokes: 8, meaning: '金玉满堂，富贵荣华', category: '财富', gender: 'unisex', source: '《说文》：金，五色金也' },
+    { char: '鑫', strokes: 24, meaning: '三金聚顶，财源广进', category: '财富', gender: 'male', source: '《玉篇》：鑫，三金也' },
+    { char: '钧', strokes: 12, meaning: '千钧一发，力挽狂澜', category: '德行', gender: 'male', source: '《说文》：钧，三十斤也' },
+    { char: '铭', strokes: 14, meaning: '铭记于心，永志不忘', category: '智慧', gender: 'unisex', source: '《礼记》：铭者，自名也' },
+    { char: '锐', strokes: 15, meaning: '锐意进取，勇往直前', category: '德行', gender: 'male', source: '《说文》：锐，芒也' },
+    { char: '锋', strokes: 15, meaning: '锋芒毕露，才华锐利', category: '智慧', gender: 'male', source: '《说文》：锋，兵端也' },
+    { char: '铮', strokes: 16, meaning: '铮铮铁骨，刚正不阿', category: '德行', gender: 'male', source: '《说文》：铮，金声也' },
+    { char: '锦', strokes: 16, meaning: '锦绣前程，缤纷美好', category: '吉祥', gender: 'unisex', source: '《说文》：锦，襄邑织文' },
+    { char: '锡', strokes: 16, meaning: '天锡纯嘏，福自天来', category: '吉祥', gender: 'male', source: '《诗经》：天锡公纯嘏' },
+    { char: '铠', strokes: 18, meaning: '铠甲将军，威武雄壮', category: '德行', gender: 'male', source: '《说文》：铠，甲也' },
+    { char: '钦', strokes: 12, meaning: '钦敬仰慕，德高望重', category: '德行', gender: 'male', source: '《尚书》：钦若昊天' },
+    { char: '钰', strokes: 12, meaning: '钰为珍宝，金玉其相', category: '财富', gender: 'unisex', source: '《玉篇》：钰，坚金也' },
+    { char: '镇', strokes: 18, meaning: '镇守四方，稳重如山', category: '德行', gender: 'male', source: '《说文》：镇，博压也' },
+    { char: '铃', strokes: 13, meaning: '铃声清脆，悦耳动听', category: '文学', gender: 'female', source: '《说文》：铃，令丁也' },
+    { char: '银', strokes: 14, meaning: '银装素裹，纯洁无瑕', category: '自然', gender: 'unisex', source: '《说文》：银，白金也' },
+    { char: '镜', strokes: 19, meaning: '镜鉴古今，明察秋毫', category: '智慧', gender: 'unisex', source: '《说文》：镜，景也' },
+    { char: '珊', strokes: 9, meaning: '珊瑚碧树，稀世珍宝', category: '财富', gender: 'female', source: '《说文》：珊，珊瑚，色赤' },
+    { char: '珍', strokes: 10, meaning: '珍奇异宝，稀世之珍', category: '财富', gender: 'unisex', source: '《说文》：珍，宝也' },
+    { char: '玲', strokes: 10, meaning: '玲珑剔透，精巧灵动', category: '智慧', gender: 'female', source: '《说文》：玲，玉声也' },
+    { char: '琴', strokes: 13, meaning: '琴瑟和鸣，知音相惜', category: '文学', gender: 'unisex', source: '《诗经》：窈窕淑女，琴瑟友之' },
+    { char: '琪', strokes: 13, meaning: '琪花瑶草，祥瑞珍奇', category: '吉祥', gender: 'unisex', source: '《尔雅》：琪，玉属' },
+    { char: '琳', strokes: 13, meaning: '琳琅满目，美不胜收', category: '文学', gender: 'unisex', source: '《说文》：琳，美玉也' },
+    { char: '瑞', strokes: 14, meaning: '瑞雪兆丰，吉祥如意', category: '吉祥', gender: 'unisex', source: '《说文》：瑞，以玉为信也' },
+    { char: '璇', strokes: 16, meaning: '璇玑玉衡，天文之星', category: '智慧', gender: 'female', source: '《尚书》：在璇玑玉衡，以齐七政' },
+    { char: '秀', strokes: 7, meaning: '秀外慧中，内外兼修', category: '德行', gender: 'unisex', source: '《尔雅》：荣而实者谓之秀' },
+    { char: '秋', strokes: 9, meaning: '秋水伊人，明净淡雅', category: '自然', gender: 'female', source: '《诗经》：秋以为期' },
+    { char: '钟', strokes: 20, meaning: '钟灵毓秀，汇聚英才', category: '智慧', gender: 'male', source: '《说文》：钟，乐钟也' },
+    { char: '铠', strokes: 18, meaning: '铠甲护身，坚不可摧', category: '德行', gender: 'male', source: '《说文》：铠，甲也' },
+    { char: '钧', strokes: 12, meaning: '雷霆万钧，气势磅礴', category: '德行', gender: 'male', source: '《说文》：钧，三十斤也' },
+    { char: '锦', strokes: 16, meaning: '衣锦还乡，功成名就', category: '吉祥', gender: 'unisex', source: '《诗经》：锦衣狐裘' },
+    { char: '铄', strokes: 11, meaning: '铄石流金，光芒四射', category: '吉祥', gender: 'male', source: '《说文》：铄，销金也' },
+    { char: '鉴', strokes: 22, meaning: '前车之鉴，明察是非', category: '智慧', gender: 'male', source: '《说文》：鉴，大盆也，可照形' },
+  ],
+  '水': [
+    { char: '泽', strokes: 17, meaning: '恩泽广被，润泽万物', category: '德行', gender: 'male', source: '《周易》：泽上有地，临' },
+    { char: '洋', strokes: 10, meaning: '洋洋大观，气度恢宏', category: '智慧', gender: 'male', source: '《诗经》：河水洋洋' },
+    { char: '浩', strokes: 11, meaning: '浩然正气，胸怀坦荡', category: '德行', gender: 'male', source: '《孟子》：我善养吾浩然之气' },
+    { char: '瀚', strokes: 20, meaning: '浩瀚无垠，学识渊博', category: '智慧', gender: 'male', source: '《说文》：瀚，瀚海也' },
+    { char: '涛', strokes: 18, meaning: '波涛万顷，气势磅礴', category: '自然', gender: 'male', source: '《说文》：涛，大波也' },
+    { char: '涵', strokes: 12, meaning: '涵养深厚，海纳百川', category: '德行', gender: 'unisex', source: '《说文》：涵，水泽多也' },
+    { char: '鸿', strokes: 17, meaning: '鸿鹄之志，志向远大', category: '智慧', gender: 'male', source: '《诗经》：鸿雁于飞' },
+    { char: '源', strokes: 14, meaning: '源远流长，根本深厚', category: '智慧', gender: 'unisex', source: '《说文》：源，水泉本也' },
+    { char: '渊', strokes: 12, meaning: '渊博学识，深不可测', category: '智慧', gender: 'male', source: '《论语》：好古敏以求之者也，浸润之谮，肤受之愬' },
+    { char: '润', strokes: 16, meaning: '温润如玉，泽被万物', category: '德行', gender: 'unisex', source: '《说文》：润，水曰润下' },
+    { char: '潇', strokes: 20, meaning: '潇洒倜傥，风度翩翩', category: '文学', gender: 'unisex', source: '《说文》：潇，水名' },
+    { char: '沐', strokes: 8, meaning: '如沐春风，心旷神怡', category: '文学', gender: 'unisex', source: '《说文》：沐，濯发也' },
+    { char: '洛', strokes: 10, meaning: '洛阳纸贵，文采斐然', category: '文学', gender: 'unisex', source: '《说文》：洛，洛水也' },
+    { char: '淳', strokes: 12, meaning: '淳朴厚道，返璞归真', category: '德行', gender: 'unisex', source: '《说文》：淳，渌也' },
+    { char: '海', strokes: 11, meaning: '海纳百川，有容乃大', category: '智慧', gender: 'male', source: '《说文》：海，天池也，以纳百川者' },
+    { char: '澜', strokes: 21, meaning: '波澜壮阔，气势不凡', category: '文学', gender: 'unisex', source: '《说文》：澜，大波为澜' },
+    { char: '漪', strokes: 15, meaning: '涟漪荡漾，柔美灵动', category: '自然', gender: 'female', source: '《说文》：漪，水摇也' },
+    { char: '溪', strokes: 14, meaning: '溪水潺潺，清幽雅致', category: '自然', gender: 'female', source: '《说文》：溪，山渎无所通者' },
+    { char: '沫', strokes: 9, meaning: '相濡以沫，患难与共', category: '德行', gender: 'unisex', source: '《庄子》：相濡以沫，不如相忘于江湖' },
+    { char: '汐', strokes: 7, meaning: '潮汐有信，诚信守约', category: '德行', gender: 'unisex', source: '《说文》：汐，水夕至也' },
+    { char: '漫', strokes: 15, meaning: '漫漫长路，矢志不渝', category: '文学', gender: 'unisex', source: '《楚辞》：路漫漫其修远兮' },
+    { char: '泓', strokes: 9, meaning: '一泓清泉，纯净透彻', category: '德行', gender: 'unisex', source: '《说文》：泓，下深貌' },
+    { char: '淑', strokes: 12, meaning: '淑人君子，温良贤德', category: '德行', gender: 'female', source: '《诗经》：窈窕淑女' },
+    { char: '洁', strokes: 16, meaning: '冰清玉洁，高洁不染', category: '德行', gender: 'unisex', source: '《说文》：洁，净也' },
+    { char: '清', strokes: 12, meaning: '清风明月，清明正直', category: '德行', gender: 'unisex', source: '《诗经》：清人在彭' },
+    { char: '滢', strokes: 19, meaning: '波光滢滢，澄澈明净', category: '自然', gender: 'female', source: '《玉篇》：滢，水澄也' },
+    { char: '漩', strokes: 15, meaning: '璇玑流转，灵动多姿', category: '自然', gender: 'female', source: '《说文》：漩，回泉也' },
+    { char: '淳', strokes: 12, meaning: '风俗淳厚，人心古朴', category: '德行', gender: 'male', source: '《说文》：淳，渌也' },
+    { char: '淼', strokes: 12, meaning: '淼淼烟波，浩瀚无垠', category: '自然', gender: 'unisex', source: '《说文》：淼，大水也' },
+    { char: '江', strokes: 7, meaning: '江山如画，豪迈壮阔', category: '自然', gender: 'male', source: '《说文》：江，江水也' },
+    { char: '河', strokes: 9, meaning: '山河壮丽，气吞万里', category: '自然', gender: 'male', source: '《诗经》：关关雎鸠，在河之洲' },
+    { char: '泉', strokes: 9, meaning: '思如泉涌，才思敏捷', category: '智慧', gender: 'unisex', source: '《说文》：泉，水源也' },
+    { char: '雯', strokes: 12, meaning: '雯华绚烂，文采风流', category: '文学', gender: 'female', source: '《玉篇》：雯，云文也' },
+    { char: '霆', strokes: 14, meaning: '雷霆万钧，声威远震', category: '德行', gender: 'male', source: '《诗经》：如霆如雷' },
+  ],
+};
+
+// Kangxi Dictionary stroke counts for 三才五格 calculation
+const STROKE_MAP = {
+  '一':1,'乙':1,'二':2,'十':2,'丁':2,'七':2,'八':2,'九':2,'人':2,'入':2,'力':2,'乃':2,'又':2,'了':2,
+  '三':3,'上':3,'下':3,'久':3,'之':3,'也':3,'于':3,'千':3,'士':3,'大':3,'女':3,'子':3,'寸':3,'小':3,'山':3,'川':3,'工':3,'己':3,'已':3,'弓':3,'才':3,
+  '不':4,'中':4,'丹':4,'之':4,'予':4,'云':4,'井':4,'仁':4,'今':4,'介':4,'元':4,'公':4,'兮':4,'匀':4,'化':4,'升':4,'午':4,'友':4,'天':4,'太':4,'夫':4,'少':4,'尹':4,'心':4,'戈':4,'文':4,'斗':4,'日':4,'月':4,'木':4,'止':4,'比':4,'水':4,'火':4,'父':4,'牛':4,'王':4,
+  '世':5,'丘':5,'主':5,'以':5,'付':5,'仕':5,'仙':5,'代':5,'令':5,'冬':5,'功':5,'加':5,'北':5,'半':5,'可':5,'右':5,'司':5,'四':5,'外':5,'央':5,'奴':5,'宁':5,'左':5,'巧':5,'市':5,'平':5,'弘':5,'必':5,'旦':5,'本':5,'正':5,'民':5,'永':5,'玄':5,'玉':5,'生':5,'用':5,'由':5,'甲':5,'申':5,'白':5,'目':5,'石':5,'禾':5,'立':5,
+  '丞':6,'亥':6,'亦':6,'仰':6,'仲':6,'任':6,'伊':6,'伍':6,'休':6,'兆':6,'先':6,'光':6,'全':6,'共':6,'再':6,'冰':6,'列':6,'匡':6,'印':6,'吉':6,'同':6,'名':6,'后':6,'向':6,'回':6,'因':6,'在':6,'地':6,'多':6,'妃':6,'好':6,'如':6,'宇':6,'守':6,'安':6,'州':6,'帆':6,'年':6,'旭':6,'有':6,'朱':6,'朵':6,'次':6,'汝':6,'江':6,'池':6,'牟':6,'百':6,'竹':6,'米':6,'羽':6,'而':6,'臣':6,'自':6,'至':6,'舟':6,'艮':6,'艾':6,'行':6,'西':6,
+  '亨':7,'伯':7,'佑':7,'伸':7,'伶':7,'位':7,'何':7,'余':7,'佛':7,'作':7,'克':7,'兵':7,'初':7,'利':7,'君':7,'吟':7,'呈':7,'吾':7,'均':7,'妍':7,'妤':7,'妙':7,'孝':7,'宏':7,'岑':7,'岐':7,'廷':7,'志':7,'忘':7,'成':7,'我':7,'攸':7,'改':7,'杏':7,'村':7,'杉':7,'李':7,'步':7,'每':7,'求':7,'沐':7,'汐':7,'汝':7,'彤':7,'秀':7,'赤':7,'走':7,'足':7,'身':7,'車':7,'辛':7,'辰':7,'酉':7,'里':7,
+  '事':8,'亞':8,'享':8,'佩':8,'佳':8,'來':8,'佾':8,'侑':8,'依':8,'侖':8,'佶':8,'供':8,'侃':8,'定':8,'宜':8,'宙':8,'尚':8,'居':8,'岳':8,'岸':8,'岱':8,'岩':8,'幸':8,'弦':8,'彼':8,'忠':8,'怡':8,'承':8,'拔':8,'招':8,'放':8,'昊':8,'昌':8,'明':8,'易':8,'昕':8,'昀':8,'東':8,'林':8,'果':8,'枝':8,'欣':8,'武':8,'歧':8,'沛':8,'泳':8,'炎':8,'炊':8,'爭':8,'版':8,'牧':8,'玨':8,'玫':8,'知':8,'秉':8,'竺':8,'芳':8,'芷':8,'芸':8,'芹':8,'虎':8,'表':8,'迎':8,'近':8,'金':8,'長':8,'門':8,'阜':8,'雨':8,'青':8,'非':8,
+  '亭':9,'亮':9,'信':9,'俊':9,'保':9,'俠':9,'俞':9,'冠':9,'則':9,'前':9,'勃':9,'勇':9,'勉':9,'南':9,'厚':9,'品':9,'垚':9,'垣':9,'奎':9,'奕':9,'姵':9,'姿':9,'威':9,'宣':9,'宥':9,'客':9,'峙':9,'帝':9,'幽':9,'度':9,'建':9,'彦':9,'待':9,'律':9,'思':9,'怡':9,'恒':9,'恢':9,'恪':9,'炫':9,'炳':9,'玫':9,'珊':9,'玲':9,'珀':9,'珍':9,'皇':9,'盈':9,'相':9,'眉':9,'看':9,'研':9,'禹':9,'秋':9,'科':9,'紀':9,'約':9,'紅':9,'美':9,'羿':9,'致':9,'若':9,'英':9,'茂':9,'虹':9,'衍':9,'計':9,'軍':9,'韋':9,'音':9,'飛':9,
+  '倚':10,'剛':10,'倫':10,'倩':10,'倪':10,'兼':10,'凌':10,'原':10,'員':10,'哲':10,'唐':10,'城':10,'娉':10,'娟':10,'孫':10,'容':10,'展':10,'峰':10,'峻':10,'桐':10,'桓':10,'桂':10,'栩':10,'殷':10,'洛':10,'洵':10,'玲':10,'珊':10,'珀':10,'珈':10,'珍':10,'真':10,'祐':10,'神':10,'祝':10,'秦':10,'素':10,'紋':10,'純':10,'紜':10,'紗':10,'納':10,'紋':10,'耘':10,'耿':10,'能':10,'致':10,'航':10,'芬':10,'芳':10,'芝':10,'芸':10,'芹':10,'芽':10,'芯':10,'花':10,'芷':10,'若':10,'英':10,'珂':10,'珮':10,'訓':10,'記':10,'貢':10,'軒':10,'倫':10,'倍':10,'修':10,
+  '健':11,'偉':11,'偲':11,'凰':11,'翊':11,'翌':11,'翎':11,'聆':11,'祥':11,'竟':11,'章':11,'笙':11,'笛':11,'笠':11,'第':11,'紫':11,'紹':11,'紳':11,'細':11,'終':11,'絃':11,'組':11,'羚':11,'習':11,'翌':11,'翎':11,'聆':11,'訢':11,'許':11,'訪':11,'設':11,'翊':11,'國':11,'堅':11,'堂':11,'培':11,'基':11,'執':11,'堯':11,'婕':11,'婥':11,'婉':11,'曼':11,'望':11,'梁':11,'梅':11,'梓':11,'淇':11,'浩':11,'海':11,'淳':11,'清':11,'涵':11,'淑':11,'淨':11,'淮':11,'深':11,'烽':11,'煥':11,'琅':11,'理':11,'現':11,'祥':11,'翊':11,
+  '傑':12,'凱':12,'勝':12,'博':12,'喜':12,'喬':12,'單':12,'堯':12,'婷':12,'媛':12,'嵐':12,'巽':12,'幃':12,'弼':12,'復':12,'循':12,'惠':12,'惇':12,'情':12,'惟':12,'捷':12,'揚':12,'揮':12,'援':12,'敦':12,'景':12,'智':12,'晴':12,'晶':12,'暉':12,'朝':12,'期':12,'棋':12,'棠':12,'森':12,'棻':12,'棟':12,'欽':12,'款':12,'淳':12,'清':12,'涵':12,'淑':12,'淮':12,'深':12,'淵':12,'渝':12,'淼':12,'湘':12,'湛':12,'港':12,'湖':12,'渲':12,'渼':12,'滋':12,'焰':12,'然':12,'焯':12,'焙':12,'焱':12,'琳':12,'琴':12,'琪':12,'琦':12,'琮':12,'琬':12,'琛':12,'琰':12,'皓':12,'硯':12,'程':12,'童':12,'筑':12,'筆':12,'策':12,'翔':12,'舒':12,'舜':12,'菊':12,'菘':12,'華':12,'菁':12,'萃':12,'茜':12,'茗':12,'茹':12,'荀':12,'茱':12,'証':12,'評':12,'詠':12,'詞':12,'詔':12,'貴':12,'賀':12,'超':12,'越':12,'迪':12,'閑':12,'閔':12,'雯':12,'雲':12,'雁':12,'雅':12,'集':12,
+  '傳':13,'勤':13,'嗣':13,'圓':13,'廉':13,'彧':13,'微':13,'意':13,'愚':13,'感':13,'慈':13,'愛':13,'愷':13,'敬':13,'新':13,'暄':13,'暘':13,'會':13,'業':13,'楊':13,'楓':13,'榆':13,'楷':13,'楠':13,'楹':13,'煜':13,'照':13,'煙':13,'煒':13,'煌':13,'煥':13,'琪':13,'琴':13,'琳':13,'琦':13,'瑛':13,'瑞':13,'瑋':13,'瑜':13,'瑀':13,'瑄':13,'盟':13,'睦':13,'睿':13,'祺':13,'祿':13,'稚':13,'筠':13,'節':13,'經':13,'絹':13,'綉':13,'綏':13,'義':13,'群':13,'聖':13,'肅':13,'萱':13,'葦':13,'葉':13,'詩':13,'詳':13,'詣':13,'誠':13,'詮':13,'詹':13,'資':13,'賈':13,'路':13,'農':13,'達':13,'雷':13,'電':13,'靖':13,'韻':13,'頌':13,'鼎':13,
+  '嘉':14,'圖':14,'壽':14,'夢':14,'實':14,'寧':14,'對':14,'彰':14,'慈':14,'愷':14,'暢':14,'榮':14,'榕':14,'槐':14,'榛':14,'榜':14,'榭':14,'歌':14,'毓':14,'源':14,'滔':14,'滂':14,'溥':14,'溪':14,'滬':14,'漢':14,'漩':14,'漫':14,'漪':14,'漱':14,'漾':14,'熙':14,'熊':14,'熔':14,'熒':14,'爾':14,'瑤':14,'瑋':14,'碧':14,'福':14,'禎':14,'端':14,'綠':14,'綸':14,'綺':14,'綾':14,'維':14,'綱':14,'綜':14,'緒':14,'網':14,'綵':14,'聞':14,'肇':14,'語':14,'誦':14,'誨':14,'豪':14,'賓':14,'輔':14,'輕':14,'逍':14,'通':14,'逢':14,'連':14,'週':14,'銘':14,'銀':14,'銓':14,'鳳':14,'鳴':14,'齊':14,
+  '儁':15,'億':15,'儀':15,'儉':15,'寬':15,'審':15,'嶙':15,'德':15,'慧':15,'慰':15,'慕':15,'慶':15,'敷':15,'樂':15,'槿':15,'樊':15,'標':15,'樟':15,'模':15,'樣':15,'樓':15,'歐':15,'毅':15,'澄':15,'漫':15,'潯':15,'潤':15,'潔':15,'澎':15,'潛':15,'潭':15,'瑩':15,'醇':15,'鋒':15,'銳':15,'銳':15,'閱':15,'霄':15,'頡':15,'養':15,'黎':15,'墨':15,
+  '儒':16,'冀':16,'凝':16,'學':16,'憲':16,'憶':16,'憾':16,'據':16,'整':16,'曉':16,'暹':16,'曄':16,'樺':16,'樹':16,'機':16,'橙':16,'橋':16,'橫':16,'樸':16,'歷':16,'澤':16,'澗':16,'澳':16,'澹':16,'濱':16,'燃':16,'燁':16,'燕':16,'瑾':16,'璇':16,'璉':16,'熹':16,'穆':16,'穎':16,'築':16,'縉':16,'縈':16,'縣':16,'翰':16,'臻':16,'興':16,'蓉':16,'蕾':16,'薇':16,'融':16,'衡':16,'諺':16,'諳':16,'謀':16,'謂':16,'豫':16,'霖':16,'靜':16,
+  '優':17,'勵':17,'嬰':17,'嶺':17,'嶽':17,'彌':17,'徽':17,'應':17,'懇':17,'操':17,'擎':17,'檀':17,'檜':17,'檢':17,'謙':17,'謝':17,'賽':17,'輿':17,'遙':17,'鴻':17,'黛':17,'點':17,'齋':17,
+  '儲':18,'歸':18,'濰':18,'燁':18,'禮':18,'簡':18,'繡':18,'翹':18,'職':18,'藝':18,'謹':18,'豐':18,'鎧':18,'鎮':18,'雛':18,'雙':18,'顏':18,'馥':18,
+  '瓊':19,'疆':19,'穩':19,'蕾':19,'薇':19,'藝':19,'贊':19,'辭':19,'韻':19,'願':19,'麒':19,'麗':19,'齡':19,
+  '寶':20,'曦':20,'耀':20,'艦':20,'藻':20,'藹':20,'議':20,'釋':20,'鐘':20,'馨':20,'騰':20,
+  '顧':21,'鶴':21,'鶯':21,'藝':21,'藩':21,'藹':21,'譽':21,'躍':21,'辯':21,'鐸':21,'霸':21,'櫻':21,
+  '權':22,'歡':22,'灝':22,'瓔':22,'藹':22,'蘭':22,'覽':22,'鑑':22,'鑒':22,
+  '巖':23,'麟':23,'欒':23,'樂':23,'顯':23,'驗':23,
+  '鑫':24,'靈':24,'鷹':24,'艷':24,'讓':24,
+};
+
+function getCharStroke(ch) {
+  if (STROKE_MAP[ch]) return STROKE_MAP[ch];
+  return Math.max(1, (ch.codePointAt(0) || 19968) - 19968 + 5);
+}
+
+function calculateWuge(surname, givenName) {
+  var sStrokes = 0, gStrokes = 0;
+  for (var i = 0; i < surname.length; i++) sStrokes += getCharStroke(surname[i]);
+  for (var j = 0; j < givenName.length; j++) gStrokes += getCharStroke(givenName[j]);
+  var tian = sStrokes + 1;
+  if (givenName.length === 1) {
+    var ren = sStrokes + getCharStroke(givenName[0]);
+    var di = getCharStroke(givenName[0]) + 1;
+    var wai = 2;
+    var zong = sStrokes + getCharStroke(givenName[0]);
+    var sanCai = { tian: (tian % 10) || 10, ren: (ren % 10) || 10, di: (di % 10) || 10 };
+    return { tian: tian, ren: ren, di: di, wai: wai, zong: zong, sanCai: sanCai };
+  }
+  var ren = sStrokes + getCharStroke(givenName[0]);
+  var di = (givenName.length >= 2) ? getCharStroke(givenName[0]) + getCharStroke(givenName[1]) : getCharStroke(givenName[0]) + 1;
+  var zong = sStrokes + gStrokes;
+  var wai = zong - ren + 1;
+  if (wai < 1) wai = 1;
+  var sanCai = { tian: (tian % 10) || 10, ren: (ren % 10) || 10, di: (di % 10) || 10 };
+  return { tian: tian, ren: ren, di: di, wai: wai, zong: zong, sanCai: sanCai };
+}
+
+function assessWuge(wuge) {
+  function assessSingle(n, type) {
+    var auspicious = [1,3,5,6,7,8,11,13,15,16,17,18,21,23,24,25,29,31,32,33,35,37,39,41,45,47,48,52,57,63,65,67,68,81];
+    var semi = [2,4,9,10,12,14,19,20,22,26,27,28,30,36,38,40,42,43,44,46,49,50,51,53,54,55,56,58,59,60,61,62,64,66,69,70,71,72,73,74,75,76,77,78,79,80];
+    if (auspicious.indexOf(n) !== -1) return { score: 100, level: '吉' };
+    if (semi.indexOf(n) !== -1) return { score: 60, level: '半吉' };
+    return { score: 30, level: '凶' };
+  }
+  var t = assessSingle(wuge.tian, '天格');
+  var r = assessSingle(wuge.ren, '人格');
+  var d = assessSingle(wuge.di, '地格');
+  var w = assessSingle(wuge.wai, '外格');
+  var z = assessSingle(wuge.zong, '总格');
+  var avgScore = Math.round((t.score * 0.15 + r.score * 0.3 + d.score * 0.25 + w.score * 0.1 + z.score * 0.2));
+  return { avgScore: avgScore, tian: t, ren: r, di: d, wai: w, zong: z, detail: '天' + t.level + ' 人' + r.level + ' 地' + d.level + ' 外' + w.level + ' 总' + z.level };
+}
+
+function analyzeSanCai(wuge) {
+  var s = wuge.sanCai;
+  var elMap = { 1:'木',2:'木',3:'火',4:'火',5:'土',6:'土',7:'金',8:'金',9:'水',10:'水' };
+  var te = elMap[s.tian], re = elMap[s.ren], de = elMap[s.di];
+  var score = 80;
+  var desc = '';
+  var genCycle = { '木':'火', '火':'土', '土':'金', '金':'水', '水':'木' };
+  if (genCycle[te] === re) score += 10;
+  if (genCycle[re] === de) score += 10;
+  if (genCycle[de] === te) score -= 5;
+  if (genCycle[re] === te) score -= 5;
+  if (genCycle[de] === re) score -= 10;
+  var level = score >= 85 ? '大吉' : score >= 70 ? '吉' : score >= 50 ? '平' : '凶';
+  desc = '天' + te + '·人' + re + '·地' + de + ' ' + (score >= 70 ? '相生有情' : '相克需慎');
+  return { score: score, level: level, desc: desc, tEl: te, rEl: re, dEl: de };
+}
+
+/* ========== Hexagram Engine ========== */
+const LIU_SHI_SI_GUA = [
+  { num:1, name:'乾为天', desc:'元亨利贞，自强不息', judgment:'大吉' },
+  { num:2, name:'坤为地', desc:'厚德载物，柔顺包容', judgment:'大吉' },
+  { num:3, name:'水雷屯', desc:'万物始生，艰难创业', judgment:'半吉' },
+  { num:4, name:'山水蒙', desc:'蒙昧初开，启蒙发智', judgment:'吉' },
+  { num:5, name:'水天需', desc:'等待时机，以需待时', judgment:'吉' },
+  { num:6, name:'天水讼', desc:'争讼不和，慎始慎终', judgment:'凶' },
+  { num:7, name:'地水师', desc:'师出有名，以正治国', judgment:'半吉' },
+  { num:8, name:'水地比', desc:'亲比和谐，团结互助', judgment:'吉' },
+  { num:9, name:'风天小畜', desc:'小有积蓄，以柔制刚', judgment:'吉' },
+  { num:10, name:'天泽履', desc:'履行中道，小心谨慎', judgment:'吉' },
+  { num:11, name:'地天泰', desc:'天地交泰，万事亨通', judgment:'大吉' },
+  { num:12, name:'天地否', desc:'天地不交，闭塞不通', judgment:'凶' },
+  { num:13, name:'天火同人', desc:'同人于野，志同道合', judgment:'吉' },
+  { num:14, name:'火天大有', desc:'大有收获，丰盛富足', judgment:'大吉' },
+  { num:15, name:'地山谦', desc:'谦谦君子，卑以自牧', judgment:'大吉' },
+  { num:16, name:'雷地豫', desc:'愉悦安乐，豫则立也', judgment:'吉' },
+  { num:17, name:'泽雷随', desc:'随时而动，顺应时势', judgment:'吉' },
+  { num:18, name:'山风蛊', desc:'蛊惑腐败，革故鼎新', judgment:'半吉' },
+  { num:19, name:'地泽临', desc:'居高临下，亲临督导', judgment:'吉' },
+  { num:20, name:'风地观', desc:'观察入微，审时度势', judgment:'吉' },
+  { num:21, name:'火雷噬嗑', desc:'噬嗑刑罚，刚柔相济', judgment:'半吉' },
+  { num:22, name:'山火贲', desc:'贲饰文采，内外兼修', judgment:'吉' },
+  { num:23, name:'山地剥', desc:'剥落衰败，小人道长', judgment:'凶' },
+  { num:24, name:'地雷复', desc:'一阳来复，万象更新', judgment:'大吉' },
+  { num:25, name:'天雷无妄', desc:'真实无妄，诚心正意', judgment:'吉' },
+  { num:26, name:'山天大畜', desc:'大畜其德，积善成德', judgment:'大吉' },
+  { num:27, name:'山雷颐', desc:'颐养天年，养生之道', judgment:'吉' },
+  { num:28, name:'泽风大过', desc:'大过之象，过犹不及', judgment:'半吉' },
+  { num:29, name:'坎为水', desc:'坎险重重，以诚相待', judgment:'半吉' },
+  { num:30, name:'离为火', desc:'离明照耀，光明磊落', judgment:'吉' },
+  { num:31, name:'泽山咸', desc:'咸感相应，两情相悦', judgment:'吉' },
+  { num:32, name:'雷风恒', desc:'恒久不变，持之以恒', judgment:'大吉' },
+  { num:33, name:'天山遁', desc:'退避隐遁，以退为进', judgment:'半吉' },
+  { num:34, name:'雷天大壮', desc:'大壮之势，强盛有力', judgment:'吉' },
+  { num:35, name:'火地晋', desc:'晋升进取，光明向上', judgment:'大吉' },
+  { num:36, name:'地火明夷', desc:'明夷晦暗，韬光养晦', judgment:'凶' },
+  { num:37, name:'风火家人', desc:'家人和睦，齐家和乐', judgment:'吉' },
+  { num:38, name:'火泽睽', desc:'睽违不合，求同存异', judgment:'半吉' },
+  { num:39, name:'水山蹇', desc:'蹇难前行，艰难困苦', judgment:'半吉' },
+  { num:40, name:'雷水解', desc:'解除困难，否极泰来', judgment:'大吉' },
+  { num:41, name:'山泽损', desc:'损下益上，损己利人', judgment:'半吉' },
+  { num:42, name:'风雷益', desc:'增益其德，利有攸往', judgment:'大吉' },
+  { num:43, name:'泽天夬', desc:'夬决果断，当机立断', judgment:'吉' },
+  { num:44, name:'天风姤', desc:'姤遇不期，风云际会', judgment:'半吉' },
+  { num:45, name:'泽地萃', desc:'荟萃聚集，精英荟萃', judgment:'吉' },
+  { num:46, name:'地风升', desc:'升进向上，步步高升', judgment:'大吉' },
+  { num:47, name:'泽水困', desc:'困顿艰难，守正待时', judgment:'凶' },
+  { num:48, name:'水风井', desc:'井养不穷，润泽四方', judgment:'吉' },
+  { num:49, name:'泽火革', desc:'革故鼎新，顺势而变', judgment:'吉' },
+  { num:50, name:'火风鼎', desc:'鼎立天下，革故鼎新', judgment:'大吉' },
+  { num:51, name:'震为雷', desc:'雷霆万钧，临危不乱', judgment:'半吉' },
+  { num:52, name:'艮为山', desc:'艮止如山，安分守己', judgment:'吉' },
+  { num:53, name:'风山渐', desc:'循序渐进，稳扎稳打', judgment:'大吉' },
+  { num:54, name:'雷泽归妹', desc:'归妹婚姻，夫妇之道', judgment:'半吉' },
+  { num:55, name:'雷火丰', desc:'丰盛富足，德业双修', judgment:'大吉' },
+  { num:56, name:'火山旅', desc:'旅居在外，客居他乡', judgment:'半吉' },
+  { num:57, name:'巽为风', desc:'巽入顺伏，以柔克刚', judgment:'吉' },
+  { num:58, name:'兑为泽', desc:'兑说和悦，喜悦欢喜', judgment:'吉' },
+  { num:59, name:'风水涣', desc:'涣散分离，重新凝聚', judgment:'半吉' },
+  { num:60, name:'水泽节', desc:'节制有度，过犹不及', judgment:'吉' },
+  { num:61, name:'风泽中孚', desc:'中孚诚信，以诚待人', judgment:'大吉' },
+  { num:62, name:'雷山小过', desc:'小有过越，宜下不宜上', judgment:'半吉' },
+  { num:63, name:'水火既济', desc:'既济成功，功成身退', judgment:'吉' },
+  { num:64, name:'火水未济', desc:'未济未成，继续努力', judgment:'半吉' },
+];
+
+function getHexagram(surnameStrokes, givenNameStrokes) {
+  var upper = ((surnameStrokes % 8) || 8);
+  var lower = ((givenNameStrokes % 8) || 8);
+  var hexNum = (upper - 1) * 8 + lower;
+  return LIU_SHI_SI_GUA[hexNum - 1] || LIU_SHI_SI_GUA[0];
+}
+
+/* ========== Phonetic Analysis ========== */
+const PINYIN_TONES = {
+  '林':{py:'lin',t:2,i:'l',f:'in'},'森':{py:'sen',t:1,i:'s',f:'en'},'柏':{py:'bai',t:3,i:'b',f:'ai'},'松':{py:'song',t:1,i:'s',f:'ong'},'枫':{py:'feng',t:1,i:'f',f:'eng'},
+  '桐':{py:'tong',t:2,i:'t',f:'ong'},'楠':{py:'nan',t:2,i:'n',f:'an'},'荣':{py:'rong',t:2,i:'r',f:'ong'},'柯':{py:'ke',t:1,i:'k',f:'e'},'栩':{py:'xu',t:3,i:'x',f:'u'},
+  '彬':{py:'bin',t:1,i:'b',f:'in'},'楚':{py:'chu',t:3,i:'ch',f:'u'},'桂':{py:'gui',t:4,i:'g',f:'ui'},'兰':{py:'lan',t:2,i:'l',f:'an'},'梅':{py:'mei',t:2,i:'m',f:'ei'},
+  '柳':{py:'liu',t:3,i:'l',f:'iu'},'樱':{py:'ying',t:1,i:'y',f:'ing'},'萱':{py:'xuan',t:1,i:'x',f:'uan'},'蓉':{py:'rong',t:2,i:'r',f:'ong'},'薇':{py:'wei',t:2,i:'w',f:'ei'},
+  '芸':{py:'yun',t:2,i:'y',f:'un'},'芷':{py:'zhi',t:3,i:'zh',f:'i'},'栋':{py:'dong',t:4,i:'d',f:'ong'},'桦':{py:'hua',t:4,i:'h',f:'ua'},'蕊':{py:'rui',t:3,i:'r',f:'ui'},
+  '菲':{py:'fei',t:1,i:'f',f:'ei'},'菁':{py:'jing',t:1,i:'j',f:'ing'},'茂':{py:'mao',t:4,i:'m',f:'ao'},'萌':{py:'meng',t:2,i:'m',f:'eng'},'莲':{py:'lian',t:2,i:'l',f:'ian'},
+  '竹':{py:'zhu',t:2,i:'zh',f:'u'},'棠':{py:'tang',t:2,i:'t',f:'ang'},'杏':{py:'xing',t:4,i:'x',f:'ing'},'禾':{py:'he',t:2,i:'h',f:'e'},'朴':{py:'pu',t:3,i:'p',f:'u'},
+  '炎':{py:'yan',t:2,i:'y',f:'an'},'烨':{py:'ye',t:4,i:'y',f:'e'},'煜':{py:'yu',t:4,i:'y',f:'u'},'炜':{py:'wei',t:3,i:'w',f:'ei'},'炫':{py:'xuan',t:4,i:'x',f:'uan'},
+  '焕':{py:'huan',t:4,i:'h',f:'uan'},'照':{py:'zhao',t:4,i:'zh',f:'ao'},'晨':{py:'chen',t:2,i:'ch',f:'en'},'昕':{py:'xin',t:1,i:'x',f:'in'},'晓':{py:'xiao',t:3,i:'x',f:'iao'},
+  '昊':{py:'hao',t:4,i:'h',f:'ao'},'晔':{py:'ye',t:4,i:'y',f:'e'},'丹':{py:'dan',t:1,i:'d',f:'an'},'彤':{py:'tong',t:2,i:'t',f:'ong'},'霞':{py:'xia',t:2,i:'x',f:'ia'},
+  '虹':{py:'hong',t:2,i:'h',f:'ong'},'婵':{py:'chan',t:2,i:'ch',f:'an'},'婉':{py:'wan',t:3,i:'w',f:'an'},'灵':{py:'ling',t:2,i:'l',f:'ing'},'燕':{py:'yan',t:4,i:'y',f:'an'},
+  '宁':{py:'ning',t:2,i:'n',f:'ing'},'丽':{py:'li',t:4,i:'l',f:'i'},'瑶':{py:'yao',t:2,i:'y',f:'ao'},'璐':{py:'lu',t:4,i:'l',f:'u'},'晖':{py:'hui',t:1,i:'h',f:'ui'},
+  '明':{py:'ming',t:2,i:'m',f:'ing'},'旭':{py:'xu',t:4,i:'x',f:'u'},'昌':{py:'chang',t:1,i:'ch',f:'ang'},'昂':{py:'ang',t:2,i:'',f:'ang'},'畅':{py:'chang',t:4,i:'ch',f:'ang'},
+  '煌':{py:'huang',t:2,i:'h',f:'uang'},'坤':{py:'kun',t:1,i:'k',f:'un'},'垚':{py:'yao',t:2,i:'y',f:'ao'},'垣':{py:'yuan',t:2,i:'y',f:'uan'},'城':{py:'cheng',t:2,i:'ch',f:'eng'},
+  '培':{py:'pei',t:2,i:'p',f:'ei'},'基':{py:'ji',t:1,i:'j',f:'i'},'堂':{py:'tang',t:2,i:'t',f:'ang'},'圣':{py:'sheng',t:4,i:'sh',f:'eng'},'坚':{py:'jian',t:1,i:'j',f:'ian'},
+  '宇':{py:'yu',t:3,i:'y',f:'u'},'安':{py:'an',t:1,i:'',f:'an'},'山':{py:'shan',t:1,i:'sh',f:'an'},'岳':{py:'yue',t:4,i:'y',f:'ue'},'峰':{py:'feng',t:1,i:'f',f:'eng'},
+  '岚':{py:'lan',t:2,i:'l',f:'an'},'岩':{py:'yan',t:2,i:'y',f:'an'},'宛':{py:'wan',t:3,i:'w',f:'an'},'怡':{py:'yi',t:2,i:'y',f:'i'},'恩':{py:'en',t:1,i:'',f:'en'},
+  '依':{py:'yi',t:1,i:'y',f:'i'},'韵':{py:'yun',t:4,i:'y',f:'un'},'瑛':{py:'ying',t:1,i:'y',f:'ing'},'瑞':{py:'rui',t:4,i:'r',f:'ui'},'玮':{py:'wei',t:3,i:'w',f:'ei'},
+  '瑜':{py:'yu',t:2,i:'y',f:'u'},'媛':{py:'yuan',t:4,i:'y',f:'uan'},'娴':{py:'xian',t:2,i:'x',f:'ian'},'均':{py:'jun',t:1,i:'j',f:'un'},'坦':{py:'tan',t:3,i:'t',f:'an'},
+  '奎':{py:'kui',t:2,i:'k',f:'ui'},'墨':{py:'mo',t:4,i:'m',f:'o'},'金':{py:'jin',t:1,i:'j',f:'in'},'鑫':{py:'xin',t:1,i:'x',f:'in'},'钧':{py:'jun',t:1,i:'j',f:'un'},
+  '铭':{py:'ming',t:2,i:'m',f:'ing'},'锐':{py:'rui',t:4,i:'r',f:'ui'},'锋':{py:'feng',t:1,i:'f',f:'eng'},'铮':{py:'zheng',t:1,i:'zh',f:'eng'},'锦':{py:'jin',t:3,i:'j',f:'in'},
+  '锡':{py:'xi',t:1,i:'x',f:'i'},'钦':{py:'qin',t:1,i:'q',f:'in'},'钰':{py:'yu',t:4,i:'y',f:'u'},'镇':{py:'zhen',t:4,i:'zh',f:'en'},'铃':{py:'ling',t:2,i:'l',f:'ing'},
+  '银':{py:'yin',t:2,i:'y',f:'in'},'镜':{py:'jing',t:4,i:'j',f:'ing'},'珊':{py:'shan',t:1,i:'sh',f:'an'},'珍':{py:'zhen',t:1,i:'zh',f:'en'},'玲':{py:'ling',t:2,i:'l',f:'ing'},
+  '琴':{py:'qin',t:2,i:'q',f:'in'},'琪':{py:'qi',t:2,i:'q',f:'i'},'琳':{py:'lin',t:2,i:'l',f:'in'},'璇':{py:'xuan',t:2,i:'x',f:'uan'},'秀':{py:'xiu',t:4,i:'x',f:'iu'},
+  '秋':{py:'qiu',t:1,i:'q',f:'iu'},'钟':{py:'zhong',t:1,i:'zh',f:'ong'},'铠':{py:'kai',t:3,i:'k',f:'ai'},'铄':{py:'shuo',t:4,i:'sh',f:'uo'},'鉴':{py:'jian',t:4,i:'j',f:'ian'},
+  '泽':{py:'ze',t:2,i:'z',f:'e'},'洋':{py:'yang',t:2,i:'y',f:'ang'},'浩':{py:'hao',t:4,i:'h',f:'ao'},'瀚':{py:'han',t:4,i:'h',f:'an'},'涛':{py:'tao',t:1,i:'t',f:'ao'},
+  '涵':{py:'han',t:2,i:'h',f:'an'},'鸿':{py:'hong',t:2,i:'h',f:'ong'},'源':{py:'yuan',t:2,i:'y',f:'uan'},'渊':{py:'yuan',t:1,i:'y',f:'uan'},'润':{py:'run',t:4,i:'r',f:'un'},
+  '潇':{py:'xiao',t:1,i:'x',f:'iao'},'沐':{py:'mu',t:4,i:'m',f:'u'},'洛':{py:'luo',t:4,i:'l',f:'uo'},'淳':{py:'chun',t:2,i:'ch',f:'un'},'海':{py:'hai',t:3,i:'h',f:'ai'},
+  '澜':{py:'lan',t:2,i:'l',f:'an'},'漪':{py:'yi',t:1,i:'y',f:'i'},'溪':{py:'xi',t:1,i:'x',f:'i'},'沫':{py:'mo',t:4,i:'m',f:'o'},'汐':{py:'xi',t:1,i:'x',f:'i'},
+  '漫':{py:'man',t:4,i:'m',f:'an'},'泓':{py:'hong',t:2,i:'h',f:'ong'},'淑':{py:'shu',t:1,i:'sh',f:'u'},'洁':{py:'jie',t:2,i:'j',f:'ie'},'清':{py:'qing',t:1,i:'q',f:'ing'},
+  '滢':{py:'ying',t:2,i:'y',f:'ing'},'漩':{py:'xuan',t:2,i:'x',f:'uan'},'淼':{py:'miao',t:3,i:'m',f:'iao'},'江':{py:'jiang',t:1,i:'j',f:'iang'},'河':{py:'he',t:2,i:'h',f:'e'},
+  '泉':{py:'quan',t:2,i:'q',f:'uan'},'雯':{py:'wen',t:2,i:'w',f:'en'},'李':{py:'li',t:3,i:'l',f:'i'},'王':{py:'wang',t:2,i:'w',f:'ang'},'张':{py:'zhang',t:1,i:'zh',f:'ang'},
+  '刘':{py:'liu',t:2,i:'l',f:'iu'},'陈':{py:'chen',t:2,i:'ch',f:'en'},'杨':{py:'yang',t:2,i:'y',f:'ang'},'赵':{py:'zhao',t:4,i:'zh',f:'ao'},'黄':{py:'huang',t:2,i:'h',f:'uang'},
+  '周':{py:'zhou',t:1,i:'zh',f:'ou'},'吴':{py:'wu',t:2,i:'w',f:'u'},'徐':{py:'xu',t:2,i:'x',f:'u'},'孙':{py:'sun',t:1,i:'s',f:'un'},'胡':{py:'hu',t:2,i:'h',f:'u'},
+  '朱':{py:'zhu',t:1,i:'zh',f:'u'},'高':{py:'gao',t:1,i:'g',f:'ao'},'林':{py:'lin',t:2,i:'l',f:'in'},'何':{py:'he',t:2,i:'h',f:'e'},'郭':{py:'guo',t:1,i:'g',f:'uo'},
+  '马':{py:'ma',t:3,i:'m',f:'a'},'罗':{py:'luo',t:2,i:'l',f:'uo'},'梁':{py:'liang',t:2,i:'l',f:'iang'},'宋':{py:'song',t:4,i:'s',f:'ong'},'郑':{py:'zheng',t:4,i:'zh',f:'eng'},
+  '谢':{py:'xie',t:4,i:'x',f:'ie'},'韩':{py:'han',t:2,i:'h',f:'an'},'唐':{py:'tang',t:2,i:'t',f:'ang'},'冯':{py:'feng',t:2,i:'f',f:'eng'},'于':{py:'yu',t:2,i:'y',f:'u'},
+  '董':{py:'dong',t:3,i:'d',f:'ong'},'萧':{py:'xiao',t:1,i:'x',f:'iao'},'程':{py:'cheng',t:2,i:'ch',f:'eng'},'曹':{py:'cao',t:2,i:'c',f:'ao'},'袁':{py:'yuan',t:2,i:'y',f:'uan'},
+};
+
+function getPinyin(ch) { return PINYIN_TONES[ch] || { py: ch, t: 1, i: '', f: '' }; }
+
+function analyzeYinLv(name) {
+  var chars = name.split('');
+  var tones = []; var initials = []; var finals = [];
+  for (var i = 0; i < chars.length; i++) {
+    var p = getPinyin(chars[i]);
+    tones.push(p.t); initials.push(p.i); finals.push(p.f);
+  }
+  var score = 80;
+  var issues = [];
+  // Check all tones are the same
+  var uniqueTones = {};
+  for (var j = 0; j < tones.length; j++) uniqueTones[tones[j]] = true;
+  if (Object.keys(uniqueTones).length === 1 && tones.length > 1) {
+    score -= 15; issues.push('声调单一，缺乏抑扬');
+  }
+  // Check tone flow (ping ze balance)
+  var pingCount = 0;
+  for (var k = 0; k < tones.length; k++) { if (tones[k] === 1 || tones[k] === 2) pingCount++; }
+  var zeCount = tones.length - pingCount;
+  if (tones.length > 1 && (pingCount === 0 || zeCount === 0)) {
+    score -= 10; issues.push('缺少平仄变化');
+  }
+  if (pingCount > 0 && zeCount > 0) score += 5;
+  // Check adjacent same finals
+  for (var l = 0; l < finals.length - 1; l++) {
+    if (finals[l] === finals[l+1] && finals[l]) { score -= 10; issues.push('相邻字韵母重复'); }
+  }
+  // Check adjacent same initials
+  for (var m = 0; m < initials.length - 1; m++) {
+    if (initials[m] === initials[m+1] && initials[m]) { score -= 5; issues.push('相邻字声母重复'); }
+  }
+  var level = score >= 85 ? '优秀' : score >= 70 ? '良好' : score >= 50 ? '一般' : '需改进';
+  return { score: score, level: level, tones: tones, issues: issues, desc: '平' + pingCount + '仄' + zeCount + '，声调' + level };
+}
+
+/* ========== Name Analysis & Suggestions ========== */
+
+function findCharInV2(ch) {
+  for (var el in NAMING_CHARS_V2) {
+    var arr = NAMING_CHARS_V2[el];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].char === ch) return arr[i];
+    }
+  }
+  return null;
+}
+
+function getCharElement(ch) {
+  var info = findCharInV2(ch);
+  return info ? info.element : null;
+}
+function getCharElementViaDb(ch) {
+  for (var el in NAMING_CHARS_V2) {
+    var arr = NAMING_CHARS_V2[el];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].char === ch) return el;
+    }
+  }
+  return null;
+}
+
+function analyzeZiYi(chars) {
+  var scores = [];
+  var details = [];
+  for (var i = 0; i < chars.length; i++) {
+    var info = findCharInV2(chars[i]);
+    if (info) {
+      var s = info.category === '德行' ? 95 : info.category === '智慧' ? 90 : info.category === '吉祥' ? 85 : info.category === '文学' ? 80 : 70;
+      scores.push(s);
+      details.push({ char: chars[i], meaning: info.meaning, category: info.category, source: info.source, score: s });
+    } else {
+      scores.push(60);
+      details.push({ char: chars[i], meaning: '未收录', category: '未知', source: '', score: 60 });
+    }
+  }
+  var avg = Math.round(scores.reduce(function(a,b){return a+b;},0) / scores.length);
+  return { score: avg, details: details };
+}
+
+function analyzeBaziMatch(nameChars, wuxing, yongShen) {
+  var nameEls = [];
+  for (var i = 0; i < nameChars.length; i++) {
+    var el = getCharElementViaDb(nameChars[i]);
+    if (el) nameEls.push(el);
+  }
+  if (nameEls.length === 0) return { score: 50, level: '无数据', desc: '名字所用字不在数据库中' };
+  var neededEls = wuxing.missing || [];
+  var strongEls = wuxing.strong || [];
+  var score = 50;
+  var descParts = [];
+  // Check if name supplements missing elements
+  for (var j = 0; j < nameEls.length; j++) {
+    if (neededEls.indexOf(nameEls[j]) !== -1) { score += 15; descParts.push('补缺' + nameEls[j]); }
+    if (strongEls.indexOf(nameEls[j]) !== -1) { score -= 10; descParts.push('过旺' + nameEls[j]); }
+  }
+  // Check against yongShen
+  if (yongShen && yongShen.element) {
+    for (var k = 0; k < nameEls.length; k++) {
+      if (nameEls[k] === yongShen.element) { score += 20; descParts.push('合用神' + nameEls[k]); }
+    }
+  }
+  score = Math.max(10, Math.min(100, score));
+  var level = score >= 80 ? '非常匹配' : score >= 60 ? '基本匹配' : score >= 40 ? '匹配一般' : '需要调整';
+  return { score: score, level: level, desc: descParts.join('，') || '无特殊匹配' };
+}
+
+/* ========== Classical Citations Library ========== */
+const NAMING_CITATIONS = [
+  { text: '名者，命也。名不正则言不顺，言不顺则事不成。', source: '《论语·子路》', element: 'all' },
+  { text: '无名天地之始，有名万物之母。', source: '《道德经》第一章', element: 'all' },
+  { text: '赐子千金，不如教子一艺；教子一艺，不如赐子好名。', source: '《三命通会》', element: 'all' },
+  { text: '姓者，统其祖考之所自出；氏者，别其子孙之所自分。', source: '《通志·氏族略》', element: 'all' },
+  { text: '名为万物之称号，所以别彼此而明贵贱也。', source: '《释名》', element: 'all' },
+  { text: '人生于地，悬命于天，天地合气，命之曰人。', source: '《黄帝内经·素问》', element: 'all' },
+  { text: '五行者，金木水火土也。五行相生，万物以成。', source: '《周易本义》', element: 'all' },
+  { text: '仁者乐山，智者乐水。', source: '《论语·雍也》', element: '水' },
+  { text: '金声玉振，集大成也。', source: '《孟子·万章下》', element: '金' },
+  { text: '木欣欣以向荣，泉涓涓而始流。', source: '《归去来兮辞》陶渊明', element: '木' },
+  { text: '离为火，为日，为电，为中女。', source: '《周易·说卦传》', element: '火' },
+  { text: '地势坤，君子以厚德载物。', source: '《周易·坤卦》', element: '土' },
+  { text: '名之与实，犹形之与影也。', source: '《颜氏家训》', element: 'all' },
+  { text: '凡人立名，必有其义。', source: '《说文解字注》段玉裁', element: 'all' },
+  { text: '文者，物象之本也；字者，言孳乳而浸多也。', source: '《说文解字·叙》', element: 'all' },
+];
+
+/* ========== Naming Analysis & Generation ========== */
+function analyzeName() {
+  var surname = (document.getElementById('namingSurname').value || '').trim();
+  var currentName = (document.getElementById('namingCurrentName').value || '').trim();
+  var year = parseInt(document.getElementById('namingYear').value);
+  var month = parseInt(document.getElementById('namingMonth').value);
+  var day = parseInt(document.getElementById('namingDay').value);
+  var hour = parseInt(document.getElementById('namingHour').value);
+  var gender = document.getElementById('namingGender').value;
 
   if (!surname) { showToast('请输入姓氏'); return; }
+  if (!year || !month || !day) { showToast('请填写完整的出生日期'); return; }
 
-  const checkboxes = document.querySelectorAll('#panel-naming input[type="checkbox"]');
-  const selectedElements = [];
-  checkboxes.forEach(cb => { if (cb.checked) selectedElements.push(cb.value); });
+  var resultEl = document.getElementById('namingResult');
+  if (!resultEl) return;
+  resultEl.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:24px;">⏳</div><p style="margin-top:12px;">正在分析中...</p></div>';
 
-  if (selectedElements.length === 0) { showToast('请至少选择一个需要补足的五行'); return; }
+  setTimeout(function() {
+    var yearP = getYearPillar(year);
+    var monthP = getMonthPillar(year, month);
+    var dayP = getDayPillar(year, month, day);
+    var hourP = getHourPillar(dayP.stemIdx, hour);
+    var wuxing = analyzeWuxing(yearP, monthP, dayP, hourP);
+    var dayEl = STEM_ELEMENT[dayP.stemIdx];
+    var strength = analyzeDayMasterStrength(dayP, monthP, yearP, hourP);
+    var yongShen = analyzeYongShen(dayEl, strength);
 
-  const names = [];
-  for (let i = 0; i < 8; i++) {
-    const el = selectedElements[Math.floor(Math.random() * selectedElements.length)];
-    const charPool = NAMING_CHARS[el]?.[gender] || NAMING_CHARS[el]?.male || [];
-    const chars = [];
-    // Pick 1-2 characters
-    const count = Math.random() > 0.3 ? 1 : 2;
-    for (let j = 0; j < count; j++) {
-      chars.push(charPool[Math.floor(Math.random() * charPool.length)]);
+    // If no current name, analyze surname only or skip
+    var fullName = surname + currentName;
+    var nameChars = currentName ? currentName.split('') : [];
+
+    // 1. 五行匹配 (20%)
+    var baziMatch = nameChars.length ? analyzeBaziMatch(nameChars, wuxing, yongShen) : { score: 50, level: '无名字', desc: '未输入名字' };
+
+    // 2. 音律 (15%)
+    var yinLv = currentName ? analyzeYinLv(currentName) : { score: 50, level: '无名字', desc: '未输入名字' };
+
+    // 3. 字义 (20%)
+    var ziYi = nameChars.length ? analyzeZiYi(nameChars) : { score: 50, level: '无名字', desc: '未输入名字' };
+
+    // 4. 三才五格 (20%)
+    var wuge = calculateWuge(surname, currentName);
+    var wugeScore = assessWuge(wuge);
+    var sanCai = analyzeSanCai(wuge);
+
+    // 5. 卦象 (10%)
+    var hexagram = getHexagram(wuge.heaven, wuge.personality);
+    var guaScore = hexagram ? 70 : 50;
+
+    // 6. 八字匹配 (15%)
+    // Already computed as baziMatch
+
+    // Weighted total
+    var total = Math.round(
+      baziMatch.score * 0.2 +
+      yinLv.score * 0.15 +
+      ziYi.score * 0.20 +
+      wugeScore * 0.20 +
+      guaScore * 0.10 +
+      baziMatch.score * 0.15
+    );
+
+    var grade = total >= 90 ? 'A' : total >= 75 ? 'B' : total >= 60 ? 'C' : total >= 45 ? 'D' : 'E';
+    var gradeColor = { A: '#4caf50', B: '#8bc34a', C: '#ff9800', D: '#ff5722', E: '#f44336' }[grade];
+    var gradeLabel = { A: '上吉 · 非常优秀', B: '中吉 · 良好', C: '中平 · 一般', D: '中下 · 需调整', E: '下 · 建议改名' }[grade];
+
+    resultEl.innerHTML = '<div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:16px;">' +
+      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">' +
+        '<div style="width:80px;height:80px;border-radius:50%;background:' + gradeColor + ';color:#fff;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;flex-shrink:0;">' + grade + '</div>' +
+        '<div style="flex:1;min-width:150px;">' +
+          '<div style="font-size:20px;font-weight:700;">' + escHtml(fullName || '未知') + '</div>' +
+          '<div style="font-size:14px;color:' + gradeColor + ';font-weight:600;">' + gradeLabel + '</div>' +
+          '<div style="font-size:24px;font-weight:700;color:var(--ink);">综合评分：' + total + '<span style="font-size:14px;color:var(--ink-lighter);"> / 100</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="border-top:1px solid var(--border-light);padding-top:16px;margin-bottom:16px;">' +
+        '<h4 style="margin-bottom:12px;">📊 六维分析报告</h4>' +
+        renderScoreBar('五行匹配', baziMatch.score, baziMatch.level, baziMatch.desc, 0.25) +
+        renderScoreBar('音律平仄', yinLv.score, yinLv.level, yinLv.desc, 0.15) +
+        renderScoreBar('字义寓意', ziYi.score, ziYi.level, ziYi.desc, 0.20) +
+        renderScoreBar('三才五格', wugeScore, sanCai.level, '天' + wuge.heaven + '·人' + wuge.personality + '·地' + wuge.earth + '·外' + wuge.outer + '·总' + wuge.total + ' | ' + sanCai.desc, 0.20) +
+        renderScoreBar('卦象', guaScore, hexagram ? hexagram.name : '无', hexagram ? hexagram.desc : '无法计算', 0.10) +
+        renderScoreBar('八字匹配', baziMatch.score, baziMatch.level, baziMatch.desc, 0.15) +
+      '</div>' +
+      '<div style="background:var(--bg-warm);padding:12px 16px;border-radius:var(--radius);font-size:13px;color:var(--ink-light);line-height:1.8;">' +
+        '<strong>💡 分析说明：</strong>日主' + dayEl + '，' + (strength.label || '中和') + '，' +
+        '喜用神为<strong>' + (yongShen.element || '无') + '</strong>。' +
+        (currentName ? '名字总格' + wuge.total + '画，' + sanCai.desc + '。' : '未输入名字，部分维度无法评估。') +
+      '</div>' +
+      '<div style="margin-top:12px;text-align:center;">' +
+        '<button class="btn btn-gold btn-sm" onclick="generateNamesV2()" style="margin-right:8px;">✨ 基于八字生成推荐名字</button>' +
+        '<button class="btn btn-outline btn-sm" onclick="scrollToNamingForm()">🔄 重新分析</button>' +
+      '</div>' +
+    '</div>';
+  }, 50);
+}
+
+function renderScoreBar(label, score, level, desc, weight) {
+  var color = score >= 80 ? '#4caf50' : score >= 60 ? '#ff9800' : score >= 40 ? '#ff5722' : '#f44336';
+  return '<div style="margin-bottom:10px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;flex-wrap:wrap;gap:4px;">' +
+      '<span style="font-weight:600;font-size:13px;">' + label + ' <span style="font-size:10px;color:var(--ink-lighter);">(权重' + Math.round(weight * 100) + '%)</span></span>' +
+      '<span style="font-size:13px;font-weight:600;color:' + color + ';">' + score + '分 <span style="font-size:11px;">' + level + '</span></span>' +
+    '</div>' +
+    '<div style="height:6px;background:var(--bg-warm);border-radius:3px;overflow:hidden;">' +
+      '<div style="height:100%;width:' + score + '%;background:' + color + ';border-radius:3px;transition:width 0.5s;"></div>' +
+    '</div>' +
+    '<div style="font-size:11px;color:var(--ink-lighter);margin-top:1px;">' + (desc || '') + '</div>' +
+  '</div>';
+}
+
+function scrollToNamingForm() {
+  var el = document.getElementById('panel-naming');
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+function generateNamesV2() {
+  if (!checkAccess('naming')) return;
+  var surname = (document.getElementById('namingSurname').value || '').trim();
+  var year = parseInt(document.getElementById('namingYear').value);
+  var month = parseInt(document.getElementById('namingMonth').value);
+  var day = parseInt(document.getElementById('namingDay').value);
+  var hour = parseInt(document.getElementById('namingHour').value);
+  var gender = document.getElementById('namingGender').value;
+
+  if (!surname) { showToast('请输入姓氏'); return; }
+  if (!year || !month || !day) { showToast('请填写完整的出生日期'); return; }
+  incrementUsageStat('naming');
+
+  var resultEl = document.getElementById('namingResult');
+  if (!resultEl) return;
+  resultEl.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:24px;">⏳</div><p style="margin-top:12px;">正在基于八字生成推荐名字...</p></div>';
+
+  setTimeout(function() {
+    var yearP = getYearPillar(year);
+    var monthP = getMonthPillar(year, month);
+    var dayP = getDayPillar(year, month, day);
+    var hourP = getHourPillar(dayP.stemIdx, hour);
+    var wuxing = analyzeWuxing(yearP, monthP, dayP, hourP);
+    var dayEl = STEM_ELEMENT[dayP.stemIdx];
+    var strength = analyzeDayMasterStrength(dayP, monthP, yearP, hourP);
+    var yongShen = analyzeYongShen(dayEl, strength);
+
+    // Determine needed elements
+    var neededElements = wuxing.missing || [];
+    if (yongShen && yongShen.element && neededElements.indexOf(yongShen.element) === -1) {
+      neededElements.unshift(yongShen.element);
     }
-    const fullName = surname + chars.join('');
-    const elInfo = ELEMENT_COLORS[el];
-    names.push({ name: fullName, element: el, elInfo });
-  }
+    if (neededElements.length === 0) neededElements = ['金','木','水','火','土'];
 
-  // Deduplicate
-  const uniqueNames = [];
-  const seen = new Set();
-  names.forEach(n => {
-    if (!seen.has(n.name) && uniqueNames.length < 5) {
-      seen.add(n.name);
-      uniqueNames.push(n);
+    // Score all candidate chars
+    var candidates = [];
+    for (var elIdx = 0; elIdx < neededElements.length; elIdx++) {
+      var el = neededElements[elIdx];
+      var chars = NAMING_CHARS_V2[el] || [];
+      for (var cIdx = 0; cIdx < chars.length; cIdx++) {
+        var c = chars[cIdx];
+        var score = 0;
+        // Element match bonus
+        if (el === (yongShen && yongShen.element)) score += 20;
+        else if (neededElements.indexOf(el) >= 0) score += 10;
+        // Meaning quality bonus
+        if (c.category === '德行') score += 8;
+        else if (c.category === '智慧') score += 7;
+        else if (c.category === '吉祥') score += 6;
+        // Stroke auspiciousness
+        if (c.strokes >= 8 && c.strokes <= 16) score += 5;
+        // Gender match
+        if (gender === 'male' && c.gender !== 'female') score += 3;
+        if (gender === 'female' && c.gender !== 'male') score += 3;
+        candidates.push({ char: c.char, strokes: c.strokes, meaning: c.meaning, element: el, category: c.category, source: c.source || '', score: score, gender: c.gender });
+      }
     }
-  });
+    candidates.sort(function(a, b) { return b.score - a.score; });
+    // Take top scoring chars with some diversity
+    var topChars = [];
+    var seenEls = {};
+    for (var t = 0; t < candidates.length && topChars.length < 60; t++) {
+      var cand = candidates[t];
+      var elKey = cand.element;
+      if (!(seenEls[elKey] >= 9)) {
+        topChars.push(cand);
+        seenEls[elKey] = (seenEls[elKey] || 0) + 1;
+      }
+    }
 
-  let html = '';
-  uniqueNames.forEach((n, idx) => {
-    html += `
-    <div class="naming-result-card">
-      <div class="name-detail" style="color:var(--ink-lighter);">推荐 ${idx + 1} · 补${n.elInfo.emoji} ${n.element}</div>
-      <div class="suggested-name">${n.name}</div>
-      <div class="name-detail">
-        五行属<strong>${n.element}</strong>，补足命局所需。<br>
-        字义吉祥，音韵和谐，适合${gender === 'male' ? '男' : '女'}孩使用。
-      </div>
-      <span class="element-tag ${n.elInfo.cssClass}">${n.elInfo.emoji} 五行属${n.element}</span>
-    </div>`;
-  });
+    // Generate 1-character and 2-character name combinations
+    var combos = [];
+    // 1-char names
+    for (var i = 0; i < Math.min(topChars.length, 30); i++) {
+      var c = topChars[i];
+      var gName = c.char;
+      var w = calculateWuge(surname, gName);
+      var ws = assessWuge(w);
+      var elMatch = neededElements.indexOf(c.element) >= 0 ? 1 : 0;
+      var totalScore = ws * 0.4 + c.score * 0.3 + elMatch * 30 * 0.3;
+      combos.push({ name: surname + gName, given: gName, chars: [c], wuge: w, wugeScore: ws, element: c.element, totalScore: totalScore, meanings: [c.meaning], sources: [c.source] });
+    }
+    // 2-char names
+    for (var j = 0; j < Math.min(topChars.length, 40); j++) {
+      for (var k = j + 1; k < Math.min(topChars.length, 40); k++) {
+        var c1 = topChars[j];
+        var c2 = topChars[k];
+        if (c1.char === c2.char) continue;
+        var gName2 = c1.char + c2.char;
+        var w2 = calculateWuge(surname, gName2);
+        var ws2 = assessWuge(w2);
+        var elMatch2 = (neededElements.indexOf(c1.element) >= 0 ? 1 : 0) + (neededElements.indexOf(c2.element) >= 0 ? 1 : 0);
+        var totalScore2 = ws2 * 0.35 + ((c1.score + c2.score) / 2) * 0.25 + elMatch2 * 15 * 0.4;
+        combos.push({ name: surname + gName2, given: gName2, chars: [c1, c2], wuge: w2, wugeScore: ws2, element: c1.element + '/' + c2.element, totalScore: totalScore2, meanings: [c1.meaning, c2.meaning], sources: [c1.source, c2.source] });
+      }
+    }
 
-  document.getElementById('namingResult').innerHTML = html;
-  document.getElementById('namingResult').scrollIntoView({ behavior: 'smooth' });
+    combos.sort(function(a, b) { return b.totalScore - a.totalScore; });
+
+    // Diversity filter: select top 7 with variety
+    var selected = [];
+    var usedEls = {};
+    var hasOneChar = false, hasTwoChar = false;
+    for (var s = 0; s < combos.length && selected.length < 7; s++) {
+      var combo = combos[s];
+      var elRep = combo.element.replace(/\/.*$/, '');
+      // Ensure at least 2 different elements, at least 1 single-char and 1 double-char
+      if (selected.length >= 5) {
+        // Last 2 slots: ensure diversity
+        if (!hasOneChar && combo.given.length === 1) { hasOneChar = true; }
+        else if (!hasTwoChar && combo.given.length === 2) { hasTwoChar = true; }
+        else if (Object.keys(usedEls).length < 2 && !usedEls[elRep]) { /* add for diversity */ }
+        else if (selected.length >= 6) { /* add any remaining */ }
+      }
+      if (combo.given.length === 1) hasOneChar = true;
+      if (combo.given.length === 2) hasTwoChar = true;
+      usedEls[elRep] = true;
+      selected.push(combo);
+    }
+
+    // Render results
+    var bokuaEl = '金木水火土'.indexOf(dayEl) >= 0 ? dayEl : '土';
+    resultEl.innerHTML = '<div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:16px;">' +
+      '<div style="margin-bottom:20px;">' +
+        '<h3 style="margin-bottom:4px;">✨ 周易取名推荐</h3>' +
+        '<p style="font-size:13px;color:var(--ink-lighter);">日主<strong>' + dayEl + '</strong>，喜用神<strong>' + (yongShen.element || '中和') + '</strong>，' +
+        '需补<strong>' + neededElements.join('、') + '</strong>。共生成 <strong>' + selected.length + '</strong> 个推荐名字：</p>' +
+      '</div>' +
+      selected.map(function(combo, idx) {
+        var medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '✨';
+        return '<div style="border:1px solid ' + (idx === 0 ? 'var(--gold)' : 'var(--border-light)') + ';border-radius:var(--radius);padding:16px;margin-bottom:12px;' + (idx === 0 ? 'background:linear-gradient(135deg, #fef9e7, #fffdf0);' : '') + '">' +
+          '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;">' +
+            '<span style="font-size:24px;">' + medal + '</span>' +
+            '<span style="font-size:22px;font-weight:700;color:var(--ink);">' + escHtml(combo.name) + '</span>' +
+            '<span style="font-size:12px;background:var(--bg-warm);padding:2px 10px;border-radius:10px;color:var(--ink-light);">' + combo.given.length + '字名</span>' +
+            '<span style="font-size:12px;font-weight:600;color:' + (combo.wugeScore >= 70 ? '#4caf50' : combo.wugeScore >= 50 ? '#ff9800' : '#f44336') + ';">五格 ' + combo.wugeScore + '分</span>' +
+          '</div>' +
+          '<div style="font-size:13px;color:var(--ink-light);line-height:1.8;margin-bottom:8px;">' +
+            '<span><strong>五行：</strong>' + combo.element + '</span> · ' +
+            '<span><strong>天格：</strong>' + combo.wuge.heaven + '</span> · ' +
+            '<span><strong>人格：</strong>' + combo.wuge.personality + '</span> · ' +
+            '<span><strong>地格：</strong>' + combo.wuge.earth + '</span> · ' +
+            '<span><strong>总格：</strong>' + combo.wuge.total + '</span>' +
+          '</div>' +
+          '<div style="font-size:13px;color:var(--ink-light);line-height:1.6;">' +
+            combo.chars.map(function(c, ci) {
+              return '<span style="margin-right:16px;"><strong>' + c.char + '</strong>：' + c.meaning + '（' + c.strokes + '画·' + c.element + '）' + (c.source ? ' <span style="font-size:11px;color:var(--ink-lighter);">' + c.source + '</span>' : '') + '</span>';
+            }).join('<br>') +
+          '</div>' +
+        '</div>';
+      }).join('') +
+      '<div style="background:var(--bg-warm);padding:12px 16px;border-radius:var(--radius);font-size:12px;color:var(--ink-lighter);line-height:1.8;margin-top:12px;">' +
+        '<strong>📖 经典参考：</strong><br>' +
+        NAMING_CITATIONS.slice(0, 3).map(function(c) { return '「' + c.text + '」——' + c.source; }).join('<br>') +
+      '</div>' +
+      '<div style="margin-top:12px;text-align:center;">' +
+        '<button class="btn btn-outline btn-sm" onclick="analyzeName()">🔍 分析当前姓名</button>' +
+        '<button class="btn btn-outline btn-sm" style="margin-left:8px;" onclick="scrollToNamingForm()">🔄 重新生成</button>' +
+      '</div>' +
+    '</div>';
+  }, 50);
 }
 
 /* ========== Mingli: Feng Shui ========== */
@@ -5539,8 +7369,10 @@ function renderFengshuiCards() {
 }
 
 function openFengshuiDetail(id) {
+  if (!checkAccess('fengshui')) return;
   const fs = FENGSHUI_DATA.find(f => f.id === id);
   if (!fs) return;
+  incrementUsageStat('fengshui');
   document.getElementById('fengshuiTitle').textContent = fs.icon + ' ' + fs.title;
   document.getElementById('fengshuiContent').innerHTML = fs.detail;
   document.getElementById('fengshuiModal').classList.add('open');
@@ -5590,7 +7422,9 @@ const CLOTHING_COLORS = {
 };
 
 function renderClothing() {
+  if (!checkAccess('clothing')) return;
   const today = new Date();
+  incrementUsageStat('clothing');
   const dayStemIdx = getDayStem(today);
   const dayStem = TIAN_GAN[dayStemIdx];
   const dayElement = STEM_ELEMENT[dayStemIdx];
