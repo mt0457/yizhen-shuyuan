@@ -2936,6 +2936,8 @@ body {
 <div id="toastContainer"></div>
 
 <script src="_zhouyi.js"></script>
+<script src="_daodejing.js"></script>
+<script src="_huangdi_neijing.js"></script>
 <script>
 /* ========== App State ========== */
 const STORAGE_KEY_BOOKS = 'yizhen_books';
@@ -2985,6 +2987,18 @@ const DEFAULT_BOOKS = [
     price: 0, coverType:1, status: 'approved',
     desc: '群经之首，大道之源。六十四卦推演天地万物变化，系辞说卦序卦杂卦各传完备，是中国哲学的根本经典。',
     content: typeof ZHOUYI_CONTENT !== 'undefined' ? ZHOUYI_CONTENT : '周易内容加载中...'
+  },
+  {
+    id: 'b2', title: '道德经', author: '老子', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '道家哲学经典，以"道"为核心，八十一章阐述宇宙万物运行规律与处世智慧，被誉为"万经之王"。',
+    content: typeof DAODEJING_CONTENT !== 'undefined' ? DAODEJING_CONTENT : '道德经内容加载中...'
+  },
+  {
+    id: 'b3', title: '黄帝内经', author: '黄帝·岐伯等', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '中医理论奠基之作，分《素问》《灵枢》各八十一篇。系统阐述阴阳五行、藏象经络、病因病机、诊法治则、针灸运气，为"医家之宗"。',
+    content: typeof HUANGDI_NEIJING_CONTENT !== 'undefined' ? HUANGDI_NEIJING_CONTENT : '黄帝内经内容加载中...'
   },
 ];
 
@@ -3903,12 +3917,19 @@ function closeVipGate() {
 
 /* ========== Init ========== */
 function init() {
-  // Load books
+  // Load books: rebuild defaults from source, preserve only user uploads
   const savedBooks = localStorage.getItem(STORAGE_KEY_BOOKS);
   if (savedBooks) {
-    try { state.books = JSON.parse(savedBooks); } catch(e) { state.books = []; }
-  }
-  if (!state.books.length) {
+    try {
+      var allSaved = JSON.parse(savedBooks);
+      // Keep only user-uploaded books (IDs not in DEFAULT_BOOKS)
+      var userBooks = allSaved.filter(function(b) { return !DEFAULT_BOOKS.find(function(db) { return db.id === b.id; }); });
+      // Rebuild defaults fresh, then add back user uploads
+      state.books = DEFAULT_BOOKS.map(function(b) { return Object.assign({}, b); });
+      for (var i = 0; i < userBooks.length; i++) { state.books.push(userBooks[i]); }
+      saveBooks();
+    } catch(e) { state.books = [...DEFAULT_BOOKS]; saveBooks(); }
+  } else {
     state.books = [...DEFAULT_BOOKS];
     saveBooks();
   }
@@ -4428,7 +4449,7 @@ function generateTOC(content) {
   const list = document.getElementById('tocList');
   if (!list) return;
   if (!content) { list.innerHTML = '<span style="font-size:12px;color:var(--ink-lighter);">暂无内容</span>'; return; }
-  const re = /^[ \t]*[^\n]+卦第[一二三四五六七八九十百千0-9]+|^[ \t]*(系辞[上下]传|说卦传|序卦传|杂卦传)|^[ \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
+  const re = /^[ \t]*(素问|灵枢)[·⋅][^\n]+?篇?第[一二三四五六七八九十百千0-9]+|^[ \t]*[^\n]+卦第[一二三四五六七八九十百千0-9]+|^[ \t]*(系辞[上下]传|说卦传|序卦传|杂卦传)|^[ \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
   const chapters = [];
   let m;
   while ((m = re.exec(content)) !== null) {

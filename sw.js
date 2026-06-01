@@ -1,8 +1,11 @@
 // Service Worker for 仪贞书院
-const CACHE_NAME = 'yizhen-v2';
+const CACHE_NAME = 'yizhen-v5';
 const ASSETS = [
   './',
   './index.html',
+  './_zhouyi.js',
+  './_daodejing.js',
+  './_huangdi_neijing.js',
   './manifest.json'
 ];
 
