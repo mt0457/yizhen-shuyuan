@@ -2938,6 +2938,63 @@ body {
 <script src="_zhouyi.js"></script>
 <script src="_daodejing.js"></script>
 <script src="_huangdi_neijing.js"></script>
+<script src="_tongxuanzhenjing.js"></script>
+<script src="_sushu.js"></script>
+<script src="_jieexue.js"></script>
+<script src="_xiyouji.js"></script>
+<script src="_sanguoyanyi.js"></script>
+<script src="_shuihuzhuan.js"></script>
+<script src="_hongloumeng.js"></script>
+<script src="_shiji.js"></script>
+<script src="_zhuangzi.js"></script>
+<script src="_huainanzi.js"></script>
+<script src="_baopuzi.js"></script>
+<script src="_shijing.js"></script>
+<script src="_daxue.js"></script>
+<script src="_liji.js"></script>
+<script src="_zhouyicantongqi.js"></script>
+<script src="_yunjiqijian.js"></script>
+<script src="_caigentan.js"></script>
+<script src="_yinfujing.js"></script>
+<script src="_shanhaijing.js"></script>
+<script src="_ganshixingjing.js"></script>
+<script src="_shangshu.js"></script>
+<script src="_shiben.js"></script>
+<script src="_chunqiu.js"></script>
+<script src="_yuejing.js"></script>
+<script src="_lunyu.js"></script>
+<script src="_guoyu.js"></script>
+<script src="_zhanguoce.js"></script>
+<script src="_zhushujinian.js"></script>
+<script src="_mengzi.js"></script>
+<script src="_xunzi.js"></script>
+<script src="_zhouli.js"></script>
+<script src="_liezi.js"></script>
+<script src="_mozi.js"></script>
+<script src="_shangjunshu.js"></script>
+<script src="_hanfeizi.js"></script>
+<script src="_lizi.js"></script>
+<script src="_sunzibingfa.js"></script>
+<script src="_wuzibingfa.js"></script>
+<script src="_simafa.js"></script>
+<script src="_sunbinbingfa.js"></script>
+<script src="_weiliaozi.js"></script>
+<script src="_liutao.js"></script>
+<script src="_gongsunlongzi.js"></script>
+<script src="_yinwenzi.js"></script>
+<script src="_lushichunqiu.js"></script>
+<script src="_shennong.js"></script>
+<script src="_yelao.js"></script>
+<script src="_lianshan.js"></script>
+<script src="_guizang.js"></script>
+<script src="_lisao.js"></script>
+<script src="_jiuge.js"></script>
+<script src="_tianwen.js"></script>
+<script src="_jiuzhang.js"></script>
+<script src="_jiubian.js"></script>
+<script src="_boxue.js"></script>
+<script src="_cangjiepian.js"></script>
+<script src="_yuanlipian.js"></script>
 <script>
 /* ========== App State ========== */
 const STORAGE_KEY_BOOKS = 'yizhen_books';
@@ -3000,6 +3057,308 @@ const DEFAULT_BOOKS = [
     desc: '中医理论奠基之作，分《素问》《灵枢》各八十一篇。系统阐述阴阳五行、藏象经络、病因病机、诊法治则、针灸运气，为"医家之宗"。',
     content: typeof HUANGDI_NEIJING_CONTENT !== 'undefined' ? HUANGDI_NEIJING_CONTENT : '黄帝内经内容加载中...'
   },
+  {
+    id: 'b4', title: '通玄真经', author: '计然（文子）', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '道家四大经典之一，计然（文子）著，范蠡之师。十二卷阐发老子之道，兼论治国修身、天文地理、阴阳五行，为帝王治世之要典。',
+    content: typeof TONGXUANZHENJING_CONTENT !== 'undefined' ? TONGXUANZHENJING_CONTENT : '通玄真经内容加载中...'
+  },
+  {
+    id: 'b5', title: '素书', author: '黄石公', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '黄石公授张良之奇书，六章言简意赅。以道、德、仁、义、礼五者为纲，论治世修身、识人用人之道，被誉为"中国谋略第一书"。',
+    content: typeof SUSHU_CONTENT !== 'undefined' ? SUSHU_CONTENT : '素书内容加载中...'
+  },
+  {
+    id: 'b6', title: '解厄学', author: '晏殊', category: '子部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '北宋宰相晏殊所著处世经典，八卷论藏锋、隐智、戒欲、省身、求实、慎言、节情、向善，为趋利避害、化解困厄之要诀。',
+    content: typeof JIEEXUE_CONTENT !== 'undefined' ? JIEEXUE_CONTENT : '解厄学内容加载中...'
+  },
+  {
+    id: 'b7', title: '西游记', author: '吴承恩', category: '集部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '中国四大名著之一，一百回记唐僧师徒西天取经。孙悟空、猪八戒、沙悟净保三藏历经九九八十一难，终成正果的神魔小说巅峰之作。',
+    content: typeof XIYOUJI_CONTENT !== 'undefined' ? XIYOUJI_CONTENT : '西游记内容加载中...'
+  },
+  {
+    id: 'b8', title: '三国演义', author: '罗贯中', category: '集部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '中国四大名著之一，一百二十回叙东汉末年至西晋初百年间群雄割据、三国鼎立的历史风云。桃园结义、赤壁之战、空城计等经典篇章传诵千古。',
+    content: typeof SANGUOYANYI_CONTENT !== 'undefined' ? SANGUOYANYI_CONTENT : '三国演义内容加载中...'
+  },
+  {
+    id: 'b9', title: '水浒传', author: '施耐庵', category: '集部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '中国四大名著之一，一百回记宋江等一百零八将聚义梁山。武松打虎、鲁智深倒拔垂杨柳、林冲风雪山神庙，英雄豪杰替天行道可歌可泣。',
+    content: typeof SHUIHUZHUAN_CONTENT !== 'undefined' ? SHUIHUZHUAN_CONTENT : '水浒传内容加载中...'
+  },
+  {
+    id: 'b10', title: '红楼梦', author: '曹雪芹', category: '集部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '中国四大名著之首，一百二十回写贾宝玉与林黛玉、薛宝钗的爱情悲剧及贾府兴衰。金陵十二钗判词、葬花吟、芙蓉诔，中国古典文学巅峰之作。',
+    content: typeof HONGLOUMENG_CONTENT !== 'undefined' ? HONGLOUMENG_CONTENT : '红楼梦内容加载中...'
+  },
+  {
+    id: 'b11', title: '史记', author: '司马迁', category: '史部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '中国第一部纪传体通史，一百三十篇记黄帝至汉武帝三千余年。本纪、世家、列传，究天人之际通古今之变，鲁迅誉"史家之绝唱，无韵之离骚"。',
+    content: typeof SHIJI_CONTENT !== 'undefined' ? SHIJI_CONTENT : '史记内容加载中...'
+  },
+  {
+    id: 'b12', title: '庄子', author: '庄子及其后学', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '道家经典之一，与老子并称"老庄"。内篇七、外篇十五、杂篇十一，以寓言说理，文风汪洋恣肆，逍遥游、齐物论等篇章哲学思辨极为深邃。',
+    content: typeof ZHUANGZI_CONTENT !== 'undefined' ? ZHUANGZI_CONTENT : '庄子内容加载中...'
+  },
+  {
+    id: 'b13', title: '淮南子', author: '刘安及门客', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '西汉淮南王刘安集门客所著，二十一篇。以道家为主融儒墨名法，究天地之理、通古今之变。塞翁失马、女娲补天等典故皆出于此。',
+    content: typeof HUAINANZI_CONTENT !== 'undefined' ? HUAINANZI_CONTENT : '淮南子内容加载中...'
+  },
+  {
+    id: 'b14', title: '抱朴子', author: '葛洪', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '东晋葛洪著，七十卷分内外篇。内篇二十论神仙方药、养生延年，外篇五十言人间得失、世事臧否。集道家炼丹术与儒家治世学之大成。',
+    content: typeof BAOPUZI_CONTENT !== 'undefined' ? BAOPUZI_CONTENT : '抱朴子内容加载中...'
+  },
+  {
+    id: 'b15', title: '诗经', author: '佚名（周代采集）', category: '经部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '中国最早的诗歌总集，收录西周初年至春秋中叶三百零五篇。分风、雅、颂三部分。关雎、蒹葭、采薇等名篇传诵至今，风雅颂赋比兴六义并举。',
+    content: typeof SHIJING_CONTENT !== 'undefined' ? SHIJING_CONTENT : '诗经内容加载中...'
+  },
+  {
+    id: 'b16', title: '大学', author: '曾子', category: '经部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '"四书"之首，原为《礼记》第四十二篇。经一章传十章，论述儒家修身齐家治国平天下的思想体系，三纲领八条目影响深远。',
+    content: typeof DAXUE_CONTENT !== 'undefined' ? DAXUE_CONTENT : '大学内容加载中...'
+  },
+  {
+    id: 'b17', title: '礼记', author: '戴圣（编纂）', category: '经部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '"三礼"之一，四十九篇述先秦礼制、典章、修身、教化。曲礼、礼运（大同小康）、学记（教学相长）、乐记、儒行等名篇皆出其中。',
+    content: typeof LIJI_CONTENT !== 'undefined' ? LIJI_CONTENT : '礼记内容加载中...'
+  },
+  {
+    id: 'b18', title: '周易参同契', author: '魏伯阳', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '东汉魏伯阳著，道教炼丹术"万古丹经王"。融周易、黄老、炉火三家，以易卦喻炼丹火候，阐明内丹修炼之原理，被誉为内丹学之祖。',
+    content: typeof ZHOUYICANTONGQI_CONTENT !== 'undefined' ? ZHOUYICANTONGQI_CONTENT : '周易参同契内容加载中...'
+  },
+  {
+    id: 'b19', title: '云笈七签', author: '张君房（编纂）', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '北宋张君房奉旨编纂，道教百科全书。一百二十卷涵盖道德、经教、日月、星辰、洞天福地、斋戒、存思、导引、方药诸篇，为"小道藏"。',
+    content: typeof YUNJIQIJIAN_CONTENT !== 'undefined' ? YUNJIQIJIAN_CONTENT : '云笈七签内容加载中...'
+  },
+  {
+    id: 'b20', title: '菜根谭', author: '洪应明', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '明代洪应明著处世智慧格言集，融合儒释道三家思想。以前后两集论修身、应酬、评议、闲适，语言简练意味深长，为修身处世必读之书。',
+    content: typeof CAIGENTAN_CONTENT !== 'undefined' ? CAIGENTAN_CONTENT : '菜根谭内容加载中...'
+  },
+  {
+    id: 'b21', title: '黄帝阴符经', author: '黄帝（托名）', category: '子部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '道家重要经典，仅三百余字。三章论神仙抱一、富国安民、强兵战胜之道。观天之道执天之行，五贼在心施行于天，言简意赅极为深邃。',
+    content: typeof YINFUJING_CONTENT !== 'undefined' ? YINFUJING_CONTENT : '黄帝阴符经内容加载中...'
+  },
+  {
+    id: 'b22', title: '山海经', author: '佚名（先秦）', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '先秦奇书，十八卷述上古地理山川、奇珍异兽、神话传说。精卫填海、夸父逐日、刑天舞干戚、西王母等神话皆出其中。',
+    content: typeof SHANHAIJING_CONTENT !== 'undefined' ? SHANHAIJING_CONTENT : '山海经内容加载中...'
+  },
+  {
+    id: 'b23', title: '甘石星经', author: '甘德、石申', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '战国甘德、石申合著，世界最早星表之一。述二十八宿、五星占、分野、星官总七百八十三星。斗为帝车运于中央，临制四方。',
+    content: typeof GANSHIXINGJING_CONTENT !== 'undefined' ? GANSHIXINGJING_CONTENT : '甘石星经内容加载中...'
+  },
+  {
+    id: 'b24', title: '尚书', author: '孔子（编纂）', category: '经部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '"五经"之一，上古政治文献汇编。含尧舜禅让、大禹治水、盘庚迁殷、武王伐纣等典故。洪范九畴、无逸等篇影响深远。',
+    content: typeof SHANGSHU_CONTENT !== 'undefined' ? SHANGSHU_CONTENT : '尚书内容加载中...'
+  },
+  {
+    id: 'b25', title: '世本', author: '先秦史官', category: '史部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '先秦史官所记帝王诸侯世系、氏姓来源、器物发明之作。含帝系、氏姓、作篇、居篇、谥法等篇，司马迁著《史记》多所取材。',
+    content: typeof SHIBEN_CONTENT !== 'undefined' ? SHIBEN_CONTENT : '世本内容加载中...'
+  },
+  {
+    id: 'b26', title: '春秋', author: '孔子（修）', category: '经部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '"五经"之一，孔子据鲁史笔削。记隐公至哀公二百四十二年大事，微言大义寓褒贬。郑伯克段于鄢、城濮之战、西狩获麟等皆出此。',
+    content: typeof CHUNQIU_CONTENT !== 'undefined' ? CHUNQIU_CONTENT : '春秋内容加载中...'
+  },
+  {
+    id: 'b27', title: '乐经', author: '佚名（先秦）', category: '经部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '"六经"之一，秦火后失传，此辑佚本。十一篇论乐本、乐论、乐象、乐律、乐教。五声八音十二律吕，乐以和声善民心。',
+    content: typeof YUEJING_CONTENT !== 'undefined' ? YUEJING_CONTENT : '乐经内容加载中...'
+  },
+  {
+    id: 'b28', title: '论语', author: '孔子及其弟子', category: '经部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '"四书"之一，二十篇记孔子及其弟子言行。学而时习、三十而立、己所不欲勿施于人等经典名句出处，儒家思想最核心的经典。',
+    content: typeof LUNYU_CONTENT !== 'undefined' ? LUNYU_CONTENT : '论语内容加载中...'
+  },
+  {
+    id: 'b29', title: '国语', author: '左丘明', category: '史部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '春秋外传，左丘明著，二十一卷分国记事。周鲁齐晋郑楚吴越八国语，防民之口甚于防川、卧薪尝胆等典故皆出其中。',
+    content: typeof GUOYU_CONTENT !== 'undefined' ? GUOYU_CONTENT : '国语内容加载中...'
+  },
+  {
+    id: 'b30', title: '战国策', author: '刘向（编）', category: '史部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '战国纵横家策论汇编，三十三卷。荆轲刺秦、邹忌讽齐王纳谏、冯谖客孟尝君、鲁仲连义不帝秦等名篇传诵千古。',
+    content: typeof ZHANGUOCE_CONTENT !== 'undefined' ? ZHANGUOCE_CONTENT : '战国策内容加载中...'
+  },
+  {
+    id: 'b31', title: '竹书纪年', author: '佚名（战国魏）', category: '史部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '西晋汲郡出土竹简编年史，记五帝至魏安釐王。五帝纪、夏商周纪、晋魏纪，与《史记》多异。尧幽囚舜野死等记载极为珍贵。',
+    content: typeof ZHUSHUJINIAN_CONTENT !== 'undefined' ? ZHUSHUJINIAN_CONTENT : '竹书纪年内容加载中...'
+  },
+  {
+    id: 'b32', title: '孟子', author: '孟子及其弟子', category: '经部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '"四书"之一，七篇十四卷。性善论、浩然之气、舍生取义、天将降大任、民贵君轻等思想，孔子之后儒家集大成者。',
+    content: typeof MENGZI_CONTENT !== 'undefined' ? MENGZI_CONTENT : '孟子内容加载中...'
+  },
+  {
+    id: 'b33', title: '荀子', author: '荀况', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '战国荀况著，三十二篇。劝学、天论、性恶等篇与孟子性善论对立。青出于蓝、锲而不舍、制天命而用之等名言出处。',
+    content: typeof XUNZI_CONTENT !== 'undefined' ? XUNZI_CONTENT : '荀子内容加载中...'
+  },
+  {
+    id: 'b34', title: '周礼', author: '周公（托名）', category: '经部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '"三礼"之首，六官分职。天官冢宰至冬官考工记，述周代官制礼法。以八法治官府、九两系万民，古代理想政治制度之大成。',
+    content: typeof ZHOULI_CONTENT !== 'undefined' ? ZHOULI_CONTENT : '周礼内容加载中...'
+  },
+  {
+    id: 'b35', title: '列子', author: '列御寇', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '道家经典之一，八篇。天瑞、黄帝、汤问、力命、杨朱等篇，愚公移山、夸父逐日、杞人忧天等寓言出处。冲虚真经。',
+    content: typeof LIEZI_CONTENT !== 'undefined' ? LIEZI_CONTENT : '列子内容加载中...'
+  },
+  {
+    id: 'b36', title: '墨子', author: '墨翟', category: '子部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '墨家经典，今存五十三篇。尚贤、兼爱、非攻、节用、天志、明鬼、非命、非乐十大主张。公输篇记墨子救宋，逻辑与科学并重。',
+    content: typeof MOZI_CONTENT !== 'undefined' ? MOZI_CONTENT : '墨子内容加载中...'
+  },
+  {
+    id: 'b37', title: '商君书', author: '商鞅', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '法家经典，商鞅著，今存二十六篇。更法、农战、开塞、壹言、修权、赏刑等篇。治世不一道便国不必法古，秦国变法强盛之理论根基。',
+    content: typeof SHANGJUNSHU_CONTENT !== 'undefined' ? SHANGJUNSHU_CONTENT : '商君书内容加载中...'
+  },
+  {
+    id: 'b38', title: '韩非子', author: '韩非', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '法家集大成者，韩非著，五十五篇。五蠹、显学、孤愤、说难、二柄等名篇。守株待兔、自相矛盾、买椟还珠等寓言皆出其中。',
+    content: typeof HANFEIZI_CONTENT !== 'undefined' ? HANFEIZI_CONTENT : '韩非子内容加载中...'
+  },
+  {
+    id: 'b39', title: '李子', author: '李悝', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '战国魏相李悝著，又称《法经》，中国第一部成文法典。盗法、贼法、囚法、捕法、杂法、具法六篇，商鞅变法多取于此。',
+    content: typeof LIZI_CONTENT !== 'undefined' ? LIZI_CONTENT : '李子内容加载中...'
+  },
+  {
+    id: 'b40', title: '孙子兵法', author: '孙武', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '兵家圣典，孙武著，十三篇。始计作战谋攻军形，兵者诡道、知彼知己、不战屈人。世界军事思想之巅峰，影响远超军事领域。',
+    content: typeof SUNZIBINGFA_CONTENT !== 'undefined' ? SUNZIBINGFA_CONTENT : '孙子兵法内容加载中...'
+  },
+  {
+    id: 'b41', title: '吴子兵法', author: '吴起', category: '子部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '兵家经典，与《孙子兵法》并称。六篇：图国、料敌、治兵、论将、应变、励士。吴起在魏国与诸侯大战七十六全胜六十四。',
+    content: typeof WUZIBINGFA_CONTENT !== 'undefined' ? WUZIBINGFA_CONTENT : '吴子兵法内容加载中...'
+  },
+  {
+    id: 'b42', title: '司马法', author: '司马穰苴', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '兵家经典，《武经七书》之一。五篇：仁本、天子之义、定爵、严位、用众。国虽大好战必亡，天下虽安忘战必危。',
+    content: typeof SIMAFA_CONTENT !== 'undefined' ? SIMAFA_CONTENT : '司马法内容加载中...'
+  },
+  {
+    id: 'b43', title: '孙膑兵法', author: '孙膑', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '孙膑著，1972年银雀山汉墓出土。擒庞涓记桂陵之战围魏救赵，八阵论阵法，篡卒言精兵之道。天时地利人和三者并重。',
+    content: typeof SUNBINBINGFA_CONTENT !== 'undefined' ? SUNBINBINGFA_CONTENT : '孙膑兵法内容加载中...'
+  },
+  {
+    id: 'b44', title: '尉缭子', author: '尉缭', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '兵家经典，《武经七书》之一。二十四篇：天官、兵谈、制谈、战威、十二陵、将理、兵令。天官时日不若人事。',
+    content: typeof WEILIAOZI_CONTENT !== 'undefined' ? WEILIAOZI_CONTENT : '尉缭子内容加载中...'
+  },
+  {
+    id: 'b45', title: '六韬', author: '姜太公（托名）', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '兵家经典，《武经七书》之一。文韬、武韬、龙韬、虎韬、豹韬、犬韬六卷。天下非一人之天下，乃天下之天下也。',
+    content: typeof LIUTAO_CONTENT !== 'undefined' ? LIUTAO_CONTENT : '六韬内容加载中...'
+  },
+  {
+    id: 'b46', title: '公孙龙子', author: '公孙龙', category: '子部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '名家经典，六篇。白马非马、坚白离、指物论等辩题极具逻辑思辨。迹府、白马论、坚白论、名实论，为先秦名学之代表。',
+    content: typeof GONGSUNLONGZI_CONTENT !== 'undefined' ? GONGSUNLONGZI_CONTENT : '公孙龙子内容加载中...'
+  },
+  {
+    id: 'b47', title: '尹文子', author: '尹文', category: '子部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '名家兼法家经典，二卷。大道上、大道下，论形名关系。道不足则用法，法不足则用术。形以定名名以定事。',
+    content: typeof YINWENZI_CONTENT !== 'undefined' ? YINWENZI_CONTENT : '尹文子内容加载中...'
+  },
+  {
+    id: 'b48', title: '吕氏春秋', author: '吕不韦（编）', category: '子部',
+    price: 0, coverType:3, status: 'approved',
+    desc: '杂家巨著，十二纪八览六论。一字千金悬赏改字。察今（刻舟求剑）、察传（穿井得人）等名篇寓言之源。',
+    content: typeof LUSHICHUNQIU_CONTENT !== 'undefined' ? LUSHICHUNQIU_CONTENT : '吕氏春秋内容加载中...'
+  },
+  {
+    id: 'b49', title: '神农本草经', author: '神农（托名）', category: '子部',
+    price: 0, coverType:4, status: 'approved',
+    desc: '中国最早药学专著，365种药物分上中下三品。序录论君臣佐使七情合和，上品养命、中品养性、下品治病，奠定中药学基础。',
+    content: typeof SHENNONG_CONTENT !== 'undefined' ? SHENNONG_CONTENT : '神农本草经内容加载中...'
+  },
+  {
+    id: 'b50', title: '野老', author: '佚名（先秦农者）', category: '子部',
+    price: 0, coverType:5, status: 'approved',
+    desc: '先秦农家经典，又称《野老书》。农本、天时、地宜、力本、五谷、治水、粪田、农器、蚕桑、畜牧诸篇，古代农业智慧之集萃。',
+    content: typeof YELAO_CONTENT !== 'undefined' ? YELAO_CONTENT : '野老内容加载中...'
+  },
+  {
+    id: 'b51', title: '连山', author: '夏后氏（托名）', category: '经部',
+    price: 0, coverType:1, status: 'approved',
+    desc: '"三易"之一，夏代之易，以艮为首。连山象山之出云，与周易（乾首）、归藏（坤首）并为上古三大易书。原书已佚，此为辑本。',
+    content: typeof LIANSHAN_CONTENT !== 'undefined' ? LIANSHAN_CONTENT : '连山内容加载中...'
+  },
+  {
+    id: 'b52', title: '归藏', author: '殷人（托名）', category: '经部',
+    price: 0, coverType:2, status: 'approved',
+    desc: '"三易"之一，殷商之易，以坤为首。归藏者万物归藏于地。含嫦娥奔月、夏后启乘龙等上古神话，与周易言道德者异趣。原书已佚，此为辑本。',
+    content: typeof GUIZANG_CONTENT !== 'undefined' ? GUIZANG_CONTENT : '归藏内容加载中...'
+  },
+  { id: 'b53', title: '离骚', author: '屈原', category: '集部', price: 0, coverType:3, status: 'approved', desc: '屈原代表作。香草美人喻高洁志向，"路漫漫其修远兮，吾将上下而求索"千古传诵。', content: typeof LISAO_CONTENT !== 'undefined' ? LISAO_CONTENT : '离骚内容加载中...' },
+  { id: 'b54', title: '九歌', author: '屈原', category: '集部', price: 0, coverType:4, status: 'approved', desc: '屈原据楚地祭祀乐歌改编十一篇。东皇太一、湘君湘夫人、山鬼、国殇。"悲莫悲兮生别离，乐莫乐兮新相知。"', content: typeof JIUGE_CONTENT !== 'undefined' ? JIUGE_CONTENT : '九歌内容加载中...' },
+  { id: 'b55', title: '天问', author: '屈原', category: '集部', price: 0, coverType:5, status: 'approved', desc: '屈原放逐后仰天而问。自天地开辟一口气提一百七十余问，奇气纵横古今独步。', content: typeof TIANWEN_CONTENT !== 'undefined' ? TIANWEN_CONTENT : '天问内容加载中...' },
+  { id: 'b56', title: '九章', author: '屈原', category: '集部', price: 0, coverType:1, status: 'approved', desc: '屈原九篇合集。惜诵涉江哀郢怀沙橘颂等。"鸟飞反故乡，狐死必首丘"之名句出此。', content: typeof JIUZHANG_CONTENT !== 'undefined' ? JIUZHANG_CONTENT : '九章内容加载中...' },
+  { id: 'b57', title: '九辩', author: '宋玉', category: '集部', price: 0, coverType:2, status: 'approved', desc: '宋玉悲秋之作。"悲哉秋之为气也，萧瑟兮草木摇落而变衰"开千古悲秋先声。', content: typeof JIUBIAN_CONTENT !== 'undefined' ? JIUBIAN_CONTENT : '九辩内容加载中...' },
+  { id: 'b58', title: '博学', author: '胡毋敬', category: '经部', price: 0, coverType:3, status: 'approved', desc: '秦太史令胡毋敬小学字书。博学审问慎思明辨笃行，秦汉启蒙教育之重要典籍。', content: typeof BOXUE_CONTENT !== 'undefined' ? BOXUE_CONTENT : '博学内容加载中...' },
+  { id: 'b59', title: '仓颉篇', author: '李斯', category: '经部', price: 0, coverType:4, status: 'approved', desc: '秦丞相李斯字书，小篆规范之始。四言韵语教童蒙识字，汉初合为《三苍》之一。', content: typeof CANGJIEPIAN_CONTENT !== 'undefined' ? CANGJIEPIAN_CONTENT : '仓颉篇内容加载中...' },
+  { id: 'b60', title: '爰历篇', author: '赵高', category: '经部', price: 0, coverType:5, status: 'approved', desc: '秦赵高所作字书，六章继仓颉篇而续成。含天文山川人事宫室饮食诸篇。', content: typeof YUANLIPIAN_CONTENT !== 'undefined' ? YUANLIPIAN_CONTENT : '爰历篇内容加载中...' },
 ];
 
 const DEFAULT_VIDEOS = [
@@ -4449,7 +4808,7 @@ function generateTOC(content) {
   const list = document.getElementById('tocList');
   if (!list) return;
   if (!content) { list.innerHTML = '<span style="font-size:12px;color:var(--ink-lighter);">暂无内容</span>'; return; }
-  const re = /^[ \t]*(素问|灵枢)[·⋅][^\n]+?篇?第[一二三四五六七八九十百千0-9]+|^[ \t]*[^\n]+卦第[一二三四五六七八九十百千0-9]+|^[ \t]*(系辞[上下]传|说卦传|序卦传|杂卦传)|^[ \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
+  const re = /^[ \t]*(离骚|九歌·|天问|九章·|九辩|博学|仓颉篇|爰历篇)[^\n]*|^[ \t]*归藏[^\n]+|^[ \t]*连山[^\n]+|^[ \t]*野老[^\n]+篇|^[ \t]*神农本草经[^\n]+经|^[ \t]*吕氏春秋[^\n]+|^[ \t]*尹文子[^\n]+|^[ \t]*公孙龙子[^\n]+第[^\n]+|^[ \t]*六韬[^\n]+|^[ \t]*尉缭子[^\n]+第[^\n]+|^[ \t]*孙膑兵法[^\n]+|^[ \t]*司马法[^\n]+第[^\n]+|^[ \t]*吴子兵法[^\n]+第[^\n]+|^[ \t]*孙子兵法[^\n]+第[^\n]+|^[ \t]*李子[^\n]+经[^\n]+|^[ \t]*韩非子[^\n]+第[^\n]+|^[ \t]*商君书[^\n]+第[^\n]+|^[ \t]*墨子[^\n]+[上下]$|^[ \t]*墨子[^\n]+第[^\n]+|^[ \t]*列子[^\n]+第[^\n]+|^[ \t]*周礼·[^\n]+第[^\n]+|^[ \t]*荀子[^\n]+第[^\n]+|^[ \t]*孟子·[^\n]+[上下]$|^[ \t]*竹书纪年·[^\n]+纪|^[ \t]*战国策·[^\n]+策|^[ \t]*国语·[^\n]+语|^[ \t]*论语·[^\n]+第[^\n]+|^[ \t]*乐经[^\n]+第[^\n]+|^[ \t]*春秋·[^\n]+公|^[ \t]*世本[^\n]+篇|^[ \t]*尚书·[^\n]+|^[ \t]*甘石星经[^\n]+|^[ \t]*山海经·[^\n]+第[^\n]+|^[ \t]*黄帝阴符经[^\n]+章|^[ \t]*菜根谭·|^[ \t]*【[^】]+】|^[ \t]*云笈七签[^\n]{3,}|^[ \t]*周易参同契[^\n]+|^[ \t]*礼记·[^\n]+$|^[ \t]*大学·[^\n]+章|^[ \t]*诗经·[^\n]+$|^[ \t]*抱朴子·[^\n]{2,}|^[ \t]*淮南子·[^\n]+训|^[ \t]*【[内外杂]篇】|^[ \t]*[^\n]+第[一二三四五六七八九十]+$|^[ \t]*史记·[^\n]+第[^\n]+|^[ \t]*红楼梦[^\n]+回|^[ \t]*水浒传[^\n]+回|^[ \t]*三国演义[^\n]+回|^[ \t]*西游记[^\n]+回|^[ \t]*解厄学[^\n]+卷|^[ \t]*素书[^\n]+章|^[ \t]*通玄真经[^\n]+篇|^[ \t]*(素问|灵枢)[·⋅][^\n]+?篇?第[一二三四五六七八九十百千0-9]+|^[ \t]*[^\n]+卦第[一二三四五六七八九十百千0-9]+|^[ \t]*(系辞[上下]传|说卦传|序卦传|杂卦传)|^[ \t]*(第[一二三四五六七八九十百千0-9]+[章节篇回卷]|【.*?】|[一二三四五六七八九十百千]{1,4}[、，,]\s*[^，,]*?$|序[言言]?$|前言$|后记$|跋$)/gm;
   const chapters = [];
   let m;
   while ((m = re.exec(content)) !== null) {
