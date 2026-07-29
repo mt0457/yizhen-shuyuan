@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(node -e \"try { new Function\\(require\\('fs'\\).readFileSync\\('sw.js','utf8'\\)\\); console.log\\('OK: sw.js passes syntax check'\\); } catch\\(e\\) { console.log\\('ERROR: ' + e.message\\); }\")"
+    ]
+  }
+}

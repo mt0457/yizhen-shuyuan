@@ -1,0 +1,24 @@
+# 仪贞书院 - Git Ignore
+
+# Sensitive user data
+_member_msgs.txt
+
+# Build artifacts
+_batch_expand.js
+_build_*.js
+_check_books.js
+_expand_*.js
+
+# Duplicate directories
+仪贞/
+
+# OS files
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

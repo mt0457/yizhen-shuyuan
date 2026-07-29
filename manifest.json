@@ -8,6 +8,7 @@
   "background_color": "#f8f4ed",
   "theme_color": "#b5343a",
   "lang": "zh-CN",
+  "categories": ["education", "books", "lifestyle"],
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23b5343a'/><text x='96' y='138' text-anchor='middle' font-family='serif' font-size='120' font-weight='bold' fill='white'>仪</text></svg>",
@@ -20,6 +21,26 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "经典书籍",
+      "short_name": "书籍",
+      "description": "浏览国学经典书籍",
+      "url": "./#books"
+    },
+    {
+      "name": "命理探索",
+      "short_name": "命理",
+      "description": "八字排盘、周易取名等",
+      "url": "./#mingli"
+    },
+    {
+      "name": "经典视频",
+      "short_name": "视频",
+      "description": "观看国学视频",
+      "url": "./#videos"
     }
   ]
 }
