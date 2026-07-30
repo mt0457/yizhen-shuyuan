@@ -5263,173 +5263,149 @@ function calculateBazi() {
 	var elDay = ELEMENT_COLORS[dayEl];
 	var getMonthStrength = function(el, mbi){ var ms = ['冬','冬','春','春','春','夏','夏','夏','秋','秋','秋','冬']; var ss = ['水旺木相','水旺木相','木旺火相','木旺火相','木旺火相','火旺土相','火旺土相','火旺土相','金旺水相','金旺水相','金旺水相','水旺木相']; var m = {'木':[2,2,0,0,0,1,1,1,2,2,2,2],'火':[2,2,1,1,1,0,0,0,2,2,2,2],'土':[2,2,2,2,2,1,1,1,2,2,2,2],'金':[2,2,2,2,2,2,2,2,0,0,0,2],'水':[0,0,2,2,2,2,2,2,2,2,2,0]}; return ms[mbi]+'季（'+ss[mbi]+'）· 日主'+el+'在此月为'+(m[el]&&m[el][mbi]===0?'旺':m[el]&&m[el][mbi]===1?'相':'休囚'); };
 	var MONTH_BRANCH_EL = {'子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水'};
-	let html = '<div class="bazi-result">';
-	const yEls2 = yongShen.yongShen.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
-	const jEls2 = yongShen.jiShen.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
-	const yElsArr = yongShen.yongShen;
-	const yElsFirst = yElsArr.length>0 ? yElsArr[0] : '';
-	const yColor = yElsFirst ? ELEMENT_COLORS[yElsFirst] : null;
-	const yColorStr = yColor ? yColor.emoji+yColor.label : '均衡';
-	const meterPct2 = Math.min(Math.round(strength.score / 40 * 100), 100);
-	const strongEls = wuxing.strong.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
-	const weakEls = wuxing.weak.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
-	const missingEls = wuxing.missing.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
-	var chongMap={子:'午',午:'子',丑:'未',未:'丑',寅:'申',申:'寅',卯:'酉',酉:'卯',辰:'戌',戌:'辰',巳:'亥',亥:'巳'};
-	var wxJobMap={木:'教育、文化、出版、医药、园林、纺织、农业、文学创作',火:'能源、餐饮、美容、传媒、影视、互联网、演艺、电力',土:'房地产、建筑、矿产、仓储、农业、土地管理、城市规划',金:'金融、银行、证券、保险、法律、机械、军警、钟表珠宝',水:'航运、渔业、水利、贸易、物流、旅游、咨询、玄学哲学'};
-	var wxColorMap={木:'🟢 绿色、青色',火:'🔴 红色、紫色',土:'🟡 黄色、棕色',金:'⚪ 白色、灰色',水:'⚫ 黑色、蓝色'};
+	let html = '<div class="bazi-result" style="font-family:var(--font-serif);">';
+	var yEls2 = yongShen.yongShen.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
+	var jEls2 = yongShen.jiShen.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
+	var yElsFirst = yongShen.yongShen.length>0 ? yongShen.yongShen[0] : '';
+	var yColor = yElsFirst ? ELEMENT_COLORS[yElsFirst] : null;
+	var yColorStr = yColor ? yColor.emoji+yColor.label : '均衡';
+	var strongEls = wuxing.strong.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
+	var weakEls = wuxing.weak.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
+	var missingEls = wuxing.missing.map(function(e){return ELEMENT_COLORS[e].emoji+e;}).join('、');
+	var dgz=dayP.stem+dayP.branch;
+	var wxJobMap={木:'农桑/文教/医药',火:'冶炼/庖厨/灯烛',土:'田产/建筑/耕作',金:'兵刃/官差/金银铺',水:'渔猎/漕运/行商'};
+	var wxLucky={木:'东方卯位·青色·文昌帝君',火:'南方午位·红色·炎帝',土:'中原戊己·黄色·黄帝',金:'西方酉位·白色·太白金星',水:'北方子位·黑色·玄武帝君'};
+	var seasonNames=['冬','冬','春','春','春','夏','夏','夏','秋','秋','秋','冬'];
+	var monthNames=['正月寅','二月卯','三月辰','四月巳','五月午','六月未','七月申','八月酉','九月戌','十月亥','十一月子','十二月丑'];
 
-	// Header
-	html += '<div style="text-align:center;padding:16px 0;border-bottom:2px solid var(--border-light);margin-bottom:16px;">';
-	html += '<p style="font-size:13px;color:var(--ink-lighter);">出生：'+year+'年'+month+'月'+day+'日 '+SHI_CHEN_NAMES[hour]+' · '+genderLabel+' &nbsp;|&nbsp; 日主：'+elDay.emoji+' <strong>'+dayEl+'</strong>（'+dayP.stem+'）&nbsp;|&nbsp; 纳音本命：<strong>'+yearP.nayin+'</strong></p>';
-	html += '</div>';
-
-	// ===== 八字表格 =====
-	html += '<table class="bazi-table bazi-table-enhanced">';
-	html += '<tr><th></th><th>年柱</th><th>月柱</th><th>日柱</th><th>时柱</th></tr>';
-	html += '<tr><td class="pillar-name">天干</td>';
-	pillars.forEach(function(p){var el=ELEMENT_COLORS[STEM_ELEMENT[p.stemIdx]];html+='<td class="gan-zhi">'+p.stem+'<br><span class="element-tag '+el.cssClass+'">'+el.emoji+' '+el.label+'</span></td>';});
-	html += '</tr>';
-	html += '<tr><td class="pillar-name">地支</td>';
-	pillars.forEach(function(p){var el=ELEMENT_COLORS[BRANCH_ELEMENT[p.branchIdx]];html+='<td class="gan-zhi">'+p.branch+'<br><span class="element-tag '+el.cssClass+'">'+el.emoji+' '+el.label+'</span></td>';});
-	html += '</tr>';
-	html += '<tr class="hidden-stem-row"><td class="pillar-name">藏干</td>';
-	pillars.forEach(function(p){var hs=HIDDEN_STEMS[p.branch]||[];html+='<td>'+hs.map(function(h){var e=ELEMENT_COLORS[STEM_ELEMENT[h.s]];return'<span class="element-tag '+e.cssClass+'" style="font-size:10px;margin:1px 2px;">'+h.l+'</span>';}).join('')+'</td>';});
-	html += '</tr>';
-	html += '<tr class="nayin-row"><td class="pillar-name">纳音</td>';
-	nayins.forEach(function(n,i){var ne=NAYIN_ELEMENT[n]||'';html+='<td><span style="color:var(--ink-light);">'+n+'</span>'+(ne?' <span style="font-size:10px;color:var(--ink-lighter);">('+ne+')</span>':'')+'</td>';});
-	html += '</tr>';
-	html += '<tr class="tengod-row"><td class="pillar-name">十神</td>';
-	tenGods.forEach(function(tg){html+='<td style="font-weight:600;color:var(--red-dark);">'+tg+'</td>';});
-	html += '</tr>';
-	html += '<tr class="changsheng-row"><td class="pillar-name">长生</td>';
-	changShengs.forEach(function(cs){html+='<td style="font-size:11px;color:var(--ink-lighter);">'+cs+'</td>';});
-	html += '</tr>';
-	html += '</table>';
-
-	// 快速概览卡片
-	html += '<div style="display:flex;flex-wrap:wrap;gap:12px;margin:12px 0;">';
-	html += '<div class="ep-card" style="flex:1;min-width:180px;text-align:center;"><strong>☀ 日主</strong><br><span style="font-size:18px;font-weight:900;">'+elDay.emoji+' '+dayEl+'</span>（'+dayP.stem+'）<br><small>纳音：'+dayNayin+'</small></div>';
-	html += '<div class="ep-card" style="flex:1;min-width:180px;text-align:center;"><strong>⚖ 强弱</strong><br><span style="color:'+(strength.level==='身强'?'#c0392b':strength.level==='身弱'?'#4a7a9a':'#5a9a6a')+';font-weight:700;">'+strength.label+'</span>（'+strength.score+'分）</div>';
-	html += '<div class="ep-card" style="flex:1;min-width:180px;text-align:center;"><strong>📐 格局</strong><br><span class="pattern-badge">'+pattern.patternName+'</span><br><small>'+pattern.favorable+'</small></div>';
-	html += '<div class="ep-card" style="flex:1;min-width:180px;text-align:center;"><strong>🎯 用神</strong><br><span style="font-size:18px;font-weight:900;">'+yColorStr+'</span><br><small>忌：'+(jEls2||'无')+'</small></div>';
-	html += '<div class="ep-card" style="flex:1;min-width:180px;text-align:center;"><strong>🎂 本命</strong><br><span style="font-size:18px;font-weight:900;">'+yearP.nayin+'命</span><br><small>'+yearP.stem+yearP.branch+'年生</small></div>';
-	html += '</div>';
-
-	// 五行 + 调候
-	html += '<div style="margin:8px 0;"><strong>🔍 五行分布：</strong>';
-	ELEMENT_NAMES.forEach(function(el){var ei=ELEMENT_COLORS[el];var cnt=wuxing.counts[el];var pct=Math.round(cnt/8*100);html+='<div class="wuxing-bar"><span class="wuxing-label">'+ei.emoji+' '+el+'</span><div class="wuxing-fill" style="width:'+Math.max(pct,4)+'%;background:'+ei.color+';"></div><span class="wuxing-count">×'+cnt+'</span></div>';});
-	html += '<div style="font-size:12px;color:var(--ink-light);margin-top:2px;">';
-	if(wuxing.missing.length>0)html+='<span style="color:#c0392b;">缺失：'+missingEls+'（建议姓名/穿戴/饮食补足）</span> &nbsp; ';
-	if(wuxing.weak.length>0)html+='偏弱：'+weakEls+' &nbsp; ';
-	if(wuxing.strong.length>0)html+='偏旺：'+strongEls;
-	if(!wuxing.strong.length&&!wuxing.missing.length)html+='五行均衡，命局中和。';
-	html += '</div>';
-	var tiaoHouText="";
-	// tiaoHou removed
-	html += '</div>';
-
-	// ===== 维度一：性格与心性 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">🧠 一、性格与心性（本命元神）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《滴天髓》《渊海子平》《三命指迷赋》《三车一览命书》对您日柱<strong>'+dayP.stem+dayP.branch+'</strong>的相关论述：</p>';
-	html += "<p>性格分析请参考十书知识库检索结果</p>";
-	html += '</div>';
-
-	// ===== 维度二：事业与功名 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">💼 二、事业与功名（官禄）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《子平真诠》《神峰通考》《三命指迷赋》《三车一览命书》对您格局<strong>'+pattern.patternName+'</strong>及用神<strong>'+yEls2+'</strong>的相关论述：</p>';
-	html += "<p>事业分析请参考十书知识库检索结果</p>";
-	if(yColor)html+='<p style="margin-top:8px;font-size:13px;"><strong>💼 适宜行业：</strong>'+wxJobMap[yElsFirst]+'</p>';
-	html += '</div>';
-
-	// ===== 维度三：财富与资产 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">💰 三、财富与资产（财帛）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《神峰通考》《三命指迷赋》《子平真诠》《三车一览命书》对您财星的相关论述：</p>';
-	html += "<p>财富分析请参考十书知识库检索结果</p>";
-	html += '<p style="margin-top:4px;">正财'+wealthDetail.zhengCai+'次 · 偏财'+wealthDetail.pianCai+'次 &nbsp;|&nbsp; '+wealthDetail.wealthType+' &nbsp;|&nbsp; 时机：'+wealthDetail.timingTip+'</p>';
-	html += '</div>';
-
-	// ===== 维度四：婚姻与情感 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">💕 四、婚姻与情感（姻缘）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《滴天髓》《渊海子平》《三车一览命书》《星平会海》《三命指迷赋》对您日柱<strong>'+dayP.stem+dayP.branch+'</strong>婚姻相关的论述：</p>';
-	html += "<p>婚姻分析请参考十书知识库检索结果</p>";
-	html += '<p style="margin-top:4px;">💑 <strong>配偶宫：</strong>日支 '+spouseDetail.spousePalace+'（'+spouseDetail.spouseEmoji+' '+spouseDetail.spouseElement+'）· '+spouseDetail.quality+' &nbsp;|&nbsp; 婚姻质量：'+spouseDetail.marriageQuality+'</p>';
-	if(marriageTiming.length>0){html+='<p><strong>婚恋时机：</strong>';marriageTiming.forEach(function(mt){html+='<span style="display:inline-block;margin:2px 4px;padding:2px 8px;background:var(--bg-warm);border-radius:10px;">'+mt.year+'年·'+mt.type+'</span>';});html+='</p>';}
-	html += '</div>';
-
-	// ===== 维度五：六亲与人际 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">👨‍👩‍👧 五、六亲与人际（亲属贵人）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《渊海子平》《子平真诠》《三命通会》《滴天髓》对六亲关系的相关论述：</p>';
-	html += "<p>六亲分析请参考十书知识库检索结果</p>";
-	html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">';
-	html += '<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👨 父：</strong>'+parents.father+'</span>';
-	html += '<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👩 母：</strong>'+parents.mother+'</span>';
-	html += '<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👫 手足：</strong>比劫'+siblings.count+'次</span>';
-	html += '<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👶 子女：</strong>'+children.childrenInfo+'</span>';
-	html += '</div>';
 	var auspiciousSS=shenShas.filter(function(s){return s.cat==='吉';});
-	if(auspiciousSS.length>0)html+='<p style="margin-top:4px;font-size:12px;">🌟 <strong>贵人：</strong>'+auspiciousSS.map(function(s){return s.name;}).join('、')+'</p>';
-	html += '</div>';
+	var inauspiciousSS=shenShas.filter(function(s){return s.cat==='凶';});
+	var hasTianYi=shenShas.some(function(s){return s.name.indexOf('天乙')>=0;});
+	var hasWenChang=shenShas.some(function(s){return s.name.indexOf('文昌')>=0;});
+	var hasTaoHua=shenShas.some(function(s){return s.name.indexOf('桃花')>=0;});
+	var hasYiMa=shenShas.some(function(s){return s.name.indexOf('驿马')>=0;});
+	var hasHuaGai=shenShas.some(function(s){return s.name.indexOf('华盖')>=0;});
+	var hasYangRen=shenShas.some(function(s){return s.name.indexOf('羊刃')>=0;});
+	var hasGuChen=shenShas.some(function(s){return s.name.indexOf('孤辰')>=0;});
+	var hasGuaSu=shenShas.some(function(s){return s.name.indexOf('寡宿')>=0;});
+	var hasKongWang=shenShas.some(function(s){return s.name.indexOf('空亡')>=0;});
 
-	// ===== 维度六：健康与寿元 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">🏥 六、健康与寿元（疾厄）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《三命指迷赋》《神峰通考》《穷通宝鉴》《三车一览命书》对您五行健康的相关论述：</p>';
-	html += "<p>健康分析请参考十书知识库检索结果</p>";
-	html += '</div>';
+	var sTitle=strength.level==='身强'?'身强':'身弱';
+	var gLevel=''; if(sTitle==='身强'&&pattern.patternName.indexOf('正官')>=0)gLevel='上等命格——官星得地，身强能任。仕途有望，可做官掌权。';else if(sTitle==='身强')gLevel='中等偏上命格——身强有力，白手起家，安稳度日有余。';else gLevel='命格中和——勤恳劳作，温饱不愁，守成之命。';
 
-	// ===== 维度七：运势起伏 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">⏳ 七、运势起伏（岁运）</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《子平真诠》《神峰通考》《三车一览命书》《三命指迷赋》对大运流年的相关论述：</p>';
-	html += "<p>运势分析请参考十书知识库检索结果</p>";
-	html += '<p style="margin-top:8px;">排法：'+(dayun.forward?'顺排':'逆排')+' · 约<strong>'+dayun.startAge+'岁</strong>起运 &nbsp;|&nbsp; 📌 <strong>'+liuNian.year+'年流年：</strong>'+liuNian.yearPillar.stem+liuNian.yearPillar.branch+' · '+liuNian.yearTenGod+' · 财'+liuNian.wealthIndicator+' 业'+liuNian.careerIndicator+' 情'+liuNian.relationshipIndicator+' 康'+liuNian.healthIndicator+'</p>';
-	html += '<table class="dayun-table"><tr><th>步骤</th><th>干支</th><th>年龄</th><th>十神</th><th>吉凶</th><th>重点</th></tr>';
+	var edu=''; if(hasWenChang&&pattern.patternName.indexOf('印')>=0)edu='命带文昌贵人且印星得力。读书悟性高，记性好，适合从文习儒。科考运佳，有望中秀才、举人乃至进士。';else if(hasWenChang)edu='命带文昌贵人，读书有一定天赋，适合求学治学。';else if(pattern.patternName.indexOf('印')>=0)edu='印星得力，读书用功有成，可通过科举或学堂谋得功名。';else if(pattern.patternName.indexOf('食')>=0||pattern.patternName.indexOf('伤')>=0)edu='食伤吐秀，聪明机敏，适合习手艺技艺，亦可从文。';else edu='学业以勤补拙。若逢文昌运年，可望功名。';
+
+	var wealthAncient=''; var zc=wealthDetail.zhengCai||0,pc=wealthDetail.pianCai||0; if(zc>=2&&pc>=2)wealthAncient='正偏财俱旺。正财主稳定俸禄、田产地租，偏财主经商红利。一生钱粮丰足，田宅有望，属上等财命。';else if(zc>=2)wealthAncient='正财旺相。俸禄、工钱、田租等固定收入稳定。宜置办田产房产，安守本分，一生温饱有余。';else if(pc>=2)wealthAncient='偏财旺相。有利经商贩卖、意外得财。然偏财不稳，需以正业为根基，不宜完全倚靠。';else wealthAncient='财星不显。宜靠手艺、农耕、做工谋生，勤恳节俭可保衣食。不宜经商投机，守成为上。';
+
+	var childAncient=''; var hasShiShen=tenGods.some(function(t){return t==='食神';}); var hasShangGuan=tenGods.some(function(t){return t==='伤官';}); if(hasShiShen&&!hasGuChen)childAncient='食神为子星，得地而不被克。子息有望，晚年可依靠儿女。宜培养儿子读书求功名。';else if(hasShangGuan&&!hasGuChen)childAncient='伤官为女星，可望有女。若兼见食神，则子息双全。';else if(hasGuChen||hasGuaSu)childAncient='命带孤辰寡宿，子息缘薄。古法宜过继、认干亲或纳妾以求子嗣延续香火。';else childAncient='子息宫时柱'+children.hourDesc+'。子嗣之事，宜修德行善以求庇佑。';
+
+	var healthAncient=health||''; if(wuxing.weak.indexOf('木')>=0)healthAncient+='木弱防肝胆之疾，宜春季养肝，食青色蔬果。';if(wuxing.weak.indexOf('火')>=0)healthAncient+='火弱防心脑血管之患，宜夏季养心，忌过劳。';if(wuxing.weak.indexOf('土')>=0)healthAncient+='土弱防脾胃之疾，宜四季调养，食黄色谷物。';if(wuxing.weak.indexOf('金')>=0)healthAncient+='金弱防肺疾咳嗽，宜秋季养肺，避风寒。';if(wuxing.weak.indexOf('水')>=0)healthAncient+='水弱防肾虚腰膝酸软，宜冬季养肾，食黑色食物。';if(hasYangRen)healthAncient+='命带羊刃，防外伤血光、手术刀伤。';if(disasters.length>0)healthAncient+=disasters.map(function(d){return d.advice;}).join('；');
+
+	var marriageAncient=''; if(gender==='male'){marriageAncient=spouseDetail.spouseChar+spouseDetail.quality+'。'+spouseDetail.marriageQuality;if(hasTaoHua)marriageAncient+='桃花入命，异性缘分较好，宜早定亲事以免风月是非。';else if(hasGuChen||hasGuaSu)marriageAncient+='宜晚婚以避刑克。';else marriageAncient+='按古代婚俗，宜择良辰吉日明媒正娶。';}else{marriageAncient=spouseDetail.quality+'。'+spouseDetail.marriageQuality;if(pattern.patternName.indexOf('官')>=0)marriageAncient+='官星为夫，有望嫁贵夫，宜端庄守节，以助夫运。';else if(pattern.patternName.indexOf('伤')>=0)marriageAncient+='伤官旺，宜晚婚以柔克刚，择性情温和之夫。';else marriageAncient+='宜选门当户对之亲，婚后以夫为天、相夫教子。';}
+
+	// Title
+	html+='<div style="text-align:center;padding:16px;background:linear-gradient(135deg,#3a1f0d,#5c2e0e);color:#f5e6d3;border-radius:8px;margin-bottom:16px;">';
+	html+='<p style="font-size:12px;margin:0;">'+year+'年'+month+'月'+day+'日 '+SHI_CHEN_NAMES[hour]+' · '+genderLabel+' &nbsp;|&nbsp; '+seasonNames[monthP.branchIdx]+'季 '+monthNames[monthP.branchIdx]+'</p>';
+	html+='<p style="font-size:24px;font-weight:900;margin:8px 0;">'+elDay.emoji+' '+dayEl+'日主 · '+yearP.nayin+'命</p>';
+	html+='<p style="font-size:13px;margin:0;">格局：<b>'+pattern.patternName+'</b> · '+strength.label+' · 用神<b>'+yEls2+'</b> &nbsp;|&nbsp; '+gLevel+'</p></div>';
+
+	// Bazi Table
+	html+='<table class="bazi-table bazi-table-enhanced"><tr><th></th><th>年柱（祖上·幼年）</th><th>月柱（父母·青年）</th><th>日柱（自身·中年）</th><th>时柱（子女·晚年）</th></tr>';
+	html+='<tr><td class="pillar-name">天干</td>';
+	pillars.forEach(function(p){var el=ELEMENT_COLORS[STEM_ELEMENT[p.stemIdx]];html+='<td class="gan-zhi">'+p.stem+'<br><span class="element-tag '+el.cssClass+'">'+el.emoji+' '+el.label+'</span></td>';});
+	html+='</tr><tr><td class="pillar-name">地支</td>';
+	pillars.forEach(function(p){var el=ELEMENT_COLORS[BRANCH_ELEMENT[p.branchIdx]];html+='<td class="gan-zhi">'+p.branch+'<br><span class="element-tag '+el.cssClass+'">'+el.emoji+' '+el.label+'</span></td>';});
+	html+='</tr><tr><td class="pillar-name">纳音</td>';
+	nayins.forEach(function(n,i){var ne=NAYIN_ELEMENT[n]||'';html+='<td>'+n+(ne?'<br><span style="font-size:10px;color:var(--ink-lighter);">('+ne+')</span>':'')+'</td>';});
+	html+='</tr><tr><td class="pillar-name">十神</td>';
+	tenGods.forEach(function(tg){html+='<td style="font-weight:600;">'+tg+'</td>';});
+	html+='</tr></table>';
+
+	// Wuxing
+	html+='<div style="margin:10px 0;padding:10px;background:#faf7f2;border-radius:6px;"><strong>五行分布：</strong>';
+	ELEMENT_NAMES.forEach(function(el){var ei=ELEMENT_COLORS[el];var cnt=wuxing.counts[el];var pct=Math.round(cnt/8*100);html+='<div class="wuxing-bar"><span class="wuxing-label">'+ei.emoji+' '+el+'</span><div class="wuxing-fill" style="width:'+Math.max(pct,4)+'%;background:'+ei.color+';"></div><span class="wuxing-count">×'+cnt+'</span></div>';});
+	html+='<p style="font-size:11px;margin-top:2px;">';if(wuxing.missing.length>0)html+='<span style="color:#c0392b;">缺失：'+missingEls+'</span> · ';if(wuxing.weak.length>0)html+='偏弱：'+weakEls+' · ';if(wuxing.strong.length>0)html+='偏旺：'+strongEls;html+='</p></div>';
+
+	// Section 1: 功名仕途
+	html+='<div class="bazi-dimension"><h3 class="dim-title">🎓 一、功名仕途·贵贱</h3>';
+	html+='<p>'+gLevel+'</p><p style="margin-top:4px;">📖 <strong>读书科考：</strong>'+edu+'</p>';
+	if(hasWenChang)html+='<p>⭐ 命带<strong>文昌贵人</strong>，主文才功名，利于科考。</p>';
+	if(hasTianYi)html+='<p>🌟 命带<strong>天乙贵人</strong>，仕途有贵人提携，逢凶化吉。</p>';
+	html+='</div>';
+
+	// Section 2: 子嗣传承
+	html+='<div class="bazi-dimension"><h3 class="dim-title">👶 二、子嗣传承·香火</h3>';
+	html+='<p>'+childAncient+'</p><p style="margin-top:4px;">时柱'+children.hourDesc+'。'+children.childrenInfo+'</p>';
+	if(hasGuChen)html+='<p>⚠️ 命带孤辰，子息缘薄，古法宜过继或认干亲。</p>';
+	if(hasGuaSu)html+='<p>⚠️ 命带寡宿，宜积德行善以求子嗣。</p>';
+	html+='</div>';
+
+	// Section 3: 寿元灾厄
+	html+='<div class="bazi-dimension"><h3 class="dim-title">🏥 三、寿元灾厄·生死</h3>';
+	html+='<p>'+healthAncient+'</p>';
+	if(hasYangRen)html+='<p>⚠️ 羊刃入命，防外伤血光、手术。流年逢冲羊刃之年尤需谨慎。</p>';
+	if(disasters.length>0){html+='<p><strong>凶灾预警：</strong>';disasters.forEach(function(d){html+='<br>· '+d.type+'（风险'+d.severity+'）：'+d.advice;});html+='</p>';}
+	html+='</div>';
+
+	// Section 4: 婚姻
+	html+='<div class="bazi-dimension"><h3 class="dim-title">💑 四、婚姻'+(gender==='female'?'妇德':'嫁娶')+'</h3>';
+	html+='<p>'+marriageAncient+'</p><p style="margin-top:4px;">配偶宫：日支'+spouseDetail.spousePalace+'（'+spouseDetail.spouseEmoji+spouseDetail.spouseElement+'）。'+spouseDetail.marriageQuality+'</p>';
+	if(marriageTiming.length>0){html+='<p><strong>婚嫁时机：</strong>';marriageTiming.forEach(function(mt){html+=mt.year+'年·'+mt.type+' &nbsp;';});html+='</p>';}
+	if(hasTaoHua)html+='<p>🌸 桃花入命，异性缘旺。古法宜早定亲以免风月是非。</p>';
+	html+='</div>';
+
+	// Section 5: 家业财禄
+	html+='<div class="bazi-dimension"><h3 class="dim-title">💰 五、家业财禄·贫富</h3>';
+	html+='<p>'+wealthAncient+'</p>';
+	html+='<p style="margin-top:4px;"><strong>祖业根基：</strong>年柱'+yearP.stem+yearP.branch+'，纳音'+yearP.nayin+'。'+(strength.level==='身强'?'根基稳健，可继承祖业或白手起家。':'根基稍弱，宜勤俭守成。')+'</p>';
+	html+='<p><strong>求财方位：</strong>'+wxLucky[yElsFirst]+'</p><p><strong>适宜行当：</strong>'+wxJobMap[yElsFirst]+'</p>';
+	html+='</div>';
+
+	// Section 6: 六亲家人
+	html+='<div class="bazi-dimension"><h3 class="dim-title">👨‍👩‍👧 六、六亲家人</h3>';
+	html+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+	html+='<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👨 父亲：</strong>'+parents.father+'</span>';
+	html+='<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👩 母亲：</strong>'+parents.mother+'</span>';
+	html+='<span class="ep-card" style="flex:1;min-width:140px;font-size:12px;"><strong>👫 手足：</strong>比劫'+siblings.count+'次。'+siblings.result+'</span>';
+	html+='</div>';
+	if(auspiciousSS.length>0)html+='<p style="margin-top:4px;font-size:12px;">🌟 <strong>吉神：</strong>'+auspiciousSS.map(function(s){return s.name;}).join('、')+'</p>';
+	if(inauspiciousSS.length>0)html+='<p style="font-size:12px;color:#c0392b;">⚠️ <strong>凶煞：</strong>'+inauspiciousSS.map(function(s){return s.name;}).join('、')+'</p>';
+	html+='</div>';
+
+	// Section 7: 大运流年
+	html+='<div class="bazi-dimension"><h3 class="dim-title">⏳ 七、大运流年·动态运势</h3>';
+	html+='<p>排法：'+(dayun.forward?'顺排':'逆排')+' · 约<strong>'+dayun.startAge+'岁</strong>起运。📌 <strong>'+liuNian.year+'年流年：</strong>'+liuNian.yearPillar.stem+liuNian.yearPillar.branch+' · '+liuNian.yearTenGod+' · 财'+liuNian.wealthIndicator+' 业'+liuNian.careerIndicator+' 康'+liuNian.healthIndicator+'</p>';
+	html+='<table class="dayun-table"><tr><th>步</th><th>干支</th><th>年龄</th><th>十神</th><th>吉凶</th><th>重点</th></tr>';
 	dayunDetail.forEach(function(dd){var fCls=dd.favorability==='有利'?'wealth-good':(dd.favorability==='需注意'?'career-challenge':'');html+='<tr><td>'+dd.index+'</td><td style="font-weight:600;">'+dd.ganZhi+'</td><td>'+dd.ages+'</td><td>'+dd.tenGod+'</td><td class="'+fCls+'">'+dd.favorability+'</td><td style="font-size:11px;">'+dd.focus+'</td></tr>';});
-	html += '</table>';
-	html += '<details style="margin-top:4px;"><summary style="cursor:pointer;color:var(--ink-light);font-size:12px;">📆 未来五年流年预测</summary>';
-	html += '<table class="forecast-table" style="margin-top:4px;"><tr><th>年份</th><th>干支</th><th>十神</th><th>财运</th><th>事业</th><th>健康</th></tr>';
+	html+='</table>';
+	html+='<details style="margin-top:4px;"><summary style="cursor:pointer;font-size:12px;">📆 未来五年</summary><table class="forecast-table"><tr><th>年</th><th>干支</th><th>十神</th><th>财运</th><th>事业</th><th>健康</th></tr>';
 	nextYears.forEach(function(ny){var wCls=ny.wealth==='财运旺'?'wealth-good':(ny.wealth==='开销大'?'wealth-warn':'');var cCls=ny.career==='升迁期'?'career-up':(ny.career==='挑战期'?'career-challenge':'');html+='<tr><td>'+ny.year+'</td><td>'+ny.ganZhi+'</td><td>'+ny.tenGod+'</td><td class="'+wCls+'">'+ny.wealth+'</td><td class="'+cCls+'">'+ny.career+'</td><td>'+ny.health+'</td></tr>';});
-	html += '</table></details>';
-	if(turningPoints.length>0){html+='<p style="margin-top:4px;font-size:12px;"><strong>🔄 转折点：</strong>'+turningPoints.map(function(tp){return tp.age+'岁：'+tp.desc;}).join('；')+'</p>';}
-	html += '</div>';
+	html+='</table></details></div>';
 
-	// ===== 维度八：特殊格局与神煞 =====
-	html += '<div class="bazi-dimension"><h3 class="dim-title">🌟 八、特殊格局与神煞</h3>';
-	html += '<p style="font-size:13px;color:var(--ink-light);margin-bottom:8px;">以下内容来源于《子平真诠》《星平会海》《李虚中命书》《三命通会》《三车一览命书》对格局与神煞的相关论述：</p>';
-	html += "<p>格局神煞分析请参考十书知识库检索结果</p>";
-	if(shenShas.length>0){
-		html += '<div class="shensha-tags" style="margin-top:6px;">';
-		shenShas.forEach(function(ss){var cls=ss.cat==='吉'?'auspicious':ss.cat==='凶'?'inauspicious':'neutral';html+='<span class="shensha-tag '+cls+'">'+ss.name+(ss.pillar?'('+ss.pillar+')':'')+'</span>';});
-		html += '</div>';
-	}
-	if(disasters.length>0){
-		html += '<div style="margin-top:8px;">';
-		disasters.forEach(function(d){var sevCls=d.severity==='高'?'risk-high':(d.severity==='中'?'risk-medium':'risk-low');html+='<div class="ep-card" style="margin:2px 0;font-size:12px;"><strong>⚠ '+d.type+'</strong> <span class="risk-indicator '+sevCls+'">'+d.severity+'</span>'+(d.hasRemedy?' ✅有制':'')+'：'+d.advice+'</div>';});
-		html += '</div>';
-	}
-	html += '</div>';
+	// Section 8: 神煞择吉
+	html+='<div class="bazi-dimension"><h3 class="dim-title">🌟 八、神煞·择吉·人际</h3>';
+	if(shenShas.length>0){html+='<div class="shensha-tags" style="margin-bottom:6px;">';shenShas.forEach(function(ss){var cls=ss.cat==='吉'?'auspicious':ss.cat==='凶'?'inauspicious':'neutral';html+='<span class="shensha-tag '+cls+'">'+ss.name+(ss.pillar?'('+ss.pillar+')':'')+'</span>';});html+='</div>';}
+	html+='<p><strong>贵人运：</strong>'+(hasTianYi?'天乙贵人入命，逢凶化吉，有长辈上司配偶帮扶。':'广结善缘可补贵人运。')+'</p>';
+	html+='<p><strong>出行方位：</strong>'+(hasYiMa?'驿马星动，宜外出远行谋生，动中求成。':'安居本地为宜，不宜奔波。')+'</p>';
+	if(hasHuaGai)html+='<p>🏯 命带华盖，与佛道有缘，可修行养性。</p>';
+	html+='</div>';
 
-	// ===== 总结与建议 =====
-	html += '<div class="bazi-dimension" style="background:linear-gradient(135deg,#fdf6f0,#faf0e6);border:2px solid var(--gold);">';
-	html += '<h3 class="dim-title" style="font-size:18px;">📋 总结与建议</h3>';
-	html += '<div style="display:flex;flex-wrap:wrap;gap:10px;">';
-	html += '<div class="ep-card" style="flex:1;min-width:200px;text-align:center;background:#fff;"><strong>🎨 幸运色</strong><br><span style="font-size:18px;">'+yColorStr+'</span> &nbsp; '+wxColorMap[yElsFirst]+'</div>';
-	html += '<div class="ep-card" style="flex:1;min-width:200px;text-align:center;background:#fff;"><strong>💼 事业方向</strong><br>'+wxJobMap[yElsFirst]+'<br><small>宜'+yColorStr+'方位发展</small></div>';
-	html += '<div class="ep-card" style="flex:1;min-width:200px;text-align:center;background:#fff;"><strong>💑 婚配建议</strong><br>宜选日柱三命顺生的对象<br><small>忌配偶宫相冲（'+dayP.branch+'冲'+chongMap[dayP.branch]+'）</small></div>';
-	html += '<div class="ep-card" style="flex:1;min-width:200px;text-align:center;background:#fff;"><strong>🏥 健康养护</strong><br>'+(wuxing.weak.length>0?'重点养护：'+weakEls:'五行均衡，保持良好作息')+'</div>';
-	html += '<div class="ep-card" style="flex:1;min-width:200px;text-align:center;background:#fff;"><strong>⚠️ 注意事项</strong><br>忌：'+(jEls2||'无明显忌讳')+'<br>'+pattern.risk+'</div>';
-	html += '</div>';
-	html += '<p style="margin-top:10px;font-size:13px;line-height:2;"><strong>📝 命理概括：</strong>您是<strong>'+yearP.nayin+'命</strong>的<strong>'+elDay.emoji+dayEl+'人</strong>（日主'+dayP.stem+'），格局<strong>'+pattern.patternName+'</strong>，'+strength.label+'，用神取<strong>'+yEls2+'</strong>。'+(wuxing.missing.length>0?'命名、穿戴、饮食宜补<strong>'+missingEls+'</strong>。':'')+'</p>';
-	html += '</div>';
+	// Summary
+	html+='<div style="margin:12px 0;padding:16px;background:linear-gradient(135deg,#fdf6f0,#faf0e6);border-radius:8px;border:2px solid var(--gold);text-align:center;">';
+	html+='<p style="font-size:14px;font-weight:900;color:var(--red-dark);">📋 批命总论</p>';
+	html+='<p>您是<strong>'+yearP.nayin+'命</strong>，<strong>'+elDay.emoji+dayEl+'日主</strong>，生于'+seasonNames[monthP.branchIdx]+'季'+monthNames[monthP.branchIdx]+'。格局<strong>'+pattern.patternName+'</strong>，'+strength.label+'，用神取<strong>'+yEls2+'</strong>。忌神为'+(jEls2||'无')+'。</p>';
+	html+='<p>'+gLevel+' &nbsp;|&nbsp; 求财宜往'+wxLucky[yElsFirst]+' &nbsp;|&nbsp; 适宜行当：'+wxJobMap[yElsFirst]+'</p>';
+	if(wuxing.missing.length>0)html+='<p style="font-size:12px;color:#c0392b;">⚠️ 五行缺失：'+missingEls+'，宜在姓名、穿戴、饮食、方位等方面补足。</p>';
+	html+='</div>';
 
-	html += '<p style="font-size:11px;color:var(--ink-lighter);margin-top:16px;text-align:center;line-height:1.8;">📖 以上分析内容来源于十部命理经典（滴天髓·渊海子平·三命通会·李虚中命书·穷通宝鉴·三命指迷赋·三车一览命书·神峰通考·星平会海·子平真诠）智能检索<br>⚠️ 此八字排盘属传统民俗文化参考，非专业命理预测，仅供研究交流。</p>';
-
-	html += '</div>';
+	html+='<p style="font-size:10px;color:var(--ink-lighter);text-align:center;margin-top:8px;">📖 参照《渊海子平》《三命通会》《滴天髓》《穷通宝鉴》《神峰通考》《子平真诠》等十部古代命理经典。⚠️ 传统民俗文化参考，非现代科学预测。</p>';
+	html+='</div>';
 
 	document.getElementById('baziResult').innerHTML = html;
 	document.getElementById('baziResult').scrollIntoView({ behavior: 'smooth' });
-	var baziCtx = { dayGanZhi: dayP.stem+dayP.branch, dayGan: dayP.stem, dayZhi: dayP.branch, monthGanZhi: monthP.stem+monthP.branch, monthZhi: monthP.branch, yearGanZhi: yearP.stem+yearP.branch, yearNayin: yearP.nayin, dayNayin: dayNayinKey, dayWuxing: dayEl, strength: strength, pattern: pattern, yongShen: yongShen };
+	var baziCtx = { dayGanZhi: dgz, dayGan: dayP.stem, dayZhi: dayP.branch, monthGanZhi: monthP.stem+monthP.branch, monthZhi: monthP.branch, yearGanZhi: yearP.stem+yearP.branch, yearNayin: yearP.nayin, dayNayin: dayNayinKey, dayWuxing: dayEl, strength: strength, pattern: pattern, yongShen: yongShen };
 	setTimeout(function(){ searchMingliKB(baziCtx, 'bazi'); }, 300);
 }
-
 var STROKE_MAP = {
   '涛':18,
   '倚':10,'剛':10,'倫':10,'倩':10,'倪':10,'兼':10,'凌':10,'原':10,'員':10,'哲':10,'唐':10,'城':10,'娉':10,'娟':10,'孫':10,'容':10,'展':10,'峰':10,'峻':10,'桐':10,'桓':10,'桂':10,'栩':10,'殷':10,'洛':10,'洵':10,'玲':10,'珊':10,'珀':10,'珈':10,'珍':10,'真':10,'祐':10,'神':10,'祝':10,'秦':10,'素':10,'紋':10,'純':10,'紜':10,'紗':10,'納':10,'紋':10,'耘':10,'耿':10,'能':10,'致':10,'航':10,'芬':10,'芳':10,'芝':10,'芸':10,'芹':10,'芽':10,'芯':10,'花':10,'芷':10,'若':10,'英':10,'珂':10,'珮':10,'訓':10,'記':10,'貢':10,'軒':10,'倫':10,'倍':10,'修':10,

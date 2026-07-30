@@ -1,5 +1,5 @@
 // Service Worker for 仪贞书院
-const CACHE_NAME = 'yizhen-v221';
+const CACHE_NAME = 'yizhen-v226';
 const ASSETS = [
   './',
   './index.html',
