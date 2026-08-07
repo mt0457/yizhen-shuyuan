@@ -1319,14 +1319,22 @@ const STORAGE_KEY_LAST_LOGIN = 'yizhen_last_login';
 const STORAGE_KEY_VIP_FEATURES = 'yizhen_vip_features';
 
 /* ========== Admin Settings Auto-Sync (localStorage → Supabase) ========== */
-// 拦截所有 yizhen_* 键的写入，自动同步到 Supabase
+// 仅白名单中的管理设置键同步到 Supabase
+var _ADMIN_SYNC_KEYS = [
+  'yizhen_admin_password',
+  'yizhen_qrcodes',
+  'yizhen_payment_enabled',
+  'yizhen_vip_features',
+  'yizhen_daozang_public',
+  'yizhen_contact_info',
+  'yizhen_vip_pricing'
+];
 (function(){
   var _origSetItem = localStorage.setItem.bind(localStorage);
   var _syncBusy = false;
   localStorage.setItem = function(key, value) {
     _origSetItem(key, value);
-    // 仅同步管理设置相关键
-    if (!_syncBusy && typeof syncAdminSetting === 'function' && key.indexOf('yizhen_') === 0) {
+    if (!_syncBusy && typeof syncAdminSetting === 'function' && _ADMIN_SYNC_KEYS.indexOf(key) >= 0) {
       _syncBusy = true;
       try { syncAdminSetting(key, value); } catch(e) {}
       _syncBusy = false;

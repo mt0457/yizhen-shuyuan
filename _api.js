@@ -398,29 +398,31 @@ async function initAdminSync() {
   console.log('[AdminSync] 已从云端同步 ' + Object.keys(remote).length + ' 项设置');
 }
 
+/** 仅同步的管理设置白名单 */
+var _ADMIN_SYNC_KEYS_WHITELIST = [
+  'yizhen_admin_password',
+  'yizhen_qrcodes',
+  'yizhen_payment_enabled',
+  'yizhen_vip_features',
+  'yizhen_daozang_public',
+  'yizhen_contact_info',
+  'yizhen_vip_pricing'
+];
+
 /** 收集本地所有管理设置 */
 function collectAdminSettings() {
   var settings = {};
-  var keys = [
-    STORAGE_KEY_ADMIN_PWD,
-    STORAGE_KEY_QRCODES,
-    STORAGE_KEY_PAYMENT_ENABLED,
-    STORAGE_KEY_VIP_FEATURES,
-    STORAGE_KEY_DAOZANG_PUBLIC,
-    STORAGE_KEY_CONTACT_INFO,
-    STORAGE_KEY_VIP_PRICING
-  ];
-  keys.forEach(function(k) {
+  _ADMIN_SYNC_KEYS_WHITELIST.forEach(function(k) {
     var v = localStorage.getItem(k);
     if (v !== null && v !== undefined) settings[k] = v;
   });
   return settings;
 }
 
-/** 将远程设置应用到 localStorage */
+/** 将远程设置应用到 localStorage（仅白名单内的键） */
 function applyRemoteSettings(remote) {
-  Object.keys(remote).forEach(function(k) {
-    if (k.indexOf('yizhen_') === 0) {
+  _ADMIN_SYNC_KEYS_WHITELIST.forEach(function(k) {
+    if (remote[k] !== undefined && remote[k] !== null) {
       localStorage.setItem(k, typeof remote[k] === 'string' ? remote[k] : JSON.stringify(remote[k]));
     }
   });
