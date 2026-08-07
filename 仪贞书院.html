@@ -135,7 +135,7 @@ body{padding-bottom:0}
       <a href="#about" class="nav-link" data-page="about" onclick="navigate('about')">关于本站</a>
       <a href="#vip" class="nav-link" data-page="vip" onclick="navigate('vip')"><span id="vipNavBadge"></span>👑 VIP</a>
       <a href="#admin" class="nav-link" data-page="admin" onclick="if(!isAdmin()){ensureAdmin(function(){navigate('admin');});return;}navigate('admin')" id="adminNavLink">🛡️ 管理</a>
-      <a href="#settings" class="nav-link" data-page="settings" onclick="navigate('settings')">⚙️ 设置</a>
+      <a href="#settings" class="nav-link admin-only" id="settingsNavLink" data-page="settings" onclick="navigate('settings')" style="display:none;">⚙️ 设置</a>
     </nav>
   </div>
 </header>
@@ -397,7 +397,7 @@ body{padding-bottom:0}
         </div>
         <p class="settings-hint">忘记密码？请通过浏览器控制台执行 <code>localStorage.removeItem('yizhen_admin_password')</code> 后刷新页面，密码将恢复为初始值。</p>
         <div style="text-align:right;margin-top:8px;">
-          <button class="btn btn-outline btn-sm" onclick="resetAdminPassword()">恢复默认</button>
+          <button class="btn btn-outline btn-sm" onclick="clearAdminPassword()">恢复默认</button>
           <button class="btn btn-primary btn-sm" style="margin-left:8px;" onclick="changeAdminPassword()">保存密码</button>
         </div>
         <h3 style="margin-top:24px;">🗑️ 缓存管理</h3>
@@ -715,7 +715,7 @@ body{padding-bottom:0}
     <button class="mobile-nav-item" data-mpage="mingli" onclick="navigate('mingli')"><span class="icon">🧭</span><span class="mlabel">探索</span></button>
     <button class="mobile-nav-item" data-mpage="vip" onclick="navigate('vip')"><span class="icon">👑</span><span class="mlabel">VIP</span></button>
     <button class="mobile-nav-item admin-only" data-mpage="admin" onclick="navigate('admin')" style="display:none;"><span class="icon">🛡️</span><span class="mlabel">管理</span></button>
-    <button class="mobile-nav-item" data-mpage="settings" onclick="navigate('settings')"><span class="icon">⚙️</span><span class="mlabel">设置</span></button>
+    <button class="mobile-nav-item admin-only" id="mobileSettingsNav" data-mpage="settings" onclick="navigate('settings')" style="display:none;"><span class="icon">⚙️</span><span class="mlabel">设置</span></button>
   </div>
 </nav>
 
@@ -1422,6 +1422,9 @@ const STORAGE_KEY_VIP_PURCHASES = 'yizhen_vip_purchases';
 const STORAGE_KEY_PURCHASES = 'yizhen_purchases';
 const STORAGE_KEY_VERIFY_CODES = 'yizhen_verify_codes';
 const STORAGE_KEY_ADMIN_PWD = 'yizhen_admin_password';
+const STORAGE_KEY_PENDING_PAYMENTS = 'yizhen_pending_payments';
+const STORAGE_KEY_ACTIVITY_LOG = 'yizhen_activity_log';
+const STORAGE_KEY_LAST_LOGIN = 'yizhen_last_login';
 
 const STORAGE_KEY_VIP_FEATURES = 'yizhen_vip_features';
 function isPaymentEnabled() {
@@ -1435,7 +1438,7 @@ function isVipFeatureEnabled(featureName) {
   return true; // default: VIP required
 }
 function toggleVipFeature(featureName) {
-  var idMap = { bazi: 'vipBaziToggle', naming: 'vipNamingToggle', fengshui: 'vipFengshuiToggle', clothing: 'vipClothingToggle' };
+  var idMap = { bazi: 'vipBaziToggle', naming: 'vipNamingToggle', fengshui: 'vipFengshuiToggle', clothing: 'vipClothingToggle', zengseries: 'vipZengseriesToggle' };
   var el = document.getElementById(idMap[featureName]);
   if (!el) return;
   try {
@@ -1446,7 +1449,7 @@ function toggleVipFeature(featureName) {
   } catch(e) {}
 }
 function initVipFeatureToggles() {
-  var idMap = { bazi: 'vipBaziToggle', naming: 'vipNamingToggle', fengshui: 'vipFengshuiToggle', clothing: 'vipClothingToggle' };
+  var idMap = { bazi: 'vipBaziToggle', naming: 'vipNamingToggle', fengshui: 'vipFengshuiToggle', clothing: 'vipClothingToggle', zengseries: 'vipZengseriesToggle' };
   Object.keys(idMap).forEach(function(f) {
     var el = document.getElementById(idMap[f]);
     if (el) el.checked = isVipFeatureEnabled(f);
@@ -2160,34 +2163,30 @@ function registerUser(username, password, phone, email) {
     phoneVerified, emailVerified
   };
   saveUsers(users);
+  logActivity('register', username, '新用户注册');
   showToast('注册成功，请登录');
   return true;
 }
 
 function loginUser(username, password) {
   if (!username || !password) { showToast('请输入用户名和密码'); return false; }
-  const users = loadUsers();
-  const user = users[username];
+  var users = loadUsers();
+  var user = users[username];
   if (!user) { showToast('用户名不存在'); return false; }
-  const hash = hashPassword(password);
+  var hash = hashPassword(password);
   if (user.password !== hash) { showToast('密码错误'); return false; }
-  const currentUser = { username, vipTier: user.vipTier, vipTierId: user.vipTierId, vipExpiry: user.vipExpiry, createdAt: user.createdAt };
-  saveCurrentUser(currentUser);
-  if (user.vipExpiry && new Date(user.vipExpiry).getTime() < Date.now()) {
-    currentUser.vipTier = 'none';
-    currentUser.vipTierId = null;
-    currentUser.vipExpiry = null;
-    saveCurrentUser(currentUser);
-  }
-  showToast('登录成功');
+  loginUserByName(username, user);
   updateVipBadge();
   if (state.currentPage === 'vip') renderVipPage();
   return true;
 }
 
 function logoutUser() {
+  var username = (state.currentUser && state.currentUser.username) ? state.currentUser.username : '';
   saveCurrentUser(null);
   updateVipBadge();
+  updateAdminNav();
+  if (username) logActivity('logout', username, '退出登录');
   showToast('已退出登录');
   if (state.currentPage === 'vip') renderVipPage();
 }
@@ -2272,6 +2271,9 @@ function doUserLogin() {
 function loginUserByName(username, userData) {
   var u = userData || loadUsers()[username];
   if (!u) return false;
+  // Get last login before updating
+  var lastLogin = u.lastLogin || null;
+
   var currentUser = {
     username: username,
     vipTier: u.vipTier || 'none',
@@ -2285,7 +2287,68 @@ function loginUserByName(username, userData) {
     currentUser.vipTier = 'none'; currentUser.vipTierId = null; currentUser.vipExpiry = null;
     saveCurrentUser(currentUser);
   }
-  showToast('登录成功');
+
+  // Update last login time in users storage
+  u.lastLogin = new Date().toISOString();
+  var users = loadUsers();
+  if (users[username]) { users[username].lastLogin = u.lastLogin; saveUsers(users); }
+
+  // Build personalized welcome message
+  var welcomeMsg = '欢迎回来，'+username+'！';
+  var details = [];
+  // VIP status
+  if (currentUser.vipTier && currentUser.vipTier !== 'none') {
+    var tierNames = {monthly:'月度VIP',quarterly:'季度VIP',semiannual:'半年VIP',annual:'年度VIP'};
+    var tname = tierNames[currentUser.vipTier] || 'VIP会员';
+    var expDate = currentUser.vipExpiry ? new Date(currentUser.vipExpiry).toLocaleDateString('zh-CN') : '';
+    details.push('👑 当前为'+tname+(expDate?'（到期：'+expDate+'）':''));
+  } else {
+    details.push('💡 尚未开通VIP，<a href="#vip" style="color:var(--gold);" onclick="navigate(\'vip\')">点此升级</a>');
+  }
+  // Last login
+  if (lastLogin) {
+    var lastDate = new Date(lastLogin);
+    var now = new Date();
+    var diffDays = Math.floor((now - lastDate) / 86400000);
+    var diffHours = Math.floor((now - lastDate) / 3600000);
+    var timeAgo = diffDays > 0 ? diffDays+'天前' : (diffHours > 0 ? diffHours+'小时前' : '刚刚');
+    details.push('🕐 上次登录：'+lastDate.toLocaleDateString('zh-CN')+' '+lastDate.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})+'（'+timeAgo+'）');
+  } else {
+    details.push('🎉 首次登录，欢迎加入仪贞书院！');
+  }
+  // Check pending payments
+  try {
+    var pending = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+    var userPending = pending.filter(function(p){ return p.username === username && p.status === 'pending'; });
+    if (userPending.length > 0) {
+      details.push('⏳ 您有 '+userPending.length+' 笔VIP支付正在审核中');
+    }
+    var userRejected = pending.filter(function(p){ return p.username === username && p.status === 'rejected'; });
+    if (userRejected.length > 0) {
+      details.push('❌ 有 '+userRejected.length+' 笔支付被拒绝，请联系管理员');
+    }
+  } catch(e) {}
+
+  showToast(welcomeMsg);
+  // Show detailed welcome in a small modal after short delay
+  setTimeout(function(){
+    var detailHtml = '<div style="text-align:center;padding:10px;"><h3 style="margin-bottom:16px;">'+welcomeMsg+'</h3>';
+    details.forEach(function(d){ detailHtml += '<p style="font-size:14px;margin:8px 0;line-height:1.8;">'+d+'</p>'; });
+    detailHtml += '<button class="btn btn-primary btn-sm" style="margin-top:16px;" onclick="document.getElementById(\'welcomeToast\').style.display=\'none\'">知道了</button></div>';
+    var toast = document.getElementById('welcomeToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'welcomeToast';
+      toast.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 40px rgba(0,0,0,0.2);max-width:420px;width:90%;';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = detailHtml;
+    toast.style.display = 'block';
+    // Auto dismiss after 8 seconds
+    setTimeout(function(){ toast.style.display = 'none'; }, 8000);
+  }, 400);
+
+  logActivity('login', username, '登录成功');
   return true;
 }
 
@@ -2944,37 +3007,60 @@ function updateVipBadge() {
 let _vipPurchaseTierId = null;
 function openVipPurchase(tierId) {
   _vipPurchaseTierId = tierId;
-  const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
-  const tier = tiers.find(t => t.id === tierId) || tiers[0];
+  var tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  var tier = tiers.find(function(t){ return t.id === tierId; }) || tiers[0];
   if (!tier) return;
-  const body = document.getElementById('vipPurchaseBody');
-  body.innerHTML = `
-    <div class="vip-purchase-steps">
-      <div class="step active" id="purchaseStep1">
-        <div class="step-num">1</div>
-        <div class="step-label">选择套餐</div>
-        <div class="step-desc">${tier.name} · ¥${tier.price.toFixed(2)}</div>
-      </div>
-      <div class="step" id="purchaseStep2">
-        <div class="step-num">2</div>
-        <div class="step-label">扫码支付</div>
-        <div class="step-desc">微信/支付宝</div>
-      </div>
-    </div>
-    <div id="purchaseStepContent">
-      <div class="vip-qr-code">
-        <p style="margin-bottom:12px;font-weight:600;">请扫描下方收款码支付 <span style="color:var(--red-primary);font-size:18px;">¥${tier.price.toFixed(2)}</span></p>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-          ${getStoredQR('wechat') ? `<div style="text-align:center;"><img src="${getStoredQR('wechat')}" alt="微信收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💚 微信支付</p></div>` : '<div style="padding:20px;border:1px dashed var(--border);border-radius:8px;color:var(--ink-lighter);">微信收款码未设置</div>'}
-          ${getStoredQR('alipay') ? `<div style="text-align:center;"><img src="${getStoredQR('alipay')}" alt="支付宝收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💙 支付宝</p></div>` : ''}
-        </div>
-        ${!getStoredQR('wechat') && !getStoredQR('alipay') ? '<p style="text-align:center;margin-top:12px;color:var(--ink-lighter);font-size:13px;">请先在 <a href="#settings" style="color:var(--gold);" onclick="closeVipPurchase()">设置页面</a> 上传收款码</p>' : ''}
-        <button class="btn btn-primary" style="margin-top:16px;min-width:200px;" onclick="simulateVipPayment()" ${!getStoredQR('wechat') && !getStoredQR('alipay') ? 'disabled' : ''}>我已支付完成</button>
-        <p style="font-size:11px;color:var(--ink-lighter);margin-top:8px;">支付完成后请点击上方按钮，管理员将确认开通</p>
-      </div>
-    </div>`;
+  var hasWechat = !!getStoredQR('wechat');
+  var hasAlipay = !!getStoredQR('alipay');
+  var body = document.getElementById('vipPurchaseBody');
+  body.innerHTML = '<div class="vip-purchase-steps">' +
+    '<div class="step active" id="purchaseStep1"><div class="step-num">1</div><div class="step-label">选择套餐</div><div class="step-desc">'+tier.name+' · ¥'+tier.price.toFixed(2)+'</div></div>' +
+    '<div class="step" id="purchaseStep2"><div class="step-num">2</div><div class="step-label">扫码支付</div><div class="step-desc">微信/支付宝</div></div>' +
+    '<div class="step" id="purchaseStep3"><div class="step-num">3</div><div class="step-label">等待确认</div><div class="step-desc">管理员审核</div></div>' +
+    '</div><div id="purchaseStepContent"><div class="vip-qr-code">' +
+    '<p style="margin-bottom:12px;font-weight:600;">请扫描下方收款码支付 <span style="color:var(--red-primary);font-size:18px;">¥'+tier.price.toFixed(2)+'</span></p>' +
+    '<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">' +
+    (hasWechat ? '<div style="text-align:center;"><img src="'+getStoredQR('wechat')+'" alt="微信收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💚 微信支付</p></div>' : '<div style="padding:20px;border:1px dashed var(--border);border-radius:8px;color:var(--ink-lighter);">微信收款码未设置</div>') +
+    (hasAlipay ? '<div style="text-align:center;"><img src="'+getStoredQR('alipay')+'" alt="支付宝收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💙 支付宝</p></div>' : '') +
+    '</div>' +
+    (!hasWechat && !hasAlipay ? '<p style="text-align:center;margin-top:12px;color:var(--ink-lighter);font-size:13px;">收款码暂未设置，请联系管理员</p>' : '') +
+    '<div style="max-width:320px;margin:16px auto 0;">' +
+    '<label style="font-size:13px;font-weight:600;">📝 付款参考号（选填）</label>' +
+    '<input type="text" id="vipPaymentReference" placeholder="请输入微信/支付宝交易单号后4-6位" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;margin-top:6px;box-sizing:border-box;">' +
+    '<p style="font-size:11px;color:var(--ink-lighter);margin-top:4px;">填写后管理员可更快确认您的付款</p></div>' +
+    '<button class="btn btn-primary" style="margin-top:16px;min-width:200px;" onclick="submitPendingPayment()" '+(state.isLoggedIn?'':'disabled')+'>我已支付，等待管理员确认</button>' +
+    (!state.isLoggedIn ? '<p style="font-size:11px;color:#d9534f;margin-top:8px;">⚠️ 请先登录后再提交</p>' : '<p style="font-size:11px;color:var(--ink-lighter);margin-top:8px;">支付完成后点击上方按钮，管理员确认后即刻开通VIP</p>') +
+    '</div></div>';
   document.getElementById('vipPurchaseModal').classList.add('open');
 }
+
+function submitPendingPayment() {
+  if (!_vipPurchaseTierId) return;
+  var tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
+  var tier = tiers.find(function(t){ return t.id === _vipPurchaseTierId; });
+  if (!tier) return;
+  if (!state.currentUser || !state.currentUser.username) { showToast('请先登录'); closeVipPurchase(); return; }
+  var reference = (document.getElementById('vipPaymentReference') || {}).value || '';
+  var pending = {username: state.currentUser.username, tierId: _vipPurchaseTierId, tierName: tier.name, amount: tier.price, reference: reference, time: new Date().toISOString(), status: 'pending'};
+  try {
+    var list = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+    list.push(pending);
+    localStorage.setItem(STORAGE_KEY_PENDING_PAYMENTS, JSON.stringify(list));
+  } catch(e) {}
+  logActivity('payment_pending', state.currentUser.username, 'VIP购买待确认: '+tier.name+' ¥'+tier.price.toFixed(2)+(reference?' 参考号:'+reference:''));
+  document.getElementById('purchaseStep2').classList.add('active');
+  document.getElementById('purchaseStep3').classList.add('active');
+  var body = document.getElementById('purchaseStepContent');
+  body.innerHTML = '<div style="text-align:center;padding:20px;"><div style="font-size:48px;margin-bottom:12px;">⏳</div>' +
+    '<p style="font-weight:600;margin-bottom:8px;">支付确认中...</p>' +
+    '<p style="font-size:13px;color:var(--ink-lighter);margin-bottom:8px;">'+tier.name+' · ¥'+tier.price.toFixed(2)+' · 用户 '+escHtml(state.currentUser.username)+'</p>' +
+    (reference ? '<p style="font-size:13px;margin-bottom:16px;">付款参考号：<code>'+escHtml(reference)+'</code></p>' : '') +
+    '<p style="font-size:14px;color:var(--gold);margin-bottom:16px;">📩 已提交，请耐心等待管理员确认</p>' +
+    '<p style="font-size:12px;color:var(--ink-lighter);margin-bottom:16px;">管理员确认收款后，VIP权限将自动开通<br>您下次登录时将收到通知</p>' +
+    '<button class="btn btn-outline" onclick="closeVipPurchase()">关闭</button></div>';
+}
+
+function simulateVipPayment() { submitPendingPayment(); }
 
 function closeVipPurchase() {
   document.getElementById('vipPurchaseModal').classList.remove('open');
@@ -3006,39 +3092,8 @@ function simulateVipPayment() {
     </div>`;
 }
 
-function confirmVipPayment() {
-  ensureAdmin(function() {
-    if (!_vipPurchaseTierId) return;
-    const tiers = state.vipPricing.length ? state.vipPricing : DEFAULT_VIP_PRICING;
-    const tier = tiers.find(t => t.id === _vipPurchaseTierId);
-    if (!tier) return;
-    const username = state.currentUser ? state.currentUser.username : null;
-    if (!username) { showToast('用户信息丢失'); return; }
-    const daysMap = { monthly: 30, quarterly: 90, semiannual: 180, annual: 365 };
-    const days = daysMap[_vipPurchaseTierId] || 30;
-    const expiry = new Date(Date.now() + days * 86400000).toISOString();
-    const users = loadUsers();
-    if (!users[username]) { showToast('用户不存在'); return; }
-    users[username].vipExpiry = expiry;
-    users[username].vipTierId = _vipPurchaseTierId;
-    users[username].vipTier = _vipPurchaseTierId;
-    saveUsers(users);
-    state.currentUser.vipExpiry = expiry;
-    state.currentUser.vipTierId = _vipPurchaseTierId;
-    state.currentUser.vipTier = _vipPurchaseTierId;
-    saveCurrentUser(state.currentUser);
-    const purchase = {
-      username, tierId: _vipPurchaseTierId, tierName: tier.name,
-      price: tier.price, date: new Date().toISOString()
-    };
-    state.vipPurchases = [...(state.vipPurchases || []), purchase];
-    saveVipPurchases();
-    showToast('VIP已开通！欢迎成为' + tier.name + '会员');
-    closeVipPurchase();
-    updateVipBadge();
-    renderVipPage();
-  });
-}
+// confirmVipPayment is deprecated — use admin panel Payments tab to approve/reject
+function confirmVipPayment() { submitPendingPayment(); }
 
 function getStoredQR(type) {
   try {
@@ -3379,8 +3434,8 @@ function navigate(page) {
 
   if (page === 'home') renderHomepageFeatured();
   if (page === 'books') renderBooks();
-  if (page === 'videos') { if (!requireVipFor('zengseries')) return; renderVideos(); }
-  if (page === 'settings') { renderQRSettings(); initPaymentToggle(); initDaozangToggle(); initVipFeatureToggles(); renderSettingsContactInfo(); renderMessages(); var vfs=document.getElementById('vipFeatureSettings');if(vfs)vfs.style.display=isAdmin()?'':'none'; }
+  if (page === 'videos') { renderVideos(); }
+  if (page === 'settings') { if (!isAdmin()) { showToast('需要管理员权限'); navigate('home'); return; } renderQRSettings(); initPaymentToggle(); initDaozangToggle(); initVipFeatureToggles(); renderSettingsContactInfo(); renderMessages(); var vfs=document.getElementById('vipFeatureSettings');if(vfs)vfs.style.display=isAdmin()?'':'none'; }
   if (page === 'mingli') { if (!requireVipFor('mingli')) return; renderMingli(); }
   if (page === 'admin') renderAdminDashboard();
   if (page === 'vip') renderVipPage();
@@ -3394,6 +3449,12 @@ function navigate(page) {
   document.getElementById('mainNav').classList.remove('open');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Log page view activity
+  if (page !== 'settings' && page !== 'admin') {
+    var username = (state.currentUser && state.currentUser.username) ? state.currentUser.username : '';
+    logActivity('page_view', username, '浏览页面: '+page);
+  }
 
   setTimeout(function() {
     _navigating = false;
@@ -4057,8 +4118,16 @@ function restoreReaderProgress(bookId) {
 let currentVideoId = null;
 
 function openPlayer(videoId) {
-  const video = state.videos.find(v => v.id === videoId);
+  var video = state.videos.find(function(v){ return v.id === videoId; });
   if (!video) return;
+
+  // zengseries videos: require VIP (or admin)
+  if (video.type === 'zengseries') {
+    if (isAdmin()) { /* admin bypass */ }
+    else if (!isLoggedIn()) { showLoginGate('zengseries'); return; }
+    else if (!isUserVip() && isVipFeatureEnabled('zengseries')) { showVipGate('zengseries'); return; }
+  }
+
   currentVideoId = videoId;
   document.getElementById('playerTitle').textContent = '🎬 ' + video.title;
   document.getElementById('playerVTitle').textContent = video.title;
@@ -7827,6 +7896,7 @@ function submitAdmin() {
     enableDevMode();
     try { localStorage.setItem('yizhen_admin_session', '1'); } catch(e) {}
     logAdminAction('管理员登录');
+    updateAdminNav();
     showAdminIndicator();
     closeAdmin();
     showToast('管理员模式已开启 — 全站权限已解锁');
@@ -7844,6 +7914,7 @@ function adminLogout() {
   try { localStorage.removeItem('yizhen_admin_session'); } catch(e) {}
   hideAdminIndicator();
   logAdminAction('管理员登出');
+  updateAdminNav();
   showToast('已退出管理员模式 — 防复制保护已恢复');
   if (state.currentPage === 'admin') navigate('home');
 }
@@ -7884,12 +7955,48 @@ function clearAdminPassword() {
   document.getElementById('confirmAdminPassword').value = '';
 }
 
+/* ========== Admin Nav Visibility ========== */
+var _adminTab = 'overview';
+function updateAdminNav() {
+  var show = isAdmin() ? '' : 'none';
+  var els = document.querySelectorAll('.admin-only');
+  for (var i = 0; i < els.length; i++) { els[i].style.display = show; }
+}
+
 /* ========== Admin Dashboard ========== */
-function renderAdminDashboard() {
+function renderAdminDashboard(tab) {
   if (!isAdmin()) {
     document.getElementById('adminDashboard').innerHTML = '<div style="text-align:center;padding:60px 20px;"><div style="font-size:48px;">🛡️</div><p style="margin-top:16px;color:var(--ink-lighter);">请先登录管理员</p><button class="btn btn-primary" onclick="ensureAdmin(function(){renderAdminDashboard();})">🔒 管理员登录</button></div>';
     return;
   }
+  updateAdminNav();
+  if (!tab) tab = _adminTab || 'overview';
+  _adminTab = tab;
+
+  var tabs = [
+    {id:'overview',icon:'📊',label:'概览'},
+    {id:'settings',icon:'⚙️',label:'网站设置'},
+    {id:'payments',icon:'💰',label:'支付管理'},
+    {id:'users',icon:'👥',label:'用户管理'}
+  ];
+  var html = '<div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;border-bottom:2px solid var(--border);padding-bottom:0;">';
+  tabs.forEach(function(t){
+    html += '<button onclick="renderAdminDashboard(\''+t.id+'\')" style="padding:10px 18px;border:none;background:'+(tab===t.id?'var(--red-primary)':'transparent')+';color:'+(tab===t.id?'#fff':'var(--ink-lighter)')+';border-radius:8px 8px 0 0;cursor:pointer;font-size:14px;font-weight:'+(tab===t.id?'700':'400')+';">'+t.icon+' '+t.label+'</button>';
+  });
+  html += '<button class="btn btn-sm btn-outline" onclick="adminLogout()" style="margin-left:auto;">🚪 退出</button></div>';
+
+  if (tab === 'overview') html += renderAdminOverview();
+  else if (tab === 'settings') html += renderAdminSettings();
+  else if (tab === 'payments') html += renderAdminPayments();
+  else if (tab === 'users') html += renderAdminUsers();
+
+  document.getElementById('adminDashboard').innerHTML = html;
+  if (tab === 'settings') {
+    setTimeout(function(){ initPaymentToggle(); initDaozangToggle(); initVipFeatureToggles(); renderQRSettings(); renderSettingsContactInfo(); renderMessages(); }, 50);
+  }
+}
+
+function renderAdminOverview() {
   var stats = {};
   stats.books = state.books.filter(function(b){return !b.status||b.status==='approved'}).length;
   stats.pendingBooks = state.books.filter(function(b){return b.status==='pending'}).length;
@@ -7898,25 +8005,171 @@ function renderAdminDashboard() {
   try { stats.users = Object.keys(JSON.parse(localStorage.getItem('yizhen_users')||'{}')).length; } catch(e) { stats.users = 0; }
   stats.covers = state.videos.filter(function(v){return v.cover}).length;
   try { stats.storageKB = (new Blob([JSON.stringify(localStorage)]).size / 1024).toFixed(1); } catch(e) { stats.storageKB = '0'; }
+  try { stats.vipUsers = Object.values(JSON.parse(localStorage.getItem('yizhen_users')||'{}')).filter(function(u){return u.vipTier&&u.vipTier!=='none'}).length; } catch(e) { stats.vipUsers = 0; }
+  try { stats.pendingPayments = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]').filter(function(p){return p.status==='pending'}).length; } catch(e) { stats.pendingPayments = 0; }
 
   var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px;">';
-  [{v:stats.books,i:'📚',l:'经典书籍'},{v:stats.pendingBooks,i:'📋',l:'待审书籍'},{v:stats.videos,i:'🎬',l:'经典视频'},{v:stats.pendingVideos,i:'🎥',l:'待审视频'},{v:stats.users,i:'👥',l:'注册用户'},{v:stats.covers,i:'🖼',l:'自定义封面'},{v:stats.storageKB,i:'💾',l:'存储KB'}].forEach(function(s){
+  [{v:stats.books,i:'📚',l:'经典书籍'},{v:stats.pendingBooks,i:'📋',l:'待审书籍'},{v:stats.videos,i:'🎬',l:'经典视频'},{v:stats.vipUsers,i:'👑',l:'VIP用户'},{v:stats.users,i:'👥',l:'注册用户'},{v:stats.pendingPayments,i:'💳',l:'待处理支付'},{v:stats.covers,i:'🖼',l:'自定义封面'},{v:stats.storageKB,i:'💾',l:'存储KB'}].forEach(function(s){
     html += '<div style="background:#fff;border-radius:12px;padding:18px 14px;box-shadow:var(--shadow);text-align:center;">';
     html += '<div style="font-size:26px;">'+s.i+'</div><div style="font-size:22px;font-weight:700;color:var(--ink);margin:6px 0;">'+s.v+'</div><div style="font-size:11px;color:var(--ink-lighter);">'+s.l+'</div></div>';
   });
   html += '</div>';
 
-  html += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;"><button class="btn btn-sm btn-outline" onclick="adminLogout()">🚪 退出管理员</button></div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
+  html += '<div style="background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);"><h4>📜 操作日志</h4>';
+  var logs = _adminLog.slice(0, 15);
+  if (!logs.length) html += '<p style="color:var(--ink-lighter);">暂无</p>';
+  else logs.forEach(function(l){ html += '<div style="padding:4px 0;border-bottom:1px solid var(--border-light);font-size:12px;"><span style="color:var(--ink-lighter);">'+l.time.slice(0,19).replace('T',' ')+'</span> '+l.action+'</div>'; });
+  html += '</div>';
 
-  var recentLog = _adminLog.slice(0, 10);
-  html += '<h4 style="margin-bottom:10px;">📜 最近操作记录</h4>';
-  if (recentLog.length === 0) { html += '<p style="color:var(--ink-lighter);">暂无记录</p>'; }
-  else {
-    html += '<div style="max-height:260px;overflow-y:auto;background:#fff;border-radius:8px;padding:10px 14px;box-shadow:var(--shadow);">';
-    recentLog.forEach(function(l){ html += '<div style="padding:5px 0;border-bottom:1px solid var(--border-light);font-size:12px;"><span style="color:var(--ink-lighter);">'+l.time.slice(0,19).replace('T',' ')+'</span> <span>'+l.action+'</span></div>'; });
-    html += '</div>';
+  html += '<div style="background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);"><h4>📈 活动日志</h4>';
+  try {
+    var alog = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVITY_LOG)||'[]');
+    var recent = alog.slice(-15).reverse();
+    if (!recent.length) html += '<p style="color:var(--ink-lighter);">暂无</p>';
+    else recent.forEach(function(a){
+      var icon = {login:'🔑',register:'📝',page_view:'👁',vip_purchase:'💳',payment_pending:'⏳',book_read:'📖',feature_use:'🔮',logout:'🚪'}[a.type]||'📌';
+      html += '<div style="padding:4px 0;border-bottom:1px solid var(--border-light);font-size:12px;"><span style="color:var(--ink-lighter);">'+a.time.slice(0,19).replace('T',' ')+'</span> '+icon+' '+(a.username||'访客')+' '+a.detail+'</div>';
+    });
+  } catch(e) { html += '<p style="color:var(--ink-lighter);">加载失败</p>'; }
+  html += '</div></div>';
+
+  return html;
+}
+
+function renderAdminSettings() {
+  var html = '';
+  // WeChat QR
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>💚 微信收款码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的微信个人收款码</p><div class="qr-upload-area"><div class="qr-upload-box" id="wechatQrBox" onclick="document.getElementById(\'wechatQrInput\').click()"><div class="icon">💚</div><div class="label" id="wechatQrLabel">点击上传微信收款码</div><img id="wechatQrPreview" style="display:none;" alt="微信收款码"></div><input type="file" id="wechatQrInput" accept="image/*" style="display:none;" onchange="uploadQR(\'wechat\', this)"><div style="flex:1;min-width:200px;"><ol style="font-size:12px;color:var(--ink-lighter);line-height:2;"><li>打开微信 → 我 → 服务 → 收付款</li><li>选择"二维码收款"，截图保存</li><li>在此上传截图即可</li></ol><button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR(\'wechat\')">清除收款码</button></div></div></div>';
+  // Alipay QR
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>💙 支付宝收款码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的支付宝个人收款码</p><div class="qr-upload-area"><div class="qr-upload-box" id="alipayQrBox" onclick="document.getElementById(\'alipayQrInput\').click()"><div class="icon">💙</div><div class="label" id="alipayQrLabel">点击上传支付宝收款码</div><img id="alipayQrPreview" style="display:none;" alt="支付宝收款码"></div><input type="file" id="alipayQrInput" accept="image/*" style="display:none;" onchange="uploadQR(\'alipay\', this)"><div style="flex:1;min-width:200px;"><ol style="font-size:12px;color:var(--ink-lighter);line-height:2;"><li>打开支付宝 → 首页 → 收钱</li><li>截图保存收款码</li><li>在此上传截图即可</li></ol><button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR(\'alipay\')">清除收款码</button></div></div></div>';
+  // Password
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>🔒 管理密码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">初始密码 <code>yizhen2024</code></p><div class="form-row"><div class="form-group" style="flex:1;"><label>旧密码</label><input type="password" id="oldAdminPassword" placeholder="请输入当前密码" style="width:100%;"></div></div><div class="form-row"><div class="form-group" style="flex:1;"><label>新密码</label><input type="password" id="newAdminPassword" placeholder="请输入新密码（至少6位）" style="width:100%;"></div><div class="form-group" style="flex:1;"><label>确认新密码</label><input type="password" id="confirmAdminPassword" placeholder="请再次输入新密码" style="width:100%;"></div></div><p class="settings-hint">忘记密码？通过控制台执行 <code>localStorage.removeItem(\'yizhen_admin_password\')</code> 后刷新。</p><div style="text-align:right;margin-top:8px;"><button class="btn btn-outline btn-sm" onclick="clearAdminPassword()">恢复默认</button><button class="btn btn-primary btn-sm" style="margin-left:8px;" onclick="changeAdminPassword()">保存密码</button></div>';
+  html += '<h3 style="margin-top:24px;">🗑️ 缓存管理</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">更新后如显示异常，请清除浏览器缓存</p><button class="btn btn-outline btn-sm" onclick="clearAllCache()" style="color:#c0392b;">清除所有缓存并刷新</button></div>';
+  // Payment toggle
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>💰 付费与打赏设置</h3><div class="toggle-row"><span class="toggle-label">启用付费与打赏</span><label class="toggle-switch"><input type="checkbox" id="paymentToggle" onchange="togglePaymentEnabled()" checked><span class="toggle-slider"></span></label></div></div>';
+  // Daozang toggle
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>📜 道藏开放设置</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">关闭后仅在管理员登录状态下可见</p><div class="toggle-row"><span class="toggle-label">对外开放道藏</span><label class="toggle-switch"><input type="checkbox" id="daozangPublicToggle" onchange="toggleDaozangPublic()" checked><span class="toggle-slider"></span></label></div><p id="daozangStatus" style="font-size:12px;color:var(--ink-lighter);margin-top:8px;">当前：道藏600部已对外开放</p></div>';
+  // VIP features
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>🔓 VIP功能开放设置</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">关闭后该功能免费开放</p>';
+  [{id:'bazi',n:'📅 八字排盘'},{id:'naming',n:'📛 周易取名'},{id:'fengshui',n:'🏡 风水布局'},{id:'clothing',n:'👗 穿衣搭配'},{id:'zengseries',n:'🎬 曾仕强视频'}].forEach(function(f){
+    html += '<div class="toggle-row"><span class="toggle-label">'+f.n+' — 需要VIP</span><label class="toggle-switch"><input type="checkbox" id="vipFeature_'+f.id+'" onchange="toggleVipFeature(\''+f.id+'\')" checked><span class="toggle-slider"></span></label></div>';
+  });
+  html += '</div>';
+  // Contact
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>📞 客服联系方式</h3><div class="form-row"><div class="form-group" style="flex:1;"><label>微信号</label><input type="text" id="contactWechat" placeholder="微信号" style="width:100%;"></div><div class="form-group" style="flex:1;"><label>邮箱</label><input type="text" id="contactEmail" placeholder="邮箱地址" style="width:100%;"></div></div><div class="form-row"><div class="form-group" style="flex:1;"><label>手机号</label><input type="text" id="contactPhone" placeholder="手机号" style="width:100%;"></div><div class="form-group" style="flex:1;"><label>其他说明</label><input type="text" id="contactOther" placeholder="其他联系方式" style="width:100%;"></div></div><div style="text-align:right;margin-top:8px;"><button class="btn btn-primary btn-sm" onclick="saveContactInfoSettings()">保存联系方式</button></div></div>';
+  // Messages
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;box-shadow:var(--shadow);"><h3>💬 用户留言</h3><div id="messageList"></div></div>';
+  return html;
+}
+
+function renderAdminPayments() {
+  var html = '';
+  try {
+    var pending = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+    if (!pending.length) {
+      html += '<div style="text-align:center;padding:40px;background:#fff;border-radius:12px;"><p style="font-size:48px;">✅</p><p style="color:var(--ink-lighter);">暂无待处理支付</p></div>';
+    } else {
+      html += '<div style="display:flex;gap:10px;margin-bottom:16px;">';
+      html += '<button class="btn btn-sm '+(true?'btn-primary':'')+'" onclick="renderAdminDashboard(\'payments\')">⏳ 待处理 ('+pending.filter(function(p){return p.status==='pending'}).length+')</button>';
+      html += '<button class="btn btn-sm btn-outline">✅ 已处理</button></div>';
+      pending.forEach(function(p, i){
+        var bg = p.status==='pending'?'#fffbf0':'#f8f8f8';
+        var badge = p.status==='pending'?'<span style="background:#f0ad4e;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">待确认</span>':(p.status==='confirmed'?'<span style="background:#5cb85c;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">已开通</span>':'<span style="background:#d9534f;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">已拒绝</span>');
+        html += '<div style="background:'+bg+';border-radius:12px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow);">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+        html += '<div><strong>'+p.username+'</strong> · '+p.tierName+' · ¥'+p.amount.toFixed(2)+' '+badge+'</div>';
+        html += '<div style="font-size:12px;color:var(--ink-lighter);">'+p.time.slice(0,19).replace('T',' ')+'</div></div>';
+        if (p.reference) html += '<div style="font-size:12px;margin-top:4px;">付款参考号：<code>'+p.reference+'</code></div>';
+        if (p.status === 'pending') {
+          html += '<div style="margin-top:10px;display:flex;gap:8px;">';
+          html += '<button class="btn btn-primary btn-sm" onclick="approvePayment('+i+')">✅ 确认开通VIP</button>';
+          html += '<button class="btn btn-outline btn-sm" onclick="rejectPayment('+i+')" style="color:#d9534f;">❌ 拒绝</button></div>';
+        }
+        html += '</div>';
+      });
+    }
+  } catch(e) { html += '<p>加载失败</p>'; }
+  return html;
+}
+
+function renderAdminUsers() {
+  var html = '';
+  try {
+    var users = JSON.parse(localStorage.getItem('yizhen_users')||'{}');
+    var names = Object.keys(users);
+    if (!names.length) {
+      html += '<div style="text-align:center;padding:40px;background:#fff;border-radius:12px;"><p style="font-size:48px;">👥</p><p style="color:var(--ink-lighter);">暂无注册用户</p></div>';
+    } else {
+      html += '<p style="margin-bottom:12px;">共 <strong>'+names.length+'</strong> 名用户</p>';
+      names.sort(function(a,b){ return (users[b].createdAt||'').localeCompare(users[a].createdAt||''); });
+      names.forEach(function(name){
+        var u = users[name];
+        var vipBadge = (u.vipTier&&u.vipTier!=='none') ? '<span style="color:#c9a96e;">👑 VIP</span>' : '<span style="color:var(--ink-lighter);">普通用户</span>';
+        var created = u.createdAt ? u.createdAt.slice(0,10) : '未知';
+        html += '<div style="background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;">';
+        html += '<div><strong>'+name+'</strong> <span style="font-size:12px;color:var(--ink-lighter);">'+created+'</span></div>';
+        html += '<div style="display:flex;gap:8px;align-items:center;">'+vipBadge+'</div></div>';
+      });
+    }
+  } catch(e) { html += '<p>加载失败</p>'; }
+  return html;
+}
+
+/* ========== Payment Approval ========== */
+function approvePayment(index) {
+  var pending = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+  if (index < 0 || index >= pending.length) return;
+  var p = pending[index];
+  if (p.status !== 'pending') return;
+  pending[index].status = 'confirmed';
+  pending[index].confirmedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY_PENDING_PAYMENTS, JSON.stringify(pending));
+  // Grant VIP
+  var users = JSON.parse(localStorage.getItem('yizhen_users')||'{}');
+  if (users[p.username]) {
+    var daysMap = {monthly:30,quarterly:90,semiannual:180,annual:365};
+    var days = daysMap[p.tierId] || 30;
+    users[p.username].vipTier = p.tierId;
+    users[p.username].vipTierId = p.tierId;
+    users[p.username].vipExpiry = new Date(Date.now() + days*86400000).toISOString();
+    localStorage.setItem('yizhen_users', JSON.stringify(users));
+    // Update current user if same
+    if (state.currentUser && state.currentUser.username === p.username) {
+      state.currentUser.vipTier = p.tierId;
+      state.currentUser.vipTierId = p.tierId;
+      state.currentUser.vipExpiry = users[p.username].vipExpiry;
+      saveCurrentUser(state.currentUser);
+    }
   }
-  document.getElementById('adminDashboard').innerHTML = html;
+  logAdminAction('确认VIP支付: '+p.username+' '+p.tierName);
+  logActivity('vip_purchase', p.username, 'VIP开通: '+p.tierName+' ¥'+p.amount.toFixed(2));
+  showToast('✅ 已为 '+p.username+' 开通VIP');
+  renderAdminDashboard('payments');
+  updateVipBadge();
+}
+
+function rejectPayment(index) {
+  var pending = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+  if (index < 0 || index >= pending.length) return;
+  var p = pending[index];
+  if (p.status !== 'pending') return;
+  pending[index].status = 'rejected';
+  pending[index].rejectedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY_PENDING_PAYMENTS, JSON.stringify(pending));
+  logAdminAction('拒绝VIP支付: '+p.username);
+  showToast('已拒绝 '+p.username+' 的支付申请');
+  renderAdminDashboard('payments');
+}
+
+/* ========== Activity Log ========== */
+function logActivity(type, username, detail) {
+  try {
+    var log = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVITY_LOG)||'[]');
+    log.push({time: new Date().toISOString(), type: type, username: username||'', detail: detail||''});
+    if (log.length > 500) log = log.slice(-500);
+    localStorage.setItem(STORAGE_KEY_ACTIVITY_LOG, JSON.stringify(log));
+  } catch(e) {}
 }/* ========== Settings: Payment Toggle ========== */
 function togglePaymentEnabled() {
   const enabled = document.getElementById('paymentToggle').checked;
