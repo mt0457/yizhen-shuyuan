@@ -14,6 +14,7 @@ mkdir -p "$DEPLOY_TMP"
 tar -czf /tmp/yizhen-deploy.tar.gz \
   --exclude='.git' \
   --exclude='曾仕强（视频）' \
+  --exclude='_update_videos.py' \
   --exclude='node_modules' \
   --exclude='.claude' \
   --exclude='*.bak' \
