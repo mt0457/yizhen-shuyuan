@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-Sitemap: https://yizhenshuyuan.com/sitemap.xml
+Sitemap: https://yizhenshuyuan.xyz/sitemap.xml
+
+# Crawl-delay for Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+Sitemap: https://yizhenshuyuan.xyz/sitemap.xml
+
+# Crawl-delay for Google
+User-agent: Googlebot
+Allow: /
+Sitemap: https://yizhenshuyuan.xyz/sitemap.xml
