@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>曾仕强《胡雪岩的启示》15集</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      color: #1f2933;
+      background: #f5f7fa;
+    }
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .note {
+      font-size: 13px;
+      color: #52606d;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+    nav {
+      overflow: auto;
+      padding: 14px;
+      background: #ffffff;
+      border-right: 1px solid #d9e2ec;
+    }
+    button {
+      width: 100%;
+      min-height: 48px;
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border: 1px solid #bcccdc;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #243b53;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    button:hover,
+    button.active {
+      border-color: #2f80ed;
+      background: #eef5ff;
+      color: #102a43;
+    }
+    .viewer {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #eef2f7;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: 8px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+      gap: 12px;
+    }
+    #currentTitle {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    a:hover { text-decoration: underline; }
+    .panel {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      min-height: 420px;
+      padding: 24px;
+      text-align: center;
+      background: #ffffff;
+    }
+    .panel p {
+      max-width: 620px;
+      margin: 0 0 18px;
+      color: #52606d;
+      line-height: 1.7;
+    }
+    .primary {
+      width: auto;
+      min-width: 220px;
+      padding: 12px 18px;
+      border-color: #1a73e8;
+      background: #1a73e8;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+    }
+    .primary:hover {
+      background: #1558b0;
+      color: #ffffff;
+    }
+    @media (max-width: 820px) {
+      header {
+        height: auto;
+        min-height: 64px;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 14px;
+        gap: 4px;
+      }
+      main {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      nav {
+        max-height: 290px;
+        border-right: 0;
+        border-bottom: 1px solid #d9e2ec;
+      }
+      .bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>曾仕强《胡雪岩的启示》15集</h1>
+    <div class="note">本地目录文件，播放加载央视官方页面，需要联网。</div>
+  </header>
+  <main>
+    <nav id="playlist"></nav>
+    <section class="viewer">
+      <div class="bar">
+        <span id="currentTitle"></span>
+        <a id="openLink" href="#" target="_blank" rel="noopener">在浏览器新窗口打开</a>
+      </div>
+      <div class="panel">
+        <p>央视页面通常不允许嵌入本地文件内播放。请选择左侧集数，然后点击下方按钮在浏览器新窗口打开官方播放页。</p>
+        <button id="openButton" class="primary" type="button">打开当前集</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    const episodes = [
+      ["01 胡雪岩的启示（一）德行定终身", "https://tv.cctv.com/2012/10/18/VIDETP3IKcCSSjO5pVJHOJdg121018.shtml"],
+      ["02 胡雪岩的启示（二）诚信为本", "https://tv.cctv.com/2012/10/18/VIDEDhK9Oj9dXNyEiQjtIxwb121018.shtml"],
+      ["03 胡雪岩的启示（三）随机应变", "https://tv.cctv.com/2012/10/18/VIDERQK4PRDkQ7PKccgnBgJL121018.shtml"],
+      ["04 胡雪岩的启示（四）患难见真情", "https://tv.cctv.com/2012/10/18/VIDEGHqmIaGlQ8azXbkKtC7R121018.shtml"],
+      ["05 胡雪岩的启示（五）福祸相依", "https://tv.cctv.com/2012/10/18/VIDEKPeZAE4pfGk5vQYs7bUf121018.shtml"],
+      ["06 胡雪岩的启示（六）重在朋友", "https://tv.cctv.com/2012/10/18/VIDExGV8ayjUtyRXMFhF8iv8121018.shtml"],
+      ["07 胡雪岩的启示（七）以诚取信", "https://tv.cctv.com/2012/10/18/VIDEEuDEZvwSeyzyE0dhfS8D121018.shtml"],
+      ["08 胡雪岩的启示（八）大意留祸根", "https://tv.cctv.com/2012/10/18/VIDEPBsDd6R9MZQUUpd1MUAw121018.shtml"],
+      ["09 胡雪岩的启示（九）为富要仁", "https://tv.cctv.com/2012/10/18/VIDEx4AjzqmJpwyR2ckhLucM121018.shtml"],
+      ["10 胡雪岩的启示（十）先义后利", "https://tv.cctv.com/2012/10/18/VIDE89t1jNDYUOMw3TSto4cM121018.shtml"],
+      ["11 胡雪岩的启示（十一）盛名难副", "https://tv.cctv.com/2012/10/18/VIDE6pM3V0DnZZl16dTJ4rOr121018.shtml"],
+      ["12 胡雪岩的启示（十二）德业传百年", "https://tv.cctv.com/2012/10/18/VIDESldYl2UmkfLPwg27Nq6l121018.shtml"],
+      ["13 胡雪岩的启示（十三）阴沟能翻船", "https://tv.cctv.com/2012/10/18/VIDEkJpXleYOPlQmWOb70Qeq121018.shtml"],
+      ["14 胡雪岩的启示（十四）冷静收残局", "https://tv.cctv.com/2012/10/18/VIDEnaKBUA0bCWP0eRRAeIdd121018.shtml"],
+      ["15 胡雪岩的启示（十五）自作自受", "https://tv.cctv.com/2012/10/18/VIDE1m9Yqs38NR5rC3SDYJkK121018.shtml"]
+    ];
+
+    const playlist = document.getElementById("playlist");
+    const currentTitle = document.getElementById("currentTitle");
+    const openLink = document.getElementById("openLink");
+    const openButton = document.getElementById("openButton");
+    const buttons = [];
+    let currentUrl = "";
+
+    function loadEpisode(index) {
+      const [title, url] = episodes[index];
+      currentTitle.textContent = title;
+      openLink.href = url;
+      currentUrl = url;
+      buttons.forEach((button, i) => button.classList.toggle("active", i === index));
+    }
+
+    episodes.forEach(([title], index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = title;
+      button.addEventListener("click", () => loadEpisode(index));
+      playlist.appendChild(button);
+      buttons.push(button);
+    });
+
+    loadEpisode(0);
+    openButton.addEventListener("click", () => {
+      window.open(currentUrl, "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>

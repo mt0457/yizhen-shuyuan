@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>导出封面</title></head>
+<body style="font-family:sans-serif;padding:40px;text-align:center;">
+<h2>📤 封面数据导出</h2>
+<p id="status">正在读取 localStorage...</p>
+<button id="btn" onclick="doExport()" style="padding:12px 32px;font-size:16px;cursor:pointer;">📥 点击下载 _covers.js</button>
+<script>
+var btn=document.getElementById('btn'), st=document.getElementById('status');
+function doExport(){
+  var raw=localStorage.getItem('yizhen_videos');
+  if(!raw){ st.innerText='❌ 未找到视频数据。请先在仪贞书院页面确认封面已上传。'; return; }
+  try{
+    var videos=JSON.parse(raw);
+    var covers={};
+    videos.forEach(function(v){ if(v.cover) covers[v.id]=v.cover; });
+    var count=Object.keys(covers).length;
+    if(!count){ st.innerText='❌ 没有找到封面数据。'; return; }
+    var js='var COVERS_DATA = '+JSON.stringify(covers,null,2)+';\n';
+    var blob=new Blob([js],{type:'application/javascript'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='_covers.js'; a.click();
+    st.innerText='✅ 已下载 _covers.js（'+count+'个封面）！请将文件拖入项目目录。';
+  }catch(e){ st.innerText='❌ 解析失败: '+e.message; }
+}
+// Auto-detect
+var raw=localStorage.getItem('yizhen_videos');
+if(raw){
+  try{ var v=JSON.parse(raw); var c=0; v.forEach(function(x){if(x.cover)c++;});
+    st.innerText='✅ 检测到 '+v.length+' 个视频，'+c+' 个有封面。点击下方按钮导出。';
+  }catch(e){}
+} else {
+  st.innerText='⚠️ 此页面需与仪贞书院同域名打开。请将此文件复制到仪贞书院项目目录，用浏览器打开。';
+}
+</script>
+</body></html>

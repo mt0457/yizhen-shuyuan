@@ -1,11 +1,11 @@
 // Service Worker for 仪贞书院
-const CACHE_NAME = 'yizhen-v226';
+const CACHE_NAME = 'yizhen-v510';
 const ASSETS = [
   './',
   './index.html',
   './仪贞书院.html',
   './styles.css',
-  './favicon.ico',
+  './favicon.svg',
   './_covers.js',
   './_zhouyi.js',
   './_daodejing.js',
@@ -169,7 +169,7 @@ const ASSETS = [
   './_chengyi_zhouyichengshizhuan.js',
   './_shaoyong_huangjijingshi.js',
   './_zhuzhen_hanshangyizhuan.js',
-  './_zhuxi_zhouyibenji.js',
+  './_zhuxi_zhouyibenyi.js',
   './_yangwanli_chengzhaiyizhuan.js',
   './_wangfuzhi_zhouyiwaizhuan.js',
   './_wangfuzhi_zhouyineizhuan.js',
@@ -241,6 +241,11 @@ self.addEventListener('fetch', function(event) {
   // Skip browser-sync and chrome-extension
   if (url.pathname.indexOf('browser-sync') !== -1) return;
   if (url.protocol === 'chrome-extension:') return;
+
+  // Skip Supabase API calls (don't cache auth/database requests)
+  if (url.hostname.endsWith('.supabase.co')) return;
+  // Skip CDN script updates (let browser cache handle them)
+  if (url.hostname === 'cdn.jsdelivr.net') return;
 
   // HTML: network first, fallback to cache
   if (event.request.headers.get('accept') && event.request.headers.get('accept').indexOf('text/html') !== -1) {

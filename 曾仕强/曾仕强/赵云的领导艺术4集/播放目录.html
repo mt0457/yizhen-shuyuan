@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>曾仕强《赵云的领导艺术》4集</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;font-family:"Microsoft YaHei","Segoe UI",Arial,sans-serif;color:#1f2933;background:#f5f7fa}header{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:#fff;border-bottom:1px solid #d9e2ec}h1{margin:0;font-size:20px}.note{font-size:13px;color:#52606d}main{display:grid;grid-template-columns:360px 1fr;min-height:calc(100vh - 64px)}nav{overflow:auto;padding:14px;background:#fff;border-right:1px solid #d9e2ec}button{width:100%;min-height:48px;margin:0 0 8px;padding:8px 10px;border:1px solid #bcccdc;border-radius:6px;background:#fff;color:#243b53;text-align:left;font-size:14px;line-height:1.45;cursor:pointer}button:hover,button.active{border-color:#2f80ed;background:#eef5ff;color:#102a43}.viewer{display:flex;flex-direction:column;min-width:0;background:#eef2f7}.bar{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:8px 14px;background:#fff;border-bottom:1px solid #d9e2ec;gap:12px}#currentTitle{font-weight:700;font-size:15px}a{color:#1a73e8;text-decoration:none;white-space:nowrap;font-size:14px}a:hover{text-decoration:underline}.panel{display:grid;align-content:center;justify-items:center;min-height:420px;padding:24px;text-align:center;background:#fff}.panel p{max-width:620px;margin:0 0 18px;color:#52606d;line-height:1.7}.primary{width:auto;min-width:220px;padding:12px 18px;border-color:#1a73e8;background:#1a73e8;color:#fff;text-align:center;font-weight:700}.primary:hover{background:#1558b0;color:#fff}@media(max-width:820px){header{align-items:flex-start;flex-direction:column}main{grid-template-columns:1fr}nav{max-height:290px;border-right:0;border-bottom:1px solid #d9e2ec}.bar{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>曾仕强《赵云的领导艺术》4集</h1>
+    <div class="note">本地目录文件，播放加载B站公开视频页面，需要联网。</div>
+  </header>
+  <main>
+    <nav id="playlist"></nav>
+    <section class="viewer">
+      <div class="bar"><span id="currentTitle"></span><a id="openLink" href="#" target="_blank" rel="noopener">在浏览器新窗口打开</a></div>
+      <div class="panel"><p>B站页面通常不允许嵌入本地文件内播放。请选择左侧集数，然后点击下方按钮在浏览器新窗口打开公开视频页。</p><button id="openButton" class="primary" type="button">打开当前集</button></div>
+    </section>
+  </main>
+  <script>
+    const episodes = [
+      ["01 赵云的领导艺术 01上", "https://www.bilibili.com/video/BV164766ZEWf?p=13"],
+      ["02 赵云的领导艺术 01下", "https://www.bilibili.com/video/BV164766ZEWf?p=14"],
+      ["03 赵云的领导艺术 02上", "https://www.bilibili.com/video/BV164766ZEWf?p=15"],
+      ["04 赵云的领导艺术 02下", "https://www.bilibili.com/video/BV164766ZEWf?p=16"]
+    ];
+    const playlist=document.getElementById("playlist"),currentTitle=document.getElementById("currentTitle"),openLink=document.getElementById("openLink"),openButton=document.getElementById("openButton"),buttons=[];let currentUrl="";
+    function loadEpisode(index){const[title,url]=episodes[index];currentTitle.textContent=title;openLink.href=url;currentUrl=url;buttons.forEach((button,i)=>button.classList.toggle("active",i===index))}
+    episodes.forEach(([title],index)=>{const button=document.createElement("button");button.type="button";button.textContent=title;button.addEventListener("click",()=>loadEpisode(index));playlist.appendChild(button);buttons.push(button)});
+    loadEpisode(0);openButton.addEventListener("click",()=>window.open(currentUrl,"_blank","noopener"));
+  </script>
+</body>
+</html>

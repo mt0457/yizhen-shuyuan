@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据迁移 — 仪贞书院</title>
+<style>
+  body { font-family: 'Noto Sans SC', sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f8f4ed; }
+  h1 { color: #b5343a; text-align: center; }
+  .card { background: #fff; border-radius: 12px; padding: 24px; margin: 16px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .btn { display: inline-block; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; margin: 4px; }
+  .btn-gold { background: #c9a96e; color: #fff; }
+  .btn-outline { background: none; border: 1px solid #ccc; }
+  .btn-danger { background: #c0392b; color: #fff; }
+  .log { background: #1a1a2e; color: #4caf50; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
+  .warn { background: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 8px; margin: 12px 0; }
+</style>
+</head>
+<body>
+<h1>📦 数据迁移工具</h1>
+<p style="text-align:center;color:#666;">将本地 localStorage 数据迁移到 Supabase 云端</p>
+
+<div class="warn">
+  ⚠️ <strong>注意：</strong>迁移前请确保已在 Supabase 中创建了数据表和 RLS 策略（参考 SUPABASE_SETUP.md）。<br>
+  迁移不会删除本地数据，安全可回退。
+</div>
+
+<div class="card">
+  <h3>第1步：检查本地数据</h3>
+  <button class="btn btn-outline" onclick="scanLocalData()">扫描本地数据</button>
+  <div id="scanResult" style="margin-top:12px;font-size:13px;"></div>
+</div>
+
+<div class="card">
+  <h3>第2步：登录 Supabase 账号</h3>
+  <p style="font-size:13px;color:#666;">请用和之前相同的用户名注册（使用注册时的手机号获取验证码）。如果你之前未注册过，请先在网站中注册。</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <input type="text" id="migUsername" placeholder="用户名" style="flex:1;padding:8px;border:1px solid #ccc;border-radius:6px;">
+    <input type="password" id="migPassword" placeholder="密码" style="flex:1;padding:8px;border:1px solid #ccc;border-radius:6px;">
+  </div>
+  <button class="btn btn-gold" style="margin-top:8px;" onclick="doMigrateLogin()">注册并登录 Supabase</button>
+  <p id="migLoginMsg" style="font-size:12px;color:#c0392b;margin-top:4px;"></p>
+</div>
+
+<div class="card">
+  <h3>第3步：执行迁移</h3>
+  <button class="btn btn-gold" onclick="doMigrate()">开始迁移数据</button>
+  <button class="btn btn-danger" onclick="clearLocalData()" style="margin-left:8px;">清除本地旧数据（迁移后执行）</button>
+  <div class="log" id="migLog"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPABASE_URL = 'https://hzvpcvgryumkxtzeiefx.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_JLkCymr-_2uCFGHO6zuJkA_UomYeyS_';
+var supabase = null;
+
+function initSupabase() {
+  if (supabase) return true;
+  if (SUPABASE_URL.indexOf('YOUR_PROJECT_ID') > -1) { log('❌ 请先配置 SUPABASE_URL 和 SUPABASE_ANON_KEY'); return false; }
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return true;
+}
+
+function log(msg) {
+  var el = document.getElementById('migLog');
+  el.textContent += '[' + new Date().toLocaleTimeString() + '] ' + msg + '\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+function scanLocalData() {
+  var result = [];
+  var keys = ['yizhen_users','yizhen_current_user','yizhen_vip_purchases','yizhen_comments','yizhen_reader_prefs','yizhen_messages','yizhen_contact_info','yizhen_theme','yizhen_qrcodes'];
+  keys.forEach(function(k) {
+    var v = localStorage.getItem(k);
+    if (v) {
+      try { var d = JSON.parse(v); result.push('✅ ' + k + ': ' + (Array.isArray(d) ? d.length + '条' : typeof d === 'object' ? Object.keys(d).length + '项' : '有数据')); }
+      catch(e) { result.push('✅ ' + k + ': ' + v.length + '字符'); }
+    } else {
+      result.push('❌ ' + k + ': 无数据');
+    }
+  });
+  document.getElementById('scanResult').innerHTML = result.join('<br>');
+}
+
+async function doMigrateLogin() {
+  if (!initSupabase()) return;
+  var username = document.getElementById('migUsername').value.trim();
+  var password = document.getElementById('migPassword').value;
+  var msg = document.getElementById('migLoginMsg');
+  if (!username || !password) { msg.textContent = '请输入用户名和密码'; return; }
+
+  // 尝试登录
+  var users = JSON.parse(localStorage.getItem('yizhen_users') || '{}');
+  var phone = (users[username] && users[username].phone) || '00000000000';
+  var email = username.toLowerCase() + '_' + phone + '@yizhen.user';
+
+  var res = await supabase.auth.signInWithPassword({ email: email, password: password });
+  if (res.error) {
+    // 登录失败，尝试注册
+    log('登录失败，尝试注册新账号...');
+    var signUpRes = await supabase.auth.signUp({
+      email: email, password: password,
+      options: { data: { username: username, phone: phone } }
+    });
+    if (signUpRes.error) { msg.textContent = '注册失败: ' + signUpRes.error.message; return; }
+    log('✅ Supabase 账号已创建: ' + username);
+    // 更新 profiles 表
+    await supabase.from('profiles').update({ username: username, phone: phone }).eq('id', signUpRes.data.user.id);
+  } else {
+    log('✅ 登录成功: ' + username);
+  }
+  msg.textContent = '✅ 已登录 Supabase，可以开始迁移数据';
+  msg.style.color = '#4caf50';
+}
+
+async function doMigrate() {
+  if (!initSupabase()) return;
+  var session = await supabase.auth.getSession();
+  if (!session.data.session) { log('❌ 请先登录 Supabase（第2步）'); return; }
+  var userId = session.data.session.user.id;
+
+  log('开始迁移数据...');
+
+  // 迁移评论
+  var comments = JSON.parse(localStorage.getItem('yizhen_comments') || '{}');
+  var commentCount = 0;
+  for (var bookId in comments) {
+    for (var i = 0; i < comments[bookId].length; i++) {
+      var c = comments[bookId][i];
+      var res = await supabase.from('comments').insert({
+        user_id: userId, book_id: bookId, content: c.text || c.content, created_at: c.time || c.created_at
+      });
+      if (!res.error) commentCount++;
+    }
+  }
+  log('✅ 评论: ' + commentCount + ' 条');
+
+  // 迁移阅读偏好
+  var prefs = JSON.parse(localStorage.getItem('yizhen_reader_prefs') || '{}');
+  if (Object.keys(prefs).length > 0) {
+    await supabase.from('reader_prefs').upsert({ user_id: userId, prefs: prefs, updated_at: new Date().toISOString() });
+    log('✅ 阅读偏好已迁移');
+  }
+
+  // 迁移留言
+  var messages = JSON.parse(localStorage.getItem('yizhen_messages') || '[]');
+  var msgCount = 0;
+  for (var i = 0; i < messages.length; i++) {
+    var m = messages[i];
+    var res = await supabase.from('contact_messages').insert({
+      user_id: userId, message: m.content || m.message, read: m.read || false, created_at: m.time || m.created_at
+    });
+    if (!res.error) msgCount++;
+  }
+  log('✅ 留言: ' + msgCount + ' 条');
+
+  log('🎉 数据迁移完成！');
+}
+
+function clearLocalData() {
+  if (!confirm('确定清除本地旧数据吗？此操作不可撤销。建议先确认迁移成功。')) return;
+  var keys = ['yizhen_users','yizhen_current_user','yizhen_vip_purchases','yizhen_comments','yizhen_reader_prefs','yizhen_messages','yizhen_verify_codes'];
+  keys.forEach(function(k) { localStorage.removeItem(k); });
+  log('✅ 旧数据已清除');
+  scanLocalData();
+}
+</script>
+</body>
+</html>

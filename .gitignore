@@ -8,9 +8,31 @@ _batch_expand.js
 _build_*.js
 _check_books.js
 _expand_*.js
+_gen_*.js
+_gen_*.py
+_build_*.py
+
+# 80GB original videos (B站外链替代)
+曾仕强（视频）/
+
+# Supabase/Python test scripts
+_supabase_setup.js
+test_*.js
+test_*.html
+test_*.py
+*.ps1
+
+# OSS tools
+ossutil64.exe
 
 # Duplicate directories
 仪贞/
+
+# Node
+node_modules/
+
+# Claude
+.claude/
 
 # OS files
 Thumbs.db
@@ -22,3 +44,8 @@ Desktop.ini
 .idea/
 *.swp
 *.swo
+*.bak
+
+# Deployment docs (keep only in memory)
+ALIYUN_DEPLOY.md
+SUPABASE_TUTORIAL.md

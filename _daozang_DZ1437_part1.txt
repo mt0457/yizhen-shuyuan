@@ -1,0 +1,11 @@
+var DZ1437=`<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
+
+<h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上正一太上三洞表奏</h1>
+<p style="text-align:center;color:#666;margin-bottom:20px;">三天法师正一真人授 · 正一部威仪类 · 明正统道藏第1437部</p>
+
+<div style="background:#faf7f2;padding:24px;border-radius:8px;margin-bottom:28px;border-left:5px solid #c9a96e;">
+<p style="margin:0;font-size:16px;"><b>提要</b></p>
+<p style="margin:8px 0 0 0;line-height:2;">《太上正一太上三洞表奏》，简称《三洞表奏》，道教正一派上章拜表之根本科仪经典，位列明《正统道藏》正一部威仪类第1437部。此书由三天法师正一真人（即祖天师张道陵）所受太上老君之教敕而传世，系统阐述正一道士向三洞天尊、三界诸神呈递表文奏章之完整仪轨。所谓"表"者，表章也，以下达上之文书也，道士为自身或为斋主（祈福者）向天界神真陈述事由、祈求恩泽之正式公文；所谓"奏"者，奏告也，以音声诵念与焚化飞升相结合之方式将表文送达天曹。三洞者——洞真部上清天、洞玄部灵宝天、洞神部三皇天——为道教宇宙观中三清道祖所居之最高三重天境，一切表奏最终皆须通过三洞天门呈递至三清御前。全书分十卷：卷一论表奏之源流与神学基础，卷二论三洞天门之职司与表奏呈递路径，卷三论正一表奏之科仪程式与法服法器，卷四论各类表文之格式范本——祈福表、禳灾表、度亡表、谢恩表、忏悔表、三洞总表等，卷五论上章拜表之存思秘法，卷六论表奏之灵验感应事迹，卷七论表奏之禁忌与注意事项，卷八论表奏与内丹符箓之内在关联，卷九论历代注疏与文献传承，卷十论当代道士行持指南。此书为历代正一道士必习之科仪经典——正一道士每日之早晚功课、每月之朔望朝真、每年之三元大醮、遇事之专坛表奏，无不以此书为法式准绳。自汉末天师道初创至于明清乃至今日，正一道士凡有表奏之事，皆遵此经之仪轨而行，其法脉传承一千八百余年未尝中断。</p>
+</div>
+
+<h2 style="color:#8b1a1a;border-bottom:2px solid #e8ddd0;padding-bottom:8px;font-size:22px;">卷一 · 经教源流——表奏之原始与传承</h2>

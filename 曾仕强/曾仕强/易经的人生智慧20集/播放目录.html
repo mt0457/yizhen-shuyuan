@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>曾仕强《易经的人生智慧》20集</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      color: #1f2933;
+      background: #f5f7fa;
+    }
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .note {
+      font-size: 13px;
+      color: #52606d;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+    nav {
+      overflow: auto;
+      padding: 14px;
+      background: #ffffff;
+      border-right: 1px solid #d9e2ec;
+    }
+    button {
+      width: 100%;
+      min-height: 48px;
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border: 1px solid #bcccdc;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #243b53;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    button:hover,
+    button.active {
+      border-color: #2f80ed;
+      background: #eef5ff;
+      color: #102a43;
+    }
+    .viewer {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #eef2f7;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: 8px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+      gap: 12px;
+    }
+    #currentTitle {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    a:hover { text-decoration: underline; }
+    .panel {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      min-height: 420px;
+      padding: 24px;
+      text-align: center;
+      background: #ffffff;
+    }
+    .panel p {
+      max-width: 620px;
+      margin: 0 0 18px;
+      color: #52606d;
+      line-height: 1.7;
+    }
+    .primary {
+      width: auto;
+      min-width: 220px;
+      padding: 12px 18px;
+      border-color: #1a73e8;
+      background: #1a73e8;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+    }
+    .primary:hover {
+      background: #1558b0;
+      color: #ffffff;
+    }
+    @media (max-width: 820px) {
+      header {
+        height: auto;
+        min-height: 64px;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 14px;
+        gap: 4px;
+      }
+      main {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      nav {
+        max-height: 290px;
+        border-right: 0;
+        border-bottom: 1px solid #d9e2ec;
+      }
+      .bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>曾仕强《易经的人生智慧》20集</h1>
+    <div class="note">本地目录文件，播放加载B站公开视频页面，需要联网。</div>
+  </header>
+  <main>
+    <nav id="playlist"></nav>
+    <section class="viewer">
+      <div class="bar">
+        <span id="currentTitle"></span>
+        <a id="openLink" href="#" target="_blank" rel="noopener">在浏览器新窗口打开</a>
+      </div>
+      <div class="panel">
+        <p>B站页面通常不允许嵌入本地文件内播放。请选择左侧集数，然后点击下方按钮在浏览器新窗口打开公开视频页。</p>
+        <button id="openButton" class="primary" type="button">打开当前集</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    const episodes = [
+      ["01 谈易经为求善始善终（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=1"],
+      ["02 谈易经为求善始善终（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=2"],
+      ["03 人人在世都虚以待位（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=3"],
+      ["04 人人在世都虚以待位（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=4"],
+      ["05 不离一阴一阳之谓道（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=5"],
+      ["06 不离一阴一阳之谓道（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=6"],
+      ["07 中华民族的易经思维（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=7"],
+      ["08 中华民族的易经思维（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=8"],
+      ["09 易经不全为卜筮的书（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=9"],
+      ["10 易经不全为卜筮的书（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=10"],
+      ["11 自然律加上伦理道德（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=11"],
+      ["12 自然律加上伦理道德（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=12"],
+      ["13 认识易经的卦爻符号（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=13"],
+      ["14 认识易经的卦爻符号（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=14"],
+      ["15 用九与用六交互作用（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=15"],
+      ["16 用九与用六交互作用（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=16"],
+      ["17 廿一世纪易学的使命（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=17"],
+      ["18 廿一世纪易学的使命（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=18"],
+      ["19 玩赏易经一辈子受用（上）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=19"],
+      ["20 玩赏易经一辈子受用（下）", "https://www.bilibili.com/video/BV12v4y1o7Fy?p=20"]
+    ];
+
+    const playlist = document.getElementById("playlist");
+    const currentTitle = document.getElementById("currentTitle");
+    const openLink = document.getElementById("openLink");
+    const openButton = document.getElementById("openButton");
+    const buttons = [];
+    let currentUrl = "";
+
+    function loadEpisode(index) {
+      const [title, url] = episodes[index];
+      currentTitle.textContent = title;
+      openLink.href = url;
+      currentUrl = url;
+      buttons.forEach((button, i) => button.classList.toggle("active", i === index));
+    }
+
+    episodes.forEach(([title], index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = title;
+      button.addEventListener("click", () => loadEpisode(index));
+      playlist.appendChild(button);
+      buttons.push(button);
+    });
+
+    loadEpisode(0);
+    openButton.addEventListener("click", () => {
+      window.open(currentUrl, "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>

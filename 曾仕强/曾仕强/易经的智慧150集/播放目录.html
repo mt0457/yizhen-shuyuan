@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>曾仕强《易经的智慧》150集</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      color: #1f2933;
+      background: #f5f7fa;
+    }
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .note {
+      font-size: 13px;
+      color: #52606d;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+    nav {
+      overflow: auto;
+      padding: 14px;
+      background: #ffffff;
+      border-right: 1px solid #d9e2ec;
+    }
+    button {
+      width: 100%;
+      min-height: 48px;
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border: 1px solid #bcccdc;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #243b53;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    button:hover,
+    button.active {
+      border-color: #2f80ed;
+      background: #eef5ff;
+      color: #102a43;
+    }
+    .viewer {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #eef2f7;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: 8px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #d9e2ec;
+      gap: 12px;
+    }
+    #currentTitle {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    a:hover { text-decoration: underline; }
+    .panel {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      min-height: 420px;
+      padding: 24px;
+      text-align: center;
+      background: #ffffff;
+    }
+    .panel p {
+      max-width: 680px;
+      margin: 0 0 18px;
+      color: #52606d;
+      line-height: 1.7;
+    }
+    .primary {
+      width: auto;
+      min-width: 220px;
+      padding: 12px 18px;
+      border-color: #1a73e8;
+      background: #1a73e8;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+    }
+    .primary:hover {
+      background: #1558b0;
+      color: #ffffff;
+    }
+    @media (max-width: 820px) {
+      header {
+        height: auto;
+        min-height: 64px;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 14px;
+        gap: 4px;
+      }
+      main {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      nav {
+        max-height: 290px;
+        border-right: 0;
+        border-bottom: 1px solid #d9e2ec;
+      }
+      .bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>曾仕强《易经的智慧》150集</h1>
+    <div class="note">本地目录文件，播放加载B站公开视频页面，需要联网。</div>
+  </header>
+  <main>
+    <nav id="playlist"></nav>
+    <section class="viewer">
+      <div class="bar">
+        <span id="currentTitle"></span>
+        <a id="openLink" href="#" target="_blank" rel="noopener">在浏览器新窗口打开</a>
+      </div>
+      <div class="panel">
+        <p>央视专题页当前只列出20条公开视频；本页整理的是B站公开视频合集的150个分P。请选择左侧集数，然后点击下方按钮在浏览器新窗口打开。</p>
+        <button id="openButton" class="primary" type="button">打开当前集</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    const episodes = [
+      ["第1集 《易经的智慧》总论 龙马负图", "https://www.bilibili.com/video/BV1usTXzaEE6?p=1"],
+      ["第2集 《易经的智慧》总论 神龟载书", "https://www.bilibili.com/video/BV1usTXzaEE6?p=2"],
+      ["第3集 《易经的智慧》总论 天人合德", "https://www.bilibili.com/video/BV1usTXzaEE6?p=3"],
+      ["第4集 《易经的智慧》总论 以人为本", "https://www.bilibili.com/video/BV1usTXzaEE6?p=4"],
+      ["第5集 《易经的智慧》总论 阴阳之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=5"],
+      ["第6集 《易经的智慧》总论 八卦定乾坤", "https://www.bilibili.com/video/BV1usTXzaEE6?p=6"],
+      ["第7集 《易经的智慧》总论 易经与命运", "https://www.bilibili.com/video/BV1usTXzaEE6?p=7"],
+      ["第8集 《易经的智慧》总论 破解占卦", "https://www.bilibili.com/video/BV1usTXzaEE6?p=8"],
+      ["第9集 《易经的智慧》乾坤易之门", "https://www.bilibili.com/video/BV1usTXzaEE6?p=9"],
+      ["第10集 《易经的智慧》卦序1 乾卦 乾卦六龙", "https://www.bilibili.com/video/BV1usTXzaEE6?p=10"],
+      ["第11集 《易经的智慧》卦序1 乾卦 六龙御天", "https://www.bilibili.com/video/BV1usTXzaEE6?p=11"],
+      ["第12集 《易经的智慧》易传 孔子文言传", "https://www.bilibili.com/video/BV1usTXzaEE6?p=12"],
+      ["第13集 《易经的智慧》卦序2 坤卦 阳极成阴", "https://www.bilibili.com/video/BV1usTXzaEE6?p=13"],
+      ["第14集 《易经的智慧》卦序2 坤卦 地道刚柔", "https://www.bilibili.com/video/BV1usTXzaEE6?p=14"],
+      ["第15集 《易经的智慧》乾坤综述 乾坤之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=15"],
+      ["第16集 《易经的智慧》卦序3 屯卦 始生之难", "https://www.bilibili.com/video/BV1usTXzaEE6?p=16"],
+      ["第17集 《易经的智慧》卦序3 屯卦 创始之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=17"],
+      ["第18集 《易经的智慧》卦序4 蒙卦 蒙以养正", "https://www.bilibili.com/video/BV1usTXzaEE6?p=18"],
+      ["第19集 《易经的智慧》卦序4 蒙卦 教化之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=19"],
+      ["第20集 《易经的智慧》卦序5 需卦 需要等待", "https://www.bilibili.com/video/BV1usTXzaEE6?p=20"],
+      ["第21集 《易经的智慧》卦序5 需卦 待机之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=21"],
+      ["第22集 《易经的智慧》卦序6 讼卦 争强好胜", "https://www.bilibili.com/video/BV1usTXzaEE6?p=22"],
+      ["第23集 《易经的智慧》卦序6 讼卦 化除讼累", "https://www.bilibili.com/video/BV1usTXzaEE6?p=23"],
+      ["第24集 《易经的智慧》卦序7 师卦 师忧比乐", "https://www.bilibili.com/video/BV1usTXzaEE6?p=24"],
+      ["第25集 《易经的智慧》卦序7 师卦 师出正道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=25"],
+      ["第26集 《易经的智慧》卦序8 比卦 亲比和谐", "https://www.bilibili.com/video/BV1usTXzaEE6?p=26"],
+      ["第27集 《易经的智慧》卦序8 比卦 情投意合", "https://www.bilibili.com/video/BV1usTXzaEE6?p=27"],
+      ["第28集 《易经的智慧》序卦传 卦有次序", "https://www.bilibili.com/video/BV1usTXzaEE6?p=28"],
+      ["第29集 《易经的智慧》卦序9 小畜卦 小有畜聚", "https://www.bilibili.com/video/BV1usTXzaEE6?p=29"],
+      ["第30集 《易经的智慧》卦序9 小畜卦 以小养大", "https://www.bilibili.com/video/BV1usTXzaEE6?p=30"],
+      ["第31集 《易经的智慧》卦序10 履卦 实践天道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=31"],
+      ["第32集 《易经的智慧》卦序10 履卦 柔能克刚", "https://www.bilibili.com/video/BV1usTXzaEE6?p=32"],
+      ["第33集 《易经的智慧》卦序11 泰卦 天下太平", "https://www.bilibili.com/video/BV1usTXzaEE6?p=33"],
+      ["第34集 《易经的智慧》卦序11 泰卦 君子的责任", "https://www.bilibili.com/video/BV1usTXzaEE6?p=34"],
+      ["第35集 《易经的智慧》卦序12 否卦 否从泰来", "https://www.bilibili.com/video/BV1usTXzaEE6?p=35"],
+      ["第36集 《易经的智慧》卦序12 否卦 无道则愚", "https://www.bilibili.com/video/BV1usTXzaEE6?p=36"],
+      ["第37集 《易经的智慧》泰否综述 否极泰来", "https://www.bilibili.com/video/BV1usTXzaEE6?p=37"],
+      ["第38集 《易经的智慧》卦序13 同人卦 一视同仁", "https://www.bilibili.com/video/BV1usTXzaEE6?p=38"],
+      ["第39集 《易经的智慧》卦序13 同人卦 万众一心", "https://www.bilibili.com/video/BV1usTXzaEE6?p=39"],
+      ["第40集 《易经的智慧》卦序14 大有卦 为富要仁", "https://www.bilibili.com/video/BV1usTXzaEE6?p=40"],
+      ["第41集 《易经的智慧》卦序14 大有卦 安享富贵", "https://www.bilibili.com/video/BV1usTXzaEE6?p=41"],
+      ["第42集 《易经的智慧》卦序15 谦卦 谦恭合礼", "https://www.bilibili.com/video/BV1usTXzaEE6?p=42"],
+      ["第43集 《易经的智慧》卦序15 谦卦 谦谦君子", "https://www.bilibili.com/video/BV1usTXzaEE6?p=43"],
+      ["第44集 《易经的智慧》卦序16 豫卦 乐不穷欢", "https://www.bilibili.com/video/BV1usTXzaEE6?p=44"],
+      ["第45集 《易经的智慧》卦序16 豫卦 与众同乐", "https://www.bilibili.com/video/BV1usTXzaEE6?p=45"],
+      ["第46集 《易经的智慧》卦序17 随卦 择善而从", "https://www.bilibili.com/video/BV1usTXzaEE6?p=46"],
+      ["第47集 《易经的智慧》卦序17 随卦 随时而动", "https://www.bilibili.com/video/BV1usTXzaEE6?p=47"],
+      ["第48集 《易经的智慧》卦序18 蛊卦 整治腐败", "https://www.bilibili.com/video/BV1usTXzaEE6?p=48"],
+      ["第49集 《易经的智慧》卦序18 蛊卦 解除祸乱", "https://www.bilibili.com/video/BV1usTXzaEE6?p=49"],
+      ["第50集 《易经的智慧》卦序19 临卦 临事而惧", "https://www.bilibili.com/video/BV1usTXzaEE6?p=50"],
+      ["第51集 《易经的智慧》卦序19 临卦 亲临现场", "https://www.bilibili.com/video/BV1usTXzaEE6?p=51"],
+      ["第52集 《易经的智慧》卦序20 观卦 观察瞻仰", "https://www.bilibili.com/video/BV1usTXzaEE6?p=52"],
+      ["第53集 《易经的智慧》卦序20 观卦 见微知著", "https://www.bilibili.com/video/BV1usTXzaEE6?p=53"],
+      ["第54集 《易经的智慧》小结1 慎始善终", "https://www.bilibili.com/video/BV1usTXzaEE6?p=54"],
+      ["第55集 《易经的智慧》卦序传 卦序之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=55"],
+      ["第56集 《易经的智慧》综述 文化与文明", "https://www.bilibili.com/video/BV1usTXzaEE6?p=56"],
+      ["第57集 《易经的智慧》卦序21 噬嗑卦 铲除梗碍", "https://www.bilibili.com/video/BV1usTXzaEE6?p=57"],
+      ["第58集 《易经的智慧》卦序21 噬嗑卦 治狱之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=58"],
+      ["第59集 《易经的智慧》卦序22 贲卦 人文精神", "https://www.bilibili.com/video/BV1usTXzaEE6?p=59"],
+      ["第60集 《易经的智慧》卦序22 贲卦 装扮得体", "https://www.bilibili.com/video/BV1usTXzaEE6?p=60"],
+      ["第61集 《易经的智慧》卦序23 剥卦 贲极剥始", "https://www.bilibili.com/video/BV1usTXzaEE6?p=61"],
+      ["第62集 《易经的智慧》卦序23 剥卦 硕果不食", "https://www.bilibili.com/video/BV1usTXzaEE6?p=62"],
+      ["第63集 《易经的智慧》卦序24 复卦 剥极而复", "https://www.bilibili.com/video/BV1usTXzaEE6?p=63"],
+      ["第64集 《易经的智慧》卦序24 复卦 复兴之路", "https://www.bilibili.com/video/BV1usTXzaEE6?p=64"],
+      ["第65集 《易经的智慧》卦序25 无妄卦 无妄而正", "https://www.bilibili.com/video/BV1usTXzaEE6?p=65"],
+      ["第66集 《易经的智慧》卦序25 无妄卦 避祸成事", "https://www.bilibili.com/video/BV1usTXzaEE6?p=66"],
+      ["第67集 《易经的智慧》卦序26 大畜卦 大畜德性", "https://www.bilibili.com/video/BV1usTXzaEE6?p=67"],
+      ["第68集 《易经的智慧》卦序26 大畜卦 慎始敬终", "https://www.bilibili.com/video/BV1usTXzaEE6?p=68"],
+      ["第69集 《易经的智慧》卦序27 颐卦 颐养之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=69"],
+      ["第70集 《易经的智慧》卦序27 颐卦 自作自受", "https://www.bilibili.com/video/BV1usTXzaEE6?p=70"],
+      ["第71集 《易经的智慧》卦序28 大过卦 大过大悟", "https://www.bilibili.com/video/BV1usTXzaEE6?p=71"],
+      ["第72集 《易经的智慧》卦序28 大过卦 化解大过", "https://www.bilibili.com/video/BV1usTXzaEE6?p=72"],
+      ["第73集 《易经的智慧》卦序29 坎卦 处险不惊", "https://www.bilibili.com/video/BV1usTXzaEE6?p=73"],
+      ["第74集 《易经的智慧》卦序29 坎卦 用险止险", "https://www.bilibili.com/video/BV1usTXzaEE6?p=74"],
+      ["第75集 《易经的智慧》卦序30 离卦 向上提升", "https://www.bilibili.com/video/BV1usTXzaEE6?p=75"],
+      ["第76集 《易经的智慧》卦序30 离卦 光明大道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=76"],
+      ["第77集 《易经的智慧》上经综述", "https://www.bilibili.com/video/BV1usTXzaEE6?p=77"],
+      ["第78集 《易经的智慧》卦序传03 易经体例", "https://www.bilibili.com/video/BV1usTXzaEE6?p=78"],
+      ["第79集 《易经的智慧》卦序31 咸卦 无心之感", "https://www.bilibili.com/video/BV1usTXzaEE6?p=79"],
+      ["第80集 《易经的智慧》卦序31 咸卦 心心相印", "https://www.bilibili.com/video/BV1usTXzaEE6?p=80"],
+      ["第81集 《易经的智慧》卦序32 恒卦 致恒之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=81"],
+      ["第82集 《易经的智慧》卦序32 恒卦 天长地久", "https://www.bilibili.com/video/BV1usTXzaEE6?p=82"],
+      ["第83集 《易经的智慧》卦序33 遁卦 退隐山林", "https://www.bilibili.com/video/BV1usTXzaEE6?p=83"],
+      ["第84集 《易经的智慧》卦序33 遁卦 全身而退", "https://www.bilibili.com/video/BV1usTXzaEE6?p=84"],
+      ["第85集 《易经的智慧》卦序34 大壮卦 大壮之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=85"],
+      ["第86集 《易经的智慧》卦序34 大壮卦 严防非礼", "https://www.bilibili.com/video/BV1usTXzaEE6?p=86"],
+      ["第87集 《易经的智慧》卦序35 晋卦 光明磊落", "https://www.bilibili.com/video/BV1usTXzaEE6?p=87"],
+      ["第88集 《易经的智慧》卦序35 晋卦 宽以待人", "https://www.bilibili.com/video/BV1usTXzaEE6?p=88"],
+      ["第89集 《易经的智慧》卦序36 明夷卦 忧患人生", "https://www.bilibili.com/video/BV1usTXzaEE6?p=89"],
+      ["第90集 《易经的智慧》卦序36 明夷卦 心地光明", "https://www.bilibili.com/video/BV1usTXzaEE6?p=90"],
+      ["第91集 《易经的智慧》卦序37 家人卦 诚信齐家", "https://www.bilibili.com/video/BV1usTXzaEE6?p=91"],
+      ["第92集 《易经的智慧》卦序37 家人卦 忠厚积善", "https://www.bilibili.com/video/BV1usTXzaEE6?p=92"],
+      ["第93集 《易经的智慧》卦序38 睽卦 多疑之害", "https://www.bilibili.com/video/BV1usTXzaEE6?p=93"],
+      ["第94集 《易经的智慧》卦序38 睽卦 和而不争", "https://www.bilibili.com/video/BV1usTXzaEE6?p=94"],
+      ["第95集 《易经的智慧》卦序39 蹇卦 越挫越勇", "https://www.bilibili.com/video/BV1usTXzaEE6?p=95"],
+      ["第96集 《易经的智慧》卦序39 蹇卦 止于至善", "https://www.bilibili.com/video/BV1usTXzaEE6?p=96"],
+      ["第97集 《易经的智慧》卦序40 解卦 化险为夷", "https://www.bilibili.com/video/BV1usTXzaEE6?p=97"],
+      ["第98集 《易经的智慧》卦序40 解卦 待时而动", "https://www.bilibili.com/video/BV1usTXzaEE6?p=98"],
+      ["第99集 《易经的智慧》小结2 崇尚自然", "https://www.bilibili.com/video/BV1usTXzaEE6?p=99"],
+      ["第100集 《易经的智慧》序卦传4 二合为一", "https://www.bilibili.com/video/BV1usTXzaEE6?p=100"],
+      ["第101集 《易经的智慧》卦序41 损卦 损以修己", "https://www.bilibili.com/video/BV1usTXzaEE6?p=101"],
+      ["第102集 《易经的智慧》卦序41 损卦 为道日损", "https://www.bilibili.com/video/BV1usTXzaEE6?p=102"],
+      ["第103集 《易经的智慧》卦序42 益卦 损极而益", "https://www.bilibili.com/video/BV1usTXzaEE6?p=103"],
+      ["第104集 《易经的智慧》卦序42 益卦 为学日益", "https://www.bilibili.com/video/BV1usTXzaEE6?p=104"],
+      ["第105集 《易经的智慧》卦序43 夬卦 决其当决", "https://www.bilibili.com/video/BV1usTXzaEE6?p=105"],
+      ["第106集 《易经的智慧》卦序43 夬卦 邪不胜正", "https://www.bilibili.com/video/BV1usTXzaEE6?p=106"],
+      ["第107集 《易经的智慧》卦序44 姤卦 不期而遇", "https://www.bilibili.com/video/BV1usTXzaEE6?p=107"],
+      ["第108集 《易经的智慧》卦序44 姤卦 宣扬文化", "https://www.bilibili.com/video/BV1usTXzaEE6?p=108"],
+      ["第109集 《易经的智慧》卦序45 萃卦 聚会之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=109"],
+      ["第110集 《易经的智慧》卦序45 萃卦 聚少离多", "https://www.bilibili.com/video/BV1usTXzaEE6?p=110"],
+      ["第111集 《易经的智慧》卦序46 升卦 积小成大", "https://www.bilibili.com/video/BV1usTXzaEE6?p=111"],
+      ["第112集 《易经的智慧》卦序46 升卦 适时上升", "https://www.bilibili.com/video/BV1usTXzaEE6?p=112"],
+      ["第113集 《易经的智慧》卦序47 困卦 处困之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=113"],
+      ["第114集 《易经的智慧》卦序47 困卦 坚持正理", "https://www.bilibili.com/video/BV1usTXzaEE6?p=114"],
+      ["第115集 《易经的智慧》卦序48 井卦 不变而通", "https://www.bilibili.com/video/BV1usTXzaEE6?p=115"],
+      ["第116集 《易经的智慧》卦序48 井卦 供养无宠", "https://www.bilibili.com/video/BV1usTXzaEE6?p=116"],
+      ["第117集 《易经的智慧》卦序49 革卦 革新之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=117"],
+      ["第118集 《易经的智慧》卦序49 革卦 顺天应人", "https://www.bilibili.com/video/BV1usTXzaEE6?p=118"],
+      ["第119集 《易经的智慧》卦序50 鼎卦 革故鼎新", "https://www.bilibili.com/video/BV1usTXzaEE6?p=119"],
+      ["第120集 《易经的智慧》卦序50 鼎卦 礼贤下士", "https://www.bilibili.com/video/BV1usTXzaEE6?p=120"],
+      ["第121集 《易经的智慧》卦序51 震卦 奋发警醒", "https://www.bilibili.com/video/BV1usTXzaEE6?p=121"],
+      ["第122集 《易经的智慧》卦序51 震卦 长治久安", "https://www.bilibili.com/video/BV1usTXzaEE6?p=122"],
+      ["第123集 《易经的智慧》卦序52 艮卦 大忧大定", "https://www.bilibili.com/video/BV1usTXzaEE6?p=123"],
+      ["第124集 《易经的智慧》卦序52 艮卦 止其所止", "https://www.bilibili.com/video/BV1usTXzaEE6?p=124"],
+      ["第125集 《易经的智慧》卦序53 渐卦 循序渐进", "https://www.bilibili.com/video/BV1usTXzaEE6?p=125"],
+      ["第126集 《易经的智慧》卦序53 渐卦 悠久稳健", "https://www.bilibili.com/video/BV1usTXzaEE6?p=126"],
+      ["第127集 《易经的智慧》卦序54 归妹卦 情理难抉", "https://www.bilibili.com/video/BV1usTXzaEE6?p=127"],
+      ["第128集 《易经的智慧》卦序54 归妹卦 知敝永终", "https://www.bilibili.com/video/BV1usTXzaEE6?p=128"],
+      ["第129集 《易经的智慧》卦序55 丰卦 求丰保丰", "https://www.bilibili.com/video/BV1usTXzaEE6?p=129"],
+      ["第130集 《易经的智慧》卦序55 丰卦 处丰之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=130"],
+      ["第131集 《易经的智慧》卦序56 旅卦 行旅之道", "https://www.bilibili.com/video/BV1usTXzaEE6?p=131"],
+      ["第132集 《易经的智慧》卦序56 旅卦 旅居之要", "https://www.bilibili.com/video/BV1usTXzaEE6?p=132"],
+      ["第133集 《易经的智慧》卦序57 巽卦 柔得其宜", "https://www.bilibili.com/video/BV1usTXzaEE6?p=133"],
+      ["第134集 《易经的智慧》卦序57 巽卦 谦顺有为", "https://www.bilibili.com/video/BV1usTXzaEE6?p=134"],
+      ["第135集 《易经的智慧》卦序58 兑卦 和悦相处", "https://www.bilibili.com/video/BV1usTXzaEE6?p=135"],
+      ["第136集 《易经的智慧》卦序58 兑卦 乐观人生", "https://www.bilibili.com/video/BV1usTXzaEE6?p=136"],
+      ["第137集 《易经的智慧》卦序59 涣卦 当散即散", "https://www.bilibili.com/video/BV1usTXzaEE6?p=137"],
+      ["第138集 《易经的智慧》卦序59 涣卦 重聚人心", "https://www.bilibili.com/video/BV1usTXzaEE6?p=138"],
+      ["第139集 《易经的智慧》卦序60 节卦 调节得宜", "https://www.bilibili.com/video/BV1usTXzaEE6?p=139"],
+      ["第140集 《易经的智慧》卦序60 节卦 政通民和", "https://www.bilibili.com/video/BV1usTXzaEE6?p=140"],
+      ["第141集 《易经的智慧》易经妙用 卦中有卦", "https://www.bilibili.com/video/BV1usTXzaEE6?p=141"],
+      ["第142集 《易经的智慧》易经妙用 自占自解", "https://www.bilibili.com/video/BV1usTXzaEE6?p=142"],
+      ["第143集 《易经的智慧》卦序61 中孚卦 广施诚信", "https://www.bilibili.com/video/BV1usTXzaEE6?p=143"],
+      ["第144集 《易经的智慧》卦序61 中孚卦 诚心不妄", "https://www.bilibili.com/video/BV1usTXzaEE6?p=144"],
+      ["第145集 《易经的智慧》卦序62 小过卦 宽留余地", "https://www.bilibili.com/video/BV1usTXzaEE6?p=145"],
+      ["第146集 《易经的智慧》卦序62 小过卦 顺势而为", "https://www.bilibili.com/video/BV1usTXzaEE6?p=146"],
+      ["第147集 《易经的智慧》卦序63 既济卦 守成艰难", "https://www.bilibili.com/video/BV1usTXzaEE6?p=147"],
+      ["第148集 《易经的智慧》卦序63 既济卦 福过灾生", "https://www.bilibili.com/video/BV1usTXzaEE6?p=148"],
+      ["第149集 《易经的智慧》卦序64 未济卦 审慎进取", "https://www.bilibili.com/video/BV1usTXzaEE6?p=149"],
+      ["第150集 《易经的智慧》卦序64 未济卦 永怀希望", "https://www.bilibili.com/video/BV1usTXzaEE6?p=150"]
+    ];
+
+    const playlist = document.getElementById("playlist");
+    const currentTitle = document.getElementById("currentTitle");
+    const openLink = document.getElementById("openLink");
+    const openButton = document.getElementById("openButton");
+    const buttons = [];
+    let currentUrl = "";
+
+    function loadEpisode(index) {
+      const [title, url] = episodes[index];
+      currentTitle.textContent = title;
+      openLink.href = url;
+      currentUrl = url;
+      buttons.forEach((button, i) => button.classList.toggle("active", i === index));
+    }
+
+    episodes.forEach(([title], index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = title;
+      button.addEventListener("click", () => loadEpisode(index));
+      playlist.appendChild(button);
+      buttons.push(button);
+    });
+
+    loadEpisode(0);
+    openButton.addEventListener("click", () => {
+      window.open(currentUrl, "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>
