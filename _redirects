@@ -1,0 +1,3 @@
+# 百度验证：Cloudflare会去掉.html后缀导致308，这里强制200原样返回
+/baidu_verify_b2d03bd18c3129ade418fc3a0688536d.html /baidu_verify_b2d03bd18c3129ade418fc3a0688536d 200
+/baidu_verify_codeva-CisBLgXny7.html /baidu_verify_codeva-CisBLgXny7 200
