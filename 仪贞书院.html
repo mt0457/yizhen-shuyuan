@@ -381,182 +381,13 @@ body{padding-bottom:0}
     </div>
   </section>
 
-  <!-- Settings Page -->
+  <!-- Settings Page (管理员请通过管理面板→⚙️网站设置访问) -->
   <section class="page" id="page-settings">
-    <div class="settings-section">
-      <div class="section-header">
-        <h2>⚙️ 网站设置</h2>
-        <p class="subtitle">收款码配置 · 支付设置</p>
-        <div class="divider"></div>
-      </div>
-
-      <div class="settings-card">
-        <h3>💚 微信收款码</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的微信个人收款码，用于书籍购买和视频打赏的微信支付</p>
-        <div class="qr-upload-area">
-          <div class="qr-upload-box" id="wechatQrBox" onclick="document.getElementById('wechatQrInput').click()">
-            <div class="icon">💚</div>
-            <div class="label" id="wechatQrLabel">点击上传微信收款码</div>
-            <img id="wechatQrPreview" style="display:none;" alt="微信收款码">
-          </div>
-          <input type="file" id="wechatQrInput" accept="image/*" style="display:none;" onchange="uploadQR('wechat', this)">
-          <div style="flex:1;min-width:200px;">
-            <p style="font-size:13px;font-weight:500;margin-bottom:6px;">如何获取微信收款码？</p>
-            <ol style="font-size:12px;color:var(--ink-lighter);line-height:2;padding-left:16px;">
-              <li>打开微信 → 我 → 服务 → 收付款</li>
-              <li>选择"二维码收款"</li>
-              <li>截图保存收款码图片</li>
-              <li>在此上传截图即可</li>
-            </ol>
-            <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR('wechat')">清除收款码</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="settings-card">
-        <h3>💙 支付宝收款码</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的支付宝个人收款码，用于书籍购买和视频打赏的支付宝支付</p>
-        <div class="qr-upload-area">
-          <div class="qr-upload-box" id="alipayQrBox" onclick="document.getElementById('alipayQrInput').click()">
-            <div class="icon">💙</div>
-            <div class="label" id="alipayQrLabel">点击上传支付宝收款码</div>
-            <img id="alipayQrPreview" style="display:none;" alt="支付宝收款码">
-          </div>
-          <input type="file" id="alipayQrInput" accept="image/*" style="display:none;" onchange="uploadQR('alipay', this)">
-          <div style="flex:1;min-width:200px;">
-            <p style="font-size:13px;font-weight:500;margin-bottom:6px;">如何获取支付宝收款码？</p>
-            <ol style="font-size:12px;color:var(--ink-lighter);line-height:2;padding-left:16px;">
-              <li>打开支付宝 → 首页 → 收钱</li>
-              <li>截图保存收款码图片</li>
-              <li>在此上传截图即可</li>
-            </ol>
-            <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR('alipay')">清除收款码</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="settings-card">
-        <h3>🔒 管理密码</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">修改管理密码需先验证旧密码。首次设置请使用初始密码 <code>yizhen2024</code>。</p>
-        <div class="form-row">
-          <div class="form-group" style="flex:1;">
-            <label>旧密码</label>
-            <input type="password" id="oldAdminPassword" placeholder="请输入当前密码" style="width:100%;">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group" style="flex:1;">
-            <label>新密码</label>
-            <input type="password" id="newAdminPassword" placeholder="请输入新密码（至少6位）" style="width:100%;">
-          </div>
-          <div class="form-group" style="flex:1;">
-            <label>确认新密码</label>
-            <input type="password" id="confirmAdminPassword" placeholder="请再次输入新密码" style="width:100%;">
-          </div>
-        </div>
-        <p class="settings-hint">忘记密码？请通过浏览器控制台执行 <code>localStorage.removeItem('yizhen_admin_password')</code> 后刷新页面，密码将恢复为初始值。</p>
-        <div style="text-align:right;margin-top:8px;">
-          <button class="btn btn-outline btn-sm" onclick="clearAdminPassword()">恢复默认</button>
-          <button class="btn btn-primary btn-sm" style="margin-left:8px;" onclick="changeAdminPassword()">保存密码</button>
-        </div>
-        <h3 style="margin-top:24px;">🗑️ 缓存管理</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">更新后如显示异常，请清除浏览器缓存</p>
-        <button class="btn btn-outline btn-sm" onclick="clearAllCache()" style="color:#c0392b;border-color:#e0c0c0;">清除所有缓存并刷新</button>
-      </div>
-
-      <div class="settings-card">
-        <h3>💰 付费与打赏设置</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">关闭后，所有书籍免费阅读、视频打赏功能隐藏。您可随时切换。</p>
-        <div class="toggle-row">
-          <span class="toggle-label">启用付费与打赏</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="paymentToggle" onchange="togglePaymentEnabled()" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-      </div>
-
-      <div class="settings-card">
-        <h3>📜 道藏开放设置</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">管理员自行决定是否对外开放道藏（明正统道藏600部）。关闭后仅在管理员登录状态下可见。</p>
-        <div class="toggle-row">
-          <span class="toggle-label">对外开放道藏</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="daozangPublicToggle" onchange="toggleDaozangPublic()" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-        <p id="daozangStatus" style="font-size:12px;color:var(--ink-lighter);margin-top:8px;">当前：道藏600部已对外开放</p>
-      </div>
-
-      <div class="settings-card" id="vipFeatureSettings" style="display:none;">
-        <h3>🔓 VIP功能开放设置</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">管理员可单独设置每个功能是否需要VIP。关闭后该功能免费开放。</p>
-        <div class="toggle-row">
-          <span class="toggle-label">📅 八字排盘 — 需要VIP</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="vipBaziToggle" onchange="toggleVipFeature('bazi')" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">📛 周易取名 — 需要VIP</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="vipNamingToggle" onchange="toggleVipFeature('naming')" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">🏡 风水布局 — 需要VIP</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="vipFengshuiToggle" onchange="toggleVipFeature('fengshui')" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-        <div class="toggle-row">
-          <span class="toggle-label">👗 穿衣搭配 — 需要VIP</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="vipClothingToggle" onchange="toggleVipFeature('clothing')" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-      </div>
-
-      <div class="settings-card">
-        <h3>💬 客服联系方式</h3>
-        <p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">设置用户在"联系客服"页面看到的联系方式（如微信号、邮箱等）</p>
-        <div class="form-group"><label>微信号</label><input type="text" id="contactWechat" placeholder="请输入微信号"></div>
-        <div class="form-group"><label>邮箱</label><input type="text" id="contactEmail" placeholder="请输入邮箱地址"></div>
-        <div class="form-group"><label>手机号</label><input type="text" id="contactPhone" placeholder="请输入手机号"></div>
-        <div class="form-group"><label>其他说明</label><textarea id="contactOther" rows="2" placeholder="其他联系方式或说明..."></textarea></div>
-        <div style="text-align:right;"><button class="btn btn-primary btn-sm" onclick="saveContactInfoSettings()">保存联系方式</button></div>
-      </div>
-
-      <div class="settings-card">
-        <h3>📬 用户留言（<span id="msgCount">0</span>）</h3>
-        <div class="message-list" id="messageList">
-          <div class="empty-state"><div class="icon">📭</div><p>暂无用户留言</p></div>
-        </div>
-      </div>
-
-      <div class="pay-notice">
-        ⚠️ <strong>支付说明：</strong>本网站使用个人收款码方案。用户在支付页面扫描您的收款码完成支付后，点击"确认已支付"即可。建议在收到款项确认后再提供服务。如需全自动支付，需接入微信支付/支付宝商户接口（需企业资质）。
-      </div>
-    </div>
-
-    <!-- 命理知识库 -->
-    <div class="mingli-kb" id="mingliKB" style="margin-top:24px;background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;">
-      <div style="padding:14px 20px;background:var(--bg-warm);border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="var b=document.getElementById('mingliKBBody');b.style.display=b.style.display==='none'?'':'none';document.getElementById('kbToggle').textContent=b.style.display==='none'?'▶ 展开':'▼ 收起';">
-        <h3 style="font-family:var(--font-serif);font-size:16px;margin:0;">📚 十书知识库 · 智能检索 11,551行 命理经典</h3>
-        <span style="font-size:12px;color:var(--ink-lighter);" id="kbToggle">▼ 收起</span>
-      </div>
-      <div id="mingliKBBody" style="display:block;">
-        <div style="padding:10px 20px;font-size:12px;color:var(--ink-lighter);border-bottom:1px solid var(--border-light);">
-          十六部经典完整版全库智能检索：命理十书（滴天髓·渊海子平·三命通会·李虚中命书·穷通宝鉴·三命指迷赋·三车一览命书·神峰通考·星平会海·子平真诠）+《钦定协纪辨方书》+《玉匣记》+《鳌头通书》+《董公择日要览》+《选择宗镜》+《中华万年历》。八字/取名/风水/黄道吉日/穿衣五大功能，自动关联对应经典深度检索。</div>
-        <div id="mingliKBResult" style="padding:14px 20px;max-height:320px;overflow-y:auto;font-size:13px;line-height:1.9;color:var(--ink-light);">
-          <p style="color:var(--ink-lighter);text-align:center;">📖 使用八字排盘/取名/风水/穿衣后将在此显示《三命通会》《滴天髓》《渊海子平》《李虚中命书》《穷通宝鉴》《三命指迷赋》《三车一览命书》《神峰通考》《星平会海》《子平真诠》相关知识</p>
-        </div>
-      </div>
+    <div class="settings-section" style="text-align:center;padding:60px 20px;">
+      <div style="font-size:48px;">⚙️</div>
+      <p style="font-size:16px;margin-top:16px;color:var(--ink);">网站设置已迁移至管理员控制台</p>
+      <p style="font-size:13px;color:var(--ink-lighter);margin-top:8px;">请先登录管理员，然后进入 🛡️ 管理 → ⚙️ 网站设置</p>
+      <button class="btn btn-primary" style="margin-top:20px;" onclick="ensureAdmin(function(){navigate('admin');setTimeout(function(){renderAdminDashboard('settings');},200);})">🔒 管理员登录</button>
     </div>
   </section>
 
@@ -7964,9 +7795,13 @@ function closeAdmin() {
 }
 
 function changeAdminPassword() {
-  var oldPwd = document.getElementById('oldAdminPassword').value.trim();
-  var newPwd = document.getElementById('newAdminPassword').value.trim();
-  var confirmPwd = document.getElementById('confirmAdminPassword').value.trim();
+  // 优先读取管理面板的输入框（ID不冲突），回退到公开设置页
+  var oldEl = document.getElementById('adminDashOldPwd') || document.getElementById('oldAdminPassword');
+  var newEl = document.getElementById('adminDashNewPwd') || document.getElementById('newAdminPassword');
+  var confirmEl = document.getElementById('adminDashConfirmPwd') || document.getElementById('confirmAdminPassword');
+  var oldPwd = (oldEl && oldEl.value || '').trim();
+  var newPwd = (newEl && newEl.value || '').trim();
+  var confirmPwd = (confirmEl && confirmEl.value || '').trim();
   // 验证旧密码
   if (!oldPwd) { showToast('请先输入旧密码'); return; }
   if (hashPassword(oldPwd) !== getAdminPasswordHash()) { showToast('旧密码错误'); return; }
@@ -7980,17 +7815,19 @@ function changeAdminPassword() {
   _adminState = true; try { localStorage.setItem('yizhen_admin_session', '1'); } catch(e) {}
   logAdminAction('修改管理密码');
   showToast('管理密码已更新（已加密存储）');
-  document.getElementById('oldAdminPassword').value = '';
-  document.getElementById('newAdminPassword').value = '';
-  document.getElementById('confirmAdminPassword').value = '';
+  if (oldEl) oldEl.value = '';
+  if (newEl) newEl.value = '';
+  if (confirmEl) confirmEl.value = '';
 }
 
 function clearAdminPassword() {
   if (!confirm('确定清除管理密码吗？')) return;
   localStorage.removeItem(STORAGE_KEY_ADMIN_PWD);
   showToast('管理密码已清除');
-  document.getElementById('newAdminPassword').value = '';
-  document.getElementById('confirmAdminPassword').value = '';
+  var newEl = document.getElementById('adminDashNewPwd') || document.getElementById('newAdminPassword');
+  var confirmEl = document.getElementById('adminDashConfirmPwd') || document.getElementById('confirmAdminPassword');
+  if (newEl) newEl.value = '';
+  if (confirmEl) confirmEl.value = '';
 }
 
 /* ========== Admin Settings Export/Import (Cross-Device Sync) ========== */
@@ -8150,7 +7987,7 @@ function renderAdminSettings() {
   // Alipay QR
   html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>💙 支付宝收款码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">上传您的支付宝个人收款码</p><div class="qr-upload-area"><div class="qr-upload-box" id="alipayQrBox" onclick="document.getElementById(\'alipayQrInput\').click()"><div class="icon">💙</div><div class="label" id="alipayQrLabel">点击上传支付宝收款码</div><img id="alipayQrPreview" style="display:none;" alt="支付宝收款码"></div><input type="file" id="alipayQrInput" accept="image/*" style="display:none;" onchange="uploadQR(\'alipay\', this)"><div style="flex:1;min-width:200px;"><ol style="font-size:12px;color:var(--ink-lighter);line-height:2;"><li>打开支付宝 → 首页 → 收钱</li><li>截图保存收款码</li><li>在此上传截图即可</li></ol><button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearQR(\'alipay\')">清除收款码</button></div></div></div>';
   // Password
-  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>🔒 管理密码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">初始密码 <code>yizhen2024</code></p><div class="form-row"><div class="form-group" style="flex:1;"><label>旧密码</label><input type="password" id="oldAdminPassword" placeholder="请输入当前密码" style="width:100%;"></div></div><div class="form-row"><div class="form-group" style="flex:1;"><label>新密码</label><input type="password" id="newAdminPassword" placeholder="请输入新密码（至少6位）" style="width:100%;"></div><div class="form-group" style="flex:1;"><label>确认新密码</label><input type="password" id="confirmAdminPassword" placeholder="请再次输入新密码" style="width:100%;"></div></div><p class="settings-hint">忘记密码？通过控制台执行 <code>localStorage.removeItem(\'yizhen_admin_password\')</code> 后刷新。</p><div style="text-align:right;margin-top:8px;"><button class="btn btn-outline btn-sm" onclick="clearAdminPassword()">恢复默认</button><button class="btn btn-primary btn-sm" style="margin-left:8px;" onclick="changeAdminPassword()">保存密码</button></div>';
+  html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>🔒 管理密码</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">初始密码 <code>yizhen2024</code></p><div class="form-row"><div class="form-group" style="flex:1;"><label>旧密码</label><input type="password" id="adminDashOldPwd" placeholder="请输入当前密码" style="width:100%;"></div></div><div class="form-row"><div class="form-group" style="flex:1;"><label>新密码</label><input type="password" id="adminDashNewPwd" placeholder="请输入新密码（至少6位）" style="width:100%;"></div><div class="form-group" style="flex:1;"><label>确认新密码</label><input type="password" id="adminDashConfirmPwd" placeholder="请再次输入新密码" style="width:100%;"></div></div><p class="settings-hint">忘记密码？通过控制台执行 <code>localStorage.removeItem(\'yizhen_admin_password\')</code> 后刷新。</p><div style="text-align:right;margin-top:8px;"><button class="btn btn-outline btn-sm" onclick="clearAdminPassword()">恢复默认</button><button class="btn btn-primary btn-sm" style="margin-left:8px;" onclick="changeAdminPassword()">保存密码</button></div>';
   html += '<h3 style="margin-top:24px;">🗑️ 缓存管理</h3><p style="font-size:13px;color:var(--ink-lighter);margin-bottom:12px;">更新后如显示异常，请清除浏览器缓存</p><button class="btn btn-outline btn-sm" onclick="clearAllCache()" style="color:#c0392b;">清除所有缓存并刷新</button></div>';
   // Payment toggle
   html += '<div class="settings-card" style="background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);"><h3>💰 付费与打赏设置</h3><div class="toggle-row"><span class="toggle-label">启用付费与打赏</span><label class="toggle-switch"><input type="checkbox" id="paymentToggle" onchange="togglePaymentEnabled()" checked><span class="toggle-slider"></span></label></div></div>';
