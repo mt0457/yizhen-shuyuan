@@ -1317,6 +1317,22 @@ const STORAGE_KEY_ACTIVITY_LOG = 'yizhen_activity_log';
 const STORAGE_KEY_LAST_LOGIN = 'yizhen_last_login';
 
 const STORAGE_KEY_VIP_FEATURES = 'yizhen_vip_features';
+
+/* ========== Admin Settings Auto-Sync (localStorage → Supabase) ========== */
+// 拦截所有 yizhen_* 键的写入，自动同步到 Supabase
+(function(){
+  var _origSetItem = localStorage.setItem.bind(localStorage);
+  var _syncBusy = false;
+  localStorage.setItem = function(key, value) {
+    _origSetItem(key, value);
+    // 仅同步管理设置相关键
+    if (!_syncBusy && typeof syncAdminSetting === 'function' && key.indexOf('yizhen_') === 0) {
+      _syncBusy = true;
+      try { syncAdminSetting(key, value); } catch(e) {}
+      _syncBusy = false;
+    }
+  };
+})();
 function isPaymentEnabled() {
   return localStorage.getItem(STORAGE_KEY_PAYMENT_ENABLED) !== '0';
 }
@@ -1335,6 +1351,7 @@ function toggleVipFeature(featureName) {
     var cfg = JSON.parse(localStorage.getItem(STORAGE_KEY_VIP_FEATURES)) || {};
     cfg[featureName] = el.checked;
     localStorage.setItem(STORAGE_KEY_VIP_FEATURES, JSON.stringify(cfg));
+    if (typeof syncAdminSetting === 'function') syncAdminSetting(STORAGE_KEY_VIP_FEATURES, JSON.stringify(cfg));
     showToast(el.checked ? ('✅ ' + featureName + ' 已设为VIP专属') : ('🔓 ' + featureName + ' 已免费开放'));
   } catch(e) {}
 }
@@ -3244,6 +3261,11 @@ function init() {
     const h = window.location.hash.replace('#', '');
     navigate(h || 'home');
   });
+
+  // 异步初始化：从 Supabase 同步管理设置（跨设备）
+  if (typeof initAdminSync === 'function') {
+    setTimeout(function(){ initAdminSync().catch(function(e){ console.warn('[Init] AdminSync:', e.message); }); }, 2000);
+  }
 }
 
 function saveBooks() {
@@ -7811,6 +7833,7 @@ function changeAdminPassword() {
   if (newPwd !== confirmPwd) { showToast('两次新密码不一致'); return; }
   // 保存
   localStorage.setItem(STORAGE_KEY_ADMIN_PWD, hashPassword(newPwd));
+  if (typeof syncAdminSetting === 'function') syncAdminSetting(STORAGE_KEY_ADMIN_PWD, hashPassword(newPwd));
   _adminState = true; try { localStorage.setItem('yizhen_admin_session', '1'); } catch(e) {}
   logAdminAction('修改管理密码');
   showToast('管理密码已更新（已加密存储）');
@@ -8118,6 +8141,7 @@ function logActivity(type, username, detail) {
 function togglePaymentEnabled() {
   const enabled = document.getElementById('paymentToggle').checked;
   localStorage.setItem(STORAGE_KEY_PAYMENT_ENABLED, enabled ? '1' : '0');
+  if (typeof syncAdminSetting === 'function') syncAdminSetting(STORAGE_KEY_PAYMENT_ENABLED, enabled ? '1' : '0');
   showToast(enabled ? '已启用付费与打赏' : '已关闭付费与打赏，所有内容免费');
   // Re-render current page
   if (state.currentPage === 'books') renderBooks();
@@ -8135,6 +8159,7 @@ function isDaozangPublic() { return localStorage.getItem(STORAGE_KEY_DAOZANG_PUB
 function toggleDaozangPublic() {
   var enabled = document.getElementById('daozangPublicToggle').checked;
   localStorage.setItem(STORAGE_KEY_DAOZANG_PUBLIC, enabled ? '1' : '0');
+  if (typeof syncAdminSetting === 'function') syncAdminSetting(STORAGE_KEY_DAOZANG_PUBLIC, enabled ? '1' : '0');
   updateDaozangStatusText(enabled);
   showToast(enabled ? '道藏600部已对外开放' : '道藏已关闭，仅管理员可见');
   if (state.currentPage === 'books') renderBooks();

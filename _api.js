@@ -316,4 +316,119 @@ async function apiInitSession() {
   return null;
 }
 
+// ============================================================
+// 管理员设置同步模块（跨设备，Supabase 持久化）
+// ============================================================
+var _adminSettingsCache = null;
+var _adminSyncReady = false;
+
+/** 从 Supabase 拉取所有管理设置 */
+async function apiGetAdminSettings() {
+  var sb = getSupabase();
+  if (!sb) return null;
+  try {
+    var res = await sb.from('site_config').select('*');
+    if (res.error) {
+      // 表可能还不存在，静默失败
+      if (res.error.code !== '42P01') console.warn('[API] site_config:', res.error.message);
+      return null;
+    }
+    var settings = {};
+    (res.data || []).forEach(function(row) {
+      settings[row.key] = row.value;
+    });
+    _adminSettingsCache = settings;
+    _adminSyncReady = true;
+    return settings;
+  } catch(e) {
+    console.warn('[API] getAdminSettings failed:', e.message);
+    return null;
+  }
+}
+
+/** 保存单个管理设置到 Supabase */
+async function apiSetAdminSetting(key, value) {
+  var sb = getSupabase();
+  if (!sb) return false;
+  try {
+    var res = await sb.from('site_config').upsert({
+      key: key,
+      value: value,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'key' });
+    if (res.error) {
+      if (res.error.code !== '42P01') console.warn('[API] setAdminSetting:', res.error.message);
+      return false;
+    }
+    if (!_adminSettingsCache) _adminSettingsCache = {};
+    _adminSettingsCache[key] = value;
+    return true;
+  } catch(e) {
+    console.warn('[API] setAdminSetting failed:', e.message);
+    return false;
+  }
+}
+
+/** 批量保存管理设置 */
+async function apiSetAdminSettings(settingsObj) {
+  var sb = getSupabase();
+  if (!sb) return;
+  var keys = Object.keys(settingsObj);
+  for (var i = 0; i < keys.length; i++) {
+    await apiSetAdminSetting(keys[i], settingsObj[keys[i]]);
+  }
+}
+
+/** 初始化：从 Supabase 拉取设置并应用到 localStorage */
+async function initAdminSync() {
+  var remote = await apiGetAdminSettings();
+  if (!remote || Object.keys(remote).length === 0) {
+    // Supabase 没有数据，把本地设置推上去
+    var localSettings = collectAdminSettings();
+    if (Object.keys(localSettings).length > 0) {
+      await apiSetAdminSettings(localSettings);
+      console.log('[AdminSync] 已推送本地设置到云端 (' + Object.keys(localSettings).length + '项)');
+    }
+    _adminSyncReady = true;
+    return;
+  }
+  // 合并远程设置到本地（远程优先）
+  applyRemoteSettings(remote);
+  _adminSyncReady = true;
+  console.log('[AdminSync] 已从云端同步 ' + Object.keys(remote).length + ' 项设置');
+}
+
+/** 收集本地所有管理设置 */
+function collectAdminSettings() {
+  var settings = {};
+  var keys = [
+    STORAGE_KEY_ADMIN_PWD,
+    STORAGE_KEY_QRCODES,
+    STORAGE_KEY_PAYMENT_ENABLED,
+    STORAGE_KEY_VIP_FEATURES,
+    STORAGE_KEY_DAOZANG_PUBLIC,
+    STORAGE_KEY_CONTACT_INFO,
+    STORAGE_KEY_VIP_PRICING
+  ];
+  keys.forEach(function(k) {
+    var v = localStorage.getItem(k);
+    if (v !== null && v !== undefined) settings[k] = v;
+  });
+  return settings;
+}
+
+/** 将远程设置应用到 localStorage */
+function applyRemoteSettings(remote) {
+  Object.keys(remote).forEach(function(k) {
+    if (k.indexOf('yizhen_') === 0) {
+      localStorage.setItem(k, typeof remote[k] === 'string' ? remote[k] : JSON.stringify(remote[k]));
+    }
+  });
+}
+
+/** 单个设置变更时，同步到 Supabase（localStorage 写入由调用方完成） */
+function syncAdminSetting(key, value) {
+  apiSetAdminSetting(key, value);
+}
+
 console.log('[API] 数据访问层已加载。Supabase URL: ' + (SUPABASE_URL === 'https://YOUR_PROJECT_ID.supabase.co' ? '⚠ 未配置，请修改 SUPABASE_URL' : SUPABASE_URL));
