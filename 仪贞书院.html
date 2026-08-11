@@ -28,12 +28,14 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23b5343a'/><text x='32' y='46' text-anchor='middle' font-family='serif' font-size='40' font-weight='bold' fill='white'>仪</text></svg>">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; frame-src https://www.youtube.com https://player.bilibili.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; media-src 'self' blob:; frame-src https://www.youtube.com https://player.bilibili.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co;">
 <title>仪贞书院 —— 国学经典，薪火相传</title>
 <!-- Google Fonts removed: blocked in China, using system fonts instead -->
 <link rel="stylesheet" href="styles.css">
 <!-- Supabase SDK -->
 <script src="_supabase-sdk.js"></script>
+<!-- HLS.js 视频播放 -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
 <!-- 数据访问层 -->
 <script src="_api.js"></script>
 <style>
@@ -3308,7 +3310,9 @@ function navigate(page) {
   state.currentPage = page;
   window.location.hash = page;
 
-  // Close any open modals when navigating
+  // Close mobile menu + any open modals when navigating
+  var mainNav = document.getElementById('mainNav');
+  if (mainNav) mainNav.classList.remove('open');
   closeReader();
   closePlayer();
   closeContact();
@@ -3355,6 +3359,14 @@ function navigate(page) {
 }
 
 function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+// Click outside to close mobile menu
+document.addEventListener('click', function(e) {
+  var nav = document.getElementById('mainNav');
+  var toggle = document.querySelector('.menu-toggle');
+  if (nav && nav.classList.contains('open') && !nav.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+    nav.classList.remove('open');
+  }
+});
 
 /* ========== Homepage Featured ========== */
 const FEATURED_BOOK_IDS = ['b1','b2','b3','b6','b10','b9'];
@@ -4054,14 +4066,13 @@ function openPlayer(videoId) {
     }
 
     var curIdx = 0;
-    var bvid = video.bvid || '';
-    var pageBase = video.pageBase || 0;
+    var _hlsInstance = null;
     function buildLocalPlayer(idx) {
       curIdx = idx;
       var ep = episodes[idx];
       var epTitle = ep.title || ("第"+(idx+1)+"集");
-      var biliPage = pageBase + idx + 1;
-      var biliSrc = "https://player.bilibili.com/player.html?bvid="+bvid+"&page="+biliPage+"&high_quality=1&danmaku=0&as_wide=1";
+      var epBaseName = ep.file.replace(/\.\w+$/i, '');
+      var hlsSrc = "videos/" + lookupKey + "/" + epBaseName + ".m3u8";
       var totalEps = episodes.length;
 
       // Build episode sidebar list
@@ -4074,16 +4085,47 @@ function openPlayer(videoId) {
       }
 
       container.innerHTML =
-        "<div style=\"padding:10px 14px;font-size:14px;background:var(--bg-warm);border-bottom:1px solid var(--border-light);\">📺 "+video.title+" — 第"+(idx+1)+"/"+totalEps+"集："+epTitle+" <span style=\"font-size:10px;color:#999;\">(B站高清源)</span></div>"+
+        "<div style=\"padding:10px 14px;font-size:14px;background:var(--bg-warm);border-bottom:1px solid var(--border-light);\">📺 "+video.title+" — 第"+(idx+1)+"/"+totalEps+"集："+epTitle+"</div>"+
         "<div class=\"zeng-player-layout\">"+
           "<div class=\"zeng-player-video\">"+
-            "<iframe src=\""+biliSrc+"\" allowfullscreen style=\"position:absolute;inset:0;width:100%;height:100%;border:none;\" allow=\"autoplay;encrypted-media\" sandbox=\"allow-scripts allow-same-origin allow-presentation allow-popups\"></iframe>"+
+            "<video id=\"zengVideoEl\" controls autoplay style=\"width:100%;height:100%;object-fit:contain;\" playsinline></video>"+
           "</div>"+
           "<div class=\"zeng-player-sidebar\">"+
             "<div style=\"padding:8px 10px;font-size:12px;color:var(--ink-lighter);font-weight:600;border-bottom:2px solid var(--red-primary);background:var(--bg-warm);\">📋 选集 ("+totalEps+"集)</div>"+
             "<div class=\"zeng-player-episodes\">"+sideList+"</div>"+
           "</div>"+
         "</div>";
+
+      // Initialize HLS playback
+      var videoEl = document.getElementById('zengVideoEl');
+      if (!videoEl) return;
+      if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+        if (_hlsInstance) { _hlsInstance.destroy(); _hlsInstance = null; }
+        var hls = new Hls({ enableWorker: false, lowLatencyMode: false });
+        hls.loadSource(hlsSrc);
+        hls.attachMedia(videoEl);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          videoEl.play().catch(function(){});
+        });
+        hls.on(Hls.Events.ERROR, function(event, data) {
+          if (data.fatal) {
+            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); }
+            else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); }
+            else { hls.destroy(); }
+          }
+        });
+        _hlsInstance = hls;
+      } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS (Safari)
+        videoEl.src = hlsSrc;
+        videoEl.addEventListener('loadedmetadata', function(){ videoEl.play().catch(function(){}); });
+      } else {
+        var errEl = document.createElement('div');
+        errEl.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c0392b;font-size:14px;background:rgba(0,0,0,0.02);';
+        errEl.textContent = '⚠️ 浏览器不支持HLS播放，请更新Chrome/Edge/Safari';
+        videoEl.parentNode.appendChild(errEl);
+        videoEl.style.display = 'none';
+      }
       window._zengPlay = function(i) { buildLocalPlayer(i); };
     }
     buildLocalPlayer(0);

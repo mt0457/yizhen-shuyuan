@@ -15,6 +15,9 @@ _build_*.py
 # 80GB original videos (B站外链替代)
 曾仕强（视频）/
 
+# HLS video segments (deployed to Cloudflare Pages)
+videos/
+
 # Supabase/Python test scripts
 _supabase_setup.js
 test_*.js
