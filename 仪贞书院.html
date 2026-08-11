@@ -3439,12 +3439,17 @@ function setBookFilter(cat, el) {
   // Show/hide daozang sub-filters
   var dzFilters = document.getElementById('daozangFilters');
   if (dzFilters) dzFilters.style.display = (cat === '道藏') ? '' : 'none';
-  // 道藏数据按需加载
-  if (cat === '道藏' && typeof DAOZANG_DATA === 'undefined') {
+  // 道藏数据按需加载（轻量索引210KB，gzip后~45KB，秒开）
+  if (cat === '道藏' && typeof DAOZANG_INDEX === 'undefined') {
     var grid = document.getElementById('bookGrid');
     if (grid) grid.innerHTML = '<div style="text-align:center;padding:60px;"><p>☯️ 正在加载道藏目录……</p></div>';
     ensureDaozangLoaded().then(function(ok) {
-      if (ok) { loadDaozangBooks(); renderBooks(); }
+      if (ok) {
+        loadDaozangBooks();
+        renderBooks();
+        // 后台静默加载完整元数据（用于搜索）
+        setTimeout(preloadFullDaozang, 500);
+      }
       else { if (grid) grid.innerHTML = '<div style="text-align:center;padding:60px;"><p>⚠️ 道藏数据加载失败，请刷新重试</p></div>'; }
     });
     return;
@@ -7513,18 +7518,28 @@ let daozangSection = 'all';
 let daozangCat = 'all';
 let _daozangLoadPromise = null;
 
-// 按需加载道藏数据（469KB），仅在首次点击道藏标签时触发
+// 按需加载道藏轻量索引（210KB→gzip~45KB），首次点击道藏标签时触发
+// 索引字段：id, title, author, section, category, dataKey（不含desc）
+// 完整元数据 _daozang.js（469KB）仅搜索时需要
 function ensureDaozangLoaded() {
-  if (typeof DAOZANG_DATA !== 'undefined') return Promise.resolve(true);
+  if (typeof DAOZANG_INDEX !== 'undefined') return Promise.resolve(true);
   if (_daozangLoadPromise) return _daozangLoadPromise;
   _daozangLoadPromise = new Promise(function(resolve) {
     var s = document.createElement('script');
-    s.src = '_daozang.js';
+    s.src = '_daozang_index.js';
     s.onload = function() { resolve(true); };
     s.onerror = function() { resolve(false); };
     document.head.appendChild(s);
   });
   return _daozangLoadPromise;
+}
+
+// 后台预加载完整元数据（含desc，供搜索用）
+function preloadFullDaozang() {
+  if (typeof DAOZANG_DATA !== 'undefined') return;
+  var s = document.createElement('script');
+  s.src = '_daozang.js';
+  document.head.appendChild(s);
 }
 
 function setDaozangSection(cat, el) {
@@ -7543,6 +7558,7 @@ function setDaozangCat(cat, el) {
 }
 
 function getDaozangBookList() {
+  if (typeof DAOZANG_INDEX !== 'undefined') return DAOZANG_INDEX;
   if (typeof DAOZANG_DATA !== 'undefined') return DAOZANG_DATA;
   return [];
 }
@@ -7659,10 +7675,12 @@ function toggleDZCat(el) {
 }
 
 function loadDaozangBooks() {
-  if (typeof DAOZANG_DATA !== 'undefined') { state.daozangBooks = DAOZANG_DATA; }
+  if (typeof DAOZANG_INDEX !== 'undefined') { state.daozangBooks = DAOZANG_INDEX; }
+  else if (typeof DAOZANG_DATA !== 'undefined') { state.daozangBooks = DAOZANG_DATA; }
   else { state.daozangBooks = []; }
 }
-if (typeof DAOZANG_DATA !== 'undefined') { loadDaozangBooks(); }
+if (typeof DAOZANG_INDEX !== 'undefined') { loadDaozangBooks(); }
+else if (typeof DAOZANG_DATA !== 'undefined') { loadDaozangBooks(); }
 /* ========== END DAOZANG ========== */
 
 
