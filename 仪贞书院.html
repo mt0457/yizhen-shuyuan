@@ -122,7 +122,7 @@ body{padding-bottom:0}
 <script src="_xufuji.js"></script>
 <script src="_sanmingtonghui.js"></script>
 <script src="_covers.js"></script>
-<script src="_daozang.js"></script>
+<!-- _daozang.js loaded lazily when 道藏 tab clicked (469KB, saves initial load) -->
 <!-- JSON-LD Structured Data for Search Engines -->
 <script type="application/ld+json">
 {
@@ -3439,6 +3439,16 @@ function setBookFilter(cat, el) {
   // Show/hide daozang sub-filters
   var dzFilters = document.getElementById('daozangFilters');
   if (dzFilters) dzFilters.style.display = (cat === '道藏') ? '' : 'none';
+  // 道藏数据按需加载
+  if (cat === '道藏' && typeof DAOZANG_DATA === 'undefined') {
+    var grid = document.getElementById('bookGrid');
+    if (grid) grid.innerHTML = '<div style="text-align:center;padding:60px;"><p>☯️ 正在加载道藏目录……</p></div>';
+    ensureDaozangLoaded().then(function(ok) {
+      if (ok) { loadDaozangBooks(); renderBooks(); }
+      else { if (grid) grid.innerHTML = '<div style="text-align:center;padding:60px;"><p>⚠️ 道藏数据加载失败，请刷新重试</p></div>'; }
+    });
+    return;
+  }
   renderBooks();
 }
 
@@ -7501,6 +7511,21 @@ function debounceRenderVideos() { debounce('videos', renderVideos, 300); }
 /* ========== Daozang (道藏目录：三洞四辅十二类层级结构) ========== */
 let daozangSection = 'all';
 let daozangCat = 'all';
+let _daozangLoadPromise = null;
+
+// 按需加载道藏数据（469KB），仅在首次点击道藏标签时触发
+function ensureDaozangLoaded() {
+  if (typeof DAOZANG_DATA !== 'undefined') return Promise.resolve(true);
+  if (_daozangLoadPromise) return _daozangLoadPromise;
+  _daozangLoadPromise = new Promise(function(resolve) {
+    var s = document.createElement('script');
+    s.src = '_daozang.js';
+    s.onload = function() { resolve(true); };
+    s.onerror = function() { resolve(false); };
+    document.head.appendChild(s);
+  });
+  return _daozangLoadPromise;
+}
 
 function setDaozangSection(cat, el) {
   if (!checkDaozangAccess()) return;
