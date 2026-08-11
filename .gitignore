@@ -40,6 +40,9 @@ node_modules/
 # Claude
 .claude/
 
+# Deployment secrets
+.env
+
 # OS files
 Thumbs.db
 .DS_Store
