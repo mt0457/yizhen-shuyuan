@@ -1,4 +1,4 @@
-const DZ739_CONTENT = `
+var DZ739_CONTENT = `
 # 太上洞玄灵宝本行因缘经
 
 ## 经名释义

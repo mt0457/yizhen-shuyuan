@@ -1,4 +1,4 @@
-const DZ990_CONTENT = `
+var DZ990_CONTENT = `
 <div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
 
 <h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上洞神九天生神玉章解</h1>

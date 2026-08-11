@@ -1,4 +1,4 @@
-const DZ1014_CONTENT=`<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
+var DZ1014_CONTENT=`<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
 
 <h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上洞神三皇内秘</h1>
 <p style="text-align:center;color:#666;margin-bottom:20px;">三皇内文修行秘法 · 洞神部 本文类 · 明正统道藏第1014部</p>

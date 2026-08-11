@@ -1,4 +1,4 @@
-const DZ1045_CONTENT = `
+var DZ1045_CONTENT = `
 # 太上洞玄灵宝天尊说报恩经
 
 ## 经名释义
@@ -1127,4 +1127,3 @@ const DZ1045_CONTENT = `
 灵宝天尊说 · 太上洞玄灵宝天尊说报恩经 · 四恩圆满 · 度人无量
 `;
 
-export { DZ1045_CONTENT };

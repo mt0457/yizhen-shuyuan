@@ -1,4 +1,4 @@
-const DZ1121_CONTENT = `
+var DZ1121_CONTENT = `
 # 太上正一北斗延寿妙经
 
 ## 经名释义
@@ -498,4 +498,3 @@ const DZ1121_CONTENT = `
 正一道传 · 一卷 · 北斗九皇 · 延寿科仪 · 三洞四辅十二类
 `;
 
-export { DZ1121_CONTENT };

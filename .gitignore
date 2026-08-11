@@ -18,6 +18,9 @@ _build_*.py
 # HLS video segments (deployed to Cloudflare Pages)
 videos/
 
+# Large MP4 source files
+通玄真经/
+
 # Supabase/Python test scripts
 _supabase_setup.js
 test_*.js

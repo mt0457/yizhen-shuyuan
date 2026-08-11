@@ -1,4 +1,4 @@
-const DZ831_CONTENT = `
+var DZ831_CONTENT = `
 # 太上洞玄灵宝升玄步虚章
 
 ## 经名释义
@@ -518,4 +518,3 @@ const DZ831_CONTENT = `
 太上洞玄灵宝升玄步虚章 · 步虚词十首 · 每首十句 · 灵宝天尊所传
 `;
 
-export { DZ831_CONTENT };

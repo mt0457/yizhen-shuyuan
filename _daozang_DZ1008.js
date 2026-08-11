@@ -1,4 +1,4 @@
-const DZ1008_CONTENT = `
+var DZ1008_CONTENT = `
 # 太上洞真飞行三界升玄经
 
 ## 经名释义
@@ -671,4 +671,3 @@ const DZ1008_CONTENT = `
 太上洞真飞行三界升玄经 · 遍历三界 · 升入玄都 · 面礼元始天尊
 `;
 
-export { DZ1008_CONTENT };

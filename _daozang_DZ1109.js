@@ -1,4 +1,4 @@
-const DZ1109_CONTENT = `
+var DZ1109_CONTENT = `
 # 太上正一上清九真妙戒
 
 ## 经名释义
@@ -498,4 +498,3 @@ const DZ1109_CONTENT = `
 正一道传 · 一卷 · 九戒 · 三洞四辅十二类
 `;
 
-export { DZ1109_CONTENT };

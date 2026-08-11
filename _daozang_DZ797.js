@@ -1,4 +1,4 @@
-const DZ797_CONTENT = `
+var DZ797_CONTENT = `
 # 太上正一三官宝诰
 
 ## 经名释义

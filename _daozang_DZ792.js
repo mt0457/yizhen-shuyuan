@@ -1,4 +1,4 @@
-const DZ792_CONTENT = `
+var DZ792_CONTENT = `
 # 太上洞神老君变化经
 
 ## 经名释义

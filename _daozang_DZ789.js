@@ -1,4 +1,4 @@
-const DZ789_CONTENT = `
+var DZ789_CONTENT = `
 # 太上正一八史醮仪
 
 ## 经名释义

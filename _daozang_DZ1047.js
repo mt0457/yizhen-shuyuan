@@ -1,4 +1,4 @@
-const DZ1047_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
+var DZ1047_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
 <h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上正一太上金书玉诰</h1>
 <p style="text-align:center;color:#888;margin-bottom:12px;">正一天师传 · 正一部 赞颂类 · 明正统道藏第1047部</p>
 <div style="background:#faf7f2;padding:24px;border-radius:8px;margin-bottom:28px;border-left:5px solid #c9a96e;">

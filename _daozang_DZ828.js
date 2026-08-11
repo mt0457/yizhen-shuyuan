@@ -1,4 +1,4 @@
-const DZ828_CONTENT = `
+var DZ828_CONTENT = `
 # 太上清静心印经
 
 ## 经名释义
@@ -498,4 +498,3 @@ const DZ828_CONTENT = `
 太上老君所说 · 清静为体心印为用 · 体用一如万法归宗
 `;
 
-export { DZ828_CONTENT };

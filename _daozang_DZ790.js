@@ -1,4 +1,4 @@
-const DZ790_CONTENT = `
+var DZ790_CONTENT = `
 # 太上洞真太极左仙公请问经
 
 ## 经名释义

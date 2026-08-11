@@ -1,4 +1,4 @@
-const DZ1023_CONTENT = `
+var DZ1023_CONTENT = `
 # 太上正一四海龙王真经
 
 ## 经名释义
@@ -500,4 +500,3 @@ const DZ1023_CONTENT = `
 太上正一四海龙王真经 · 八卷 · 四海龙王护佑众生航海平安渔业丰饶
 `;
 
-export { DZ1023_CONTENT };

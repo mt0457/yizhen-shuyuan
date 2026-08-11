@@ -1,4 +1,4 @@
-const DZ795_CONTENT = `
+var DZ795_CONTENT = `
 # 太上洞玄灵宝黄箓简文
 
 ## 经名释义

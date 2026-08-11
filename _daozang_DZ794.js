@@ -1,4 +1,4 @@
-const DZ794_CONTENT = `
+var DZ794_CONTENT = `
 # 太上洞真上清天关三图经
 
 ## 经名释义

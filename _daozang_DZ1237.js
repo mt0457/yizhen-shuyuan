@@ -1,4 +1,4 @@
-const DZ1237_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
+var DZ1237_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
 <h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上正一中岳嵩山宝忏</h1>
 <p style="text-align:center;color:#666;margin-bottom:20px;">中岳大帝 · 正一部 忏法类 · 明正统道藏第1237部</p>
 <div style="background:#faf7f2;padding:24px;border-radius:8px;margin-bottom:28px;border-left:5px solid #c9a96e;">

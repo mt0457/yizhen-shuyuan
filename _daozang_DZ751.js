@@ -1,4 +1,4 @@
-const DZ751_CONTENT = `
+var DZ751_CONTENT = `
 太上洞玄灵宝洞真上经
 
 部类：洞玄部·本文类

@@ -1,4 +1,4 @@
-const DZ752_CONTENT = `
+var DZ752_CONTENT = `
 太上洞真八素真经
 
 部类：洞真部·本文类

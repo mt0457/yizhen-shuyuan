@@ -1,4 +1,4 @@
-const DZ1238_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;"><h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上洞真上清斗姆天尊说紫微妙经</h1>
+var DZ1238_CONTENT = `<div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;"><h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上洞真上清斗姆天尊说紫微妙经</h1>
 <p style="text-align:center;color:#666;margin-bottom:20px;">洞真部·本文类 · 明正统道藏第1238部</p>
 <div style="background:#faf7f2;padding:24px;border-radius:8px;margin-bottom:28px;border-left:5px solid #c9a96e;"><p style="margin:0;font-size:16px;"><b>提要</b></p>
 <p style="margin:8px 0 0 0;line-height:2;">《太上洞真上清斗姆天尊说紫微妙经》，简称《紫微妙经》或《斗姆经》，一卷，撰人不详，约出于唐宋时期，为上清派斗姆信仰之根本经典，收录于明《正统道藏》洞真部本文类。斗姆天尊者，北斗众星之母也，居大梵天宫紫微玉阙，统御北斗九皇、南斗六司、东西中三斗群星。此经述斗姆天尊之本行功德、神通妙用及存思礼斗之法门。斗姆天尊现四头八臂之相，乘七宝金莲，持日月为双目，执弓矢戟剑以降魔护法。经中阐明：礼斗姆则北斗九皇俱礼，诵斗姆则满天星斗悉皆拥护。修道者若能至心皈命斗姆天尊，如法存思修持，可消灾度厄、延生注福、开悟增慧、毕竟成真。此经乃道教星斗信仰之集大成者，将北斗崇拜提升至"斗姆为母、众星为子"之完整神学体系，对后世道教之礼斗科仪影响深远。</p>

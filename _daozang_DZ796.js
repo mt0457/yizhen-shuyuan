@@ -1,4 +1,4 @@
-const DZ796_CONTENT = `
+var DZ796_CONTENT = `
 # 太上洞神紫微宝诰
 
 ## 经名释义

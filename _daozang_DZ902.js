@@ -1,4 +1,4 @@
-const DZ902_CONTENT = `
+var DZ902_CONTENT = `
 <div style="font-family:Noto Serif SC,SimSun,serif;line-height:2.3;font-size:17px;max-width:800px;margin:0 auto;">
 
 <h1 style="text-align:center;font-size:30px;color:#8b1a1a;margin-bottom:4px;">太上洞玄灵宝无量度人上品妙经</h1>

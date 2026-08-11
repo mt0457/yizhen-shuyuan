@@ -1,4 +1,4 @@
-const DZ801_CONTENT = `
+var DZ801_CONTENT = `
 # 太上正一太上三洞传度秘诀
 
 ## 经名释义

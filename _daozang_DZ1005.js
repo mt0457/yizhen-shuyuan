@@ -1,4 +1,4 @@
-const DZ1005_CONTENT = `
+var DZ1005_CONTENT = `
 # 太上洞玄灵宝天尊说十戒经
 
 ## 经名释义
@@ -497,4 +497,3 @@ const DZ1005_CONTENT = `
 灵宝天尊说 · 十戒根本 · 修道基石 · 度人津梁
 `;
 
-export { DZ1005_CONTENT };

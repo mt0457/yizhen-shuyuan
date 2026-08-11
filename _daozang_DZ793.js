@@ -1,4 +1,4 @@
-const DZ793_CONTENT = `
+var DZ793_CONTENT = `
 # 太上正一传度仪范
 
 ## 经名释义

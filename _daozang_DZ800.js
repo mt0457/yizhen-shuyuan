@@ -1,4 +1,4 @@
-const DZ800_CONTENT = `
+var DZ800_CONTENT = `
 # 太上洞神天篆度命经
 
 ## 经名释义
@@ -498,4 +498,3 @@ const DZ800_CONTENT = `
 元始天尊说 · 天篆度命 · 禳灾祈福 · 延寿增算
 `;
 
-export { DZ800_CONTENT };

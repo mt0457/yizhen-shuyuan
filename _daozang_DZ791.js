@@ -1,4 +1,4 @@
-const DZ791_CONTENT = `
+var DZ791_CONTENT = `
 # 太上洞玄灵宝敷斋威仪经
 
 ## 经名释义

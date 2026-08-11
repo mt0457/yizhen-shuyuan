@@ -1,4 +1,4 @@
-const DZ799_CONTENT = `
+var DZ799_CONTENT = `
 # 太上洞玄灵宝洞渊神咒经
 
 ## 经名释义
