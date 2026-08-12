@@ -967,7 +967,7 @@ body{padding-bottom:0}
         <button id="registerTabBtn" onclick="switchLoginTab('register')" style="flex:1;padding:8px;border:none;background:none;font-weight:600;color:var(--ink-lighter);cursor:pointer;">注册</button>
       </div>
       <div id="loginFormArea">
-        <div class="form-group"><input type="text" id="loginUsername" placeholder="用户名 / 手机号" required></div>
+        <div class="form-group"><input type="text" id="loginUsername" placeholder="用户名 / 手机号 / 邮箱" required></div>
         <div class="form-group"><input type="password" id="loginPassword" placeholder="密码" required onkeydown="if(event.key==='Enter')doUserLogin()"></div>
         <p id="loginError" style="color:#c0392b;font-size:12px;margin-bottom:8px;display:none;"></p>
         <button class="btn btn-gold" style="width:100%;" onclick="doUserLogin()">登录</button>
@@ -976,9 +976,15 @@ body{padding-bottom:0}
       </div>
       <div id="registerFormArea" style="display:none;">
         <div class="form-group"><input type="text" id="regUsername" placeholder="用户名（中英文/数字/下划线）" required></div>
-        <div class="form-group"><input type="text" id="regPhone" placeholder="手机号（用于登录和找回密码）" required></div>
+        <div class="form-group"><input type="email" id="regEmail" placeholder="📧 邮箱（用于验证身份）" required></div>
         <div style="display:flex;gap:8px;" class="form-group">
-          <input type="text" id="regPhoneCode" placeholder="验证码" style="flex:1;" required>
+          <input type="text" id="regEmailCode" placeholder="邮箱验证码" style="flex:1;" required>
+          <button class="btn btn-outline btn-sm" onclick="sendRegEmailCode()" id="sendEmailCodeBtn" style="white-space:nowrap;">📧 获取验证码</button>
+        </div>
+        <p style="font-size:11px;color:var(--ink-lighter);margin:-8px 0 12px;">💡 验证码将发送到您的邮箱，如未收到请检查垃圾邮件</p>
+        <div class="form-group"><input type="text" id="regPhone" placeholder="📱 手机号（选填，用于找回密码）"></div>
+        <div style="display:flex;gap:8px;" class="form-group">
+          <input type="text" id="regPhoneCode" placeholder="短信验证码（选填）" style="flex:1;">
           <button class="btn btn-outline btn-sm" onclick="sendRegPhoneCode()" id="sendCodeBtn" style="white-space:nowrap;">获取验证码</button>
         </div>
         <div class="form-group"><input type="password" id="regPassword" placeholder="密码（至少6位）" required></div>
@@ -2034,20 +2040,54 @@ function sendPhoneCode(phone) {
   const codes = loadVerifyCodes();
   codes['phone_' + phone] = { code, expires: Date.now() + 300000, attempts: 3 };
   saveVerifyCodes(codes);
-  // 本网站使用模拟验证码（无需短信费用），验证码直接展示
-  showToast('📱 验证码：[ ' + code + ' ] — 请记下并填入（有效期5分钟，模拟短信无费用）', 8000);
+  // 模拟短信验证（无费用），验证码通过console输出，不显示在前端
+  console.log('[仪贞书院] 手机验证码（模拟）：' + code + ' 手机号：' + phone);
+  showToast('📱 验证码已发送至 ' + phone + '（有效期5分钟）', 5000);
   return true;
 }
 
 function sendEmailCode(email) {
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('请输入有效的邮箱地址'); return false; }
-  const code = generateVerifyCode();
-  const codes = loadVerifyCodes();
-  codes['email_' + email] = { code, expires: Date.now() + 600000, attempts: 0 };
+  var code = generateVerifyCode();
+  var codes = loadVerifyCodes();
+  codes['email_' + email] = { code: code, expires: Date.now() + 600000, attempts: 0 };
   saveVerifyCodes(codes);
-  showToast('验证码已发送至 ' + email + '（有效期5分钟）', 5000);
-  // Verification code sent (not logged)
+
+  // Call Cloudflare Worker to send real email
+  var btn = document.getElementById('sendEmailCodeBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '发送中...'; }
+  fetch('/api/send-verify-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: email, code: code })
+  }).then(function(resp) {
+    return resp.json();
+  }).then(function(data) {
+    if (data.success) {
+      showToast('📧 验证码已发送至 ' + email + '，请查收（如未收到请检查垃圾邮件）', 6000);
+    } else {
+      showToast('⚠️ 邮件发送失败：' + (data.error || '请稍后重试'), 5000);
+    }
+  }).catch(function() {
+    showToast('⚠️ 邮件服务暂时不可用，请稍后重试或使用手机验证', 6000);
+  }).finally(function() {
+    if (btn) { btn.disabled = false; btn.textContent = '📧 获取验证码'; }
+  });
   return true;
+}
+
+// 注册时发送邮箱验证码
+function sendRegEmailCode() {
+  var email = document.getElementById('regEmail').value.trim();
+  if (!email) { showToast('请先输入邮箱地址'); return; }
+  sendEmailCode(email);
+}
+
+// 注册时发送手机验证码
+function sendRegPhoneCode() {
+  var phone = document.getElementById('regPhone').value.trim();
+  if (!phone) { showToast('请先输入手机号（或使用邮箱验证）'); return; }
+  sendPhoneCode(phone);
 }
 
 function verifyCode(target, code) {
@@ -2166,9 +2206,9 @@ function doUserLogin() {
   var credential = document.getElementById('loginUsername').value.trim();
   var password = document.getElementById('loginPassword').value;
   var errEl = document.getElementById('loginError');
-  if (!credential || !password) { errEl.style.display = ''; errEl.textContent = '请输入用户名/手机号和密码'; return; }
+  if (!credential || !password) { errEl.style.display = ''; errEl.textContent = '请输入用户名/手机号/邮箱和密码'; return; }
   var users = loadUsers();
-  // 尝试用户名登录，失败则尝试手机号登录
+  // 尝试用户名登录，失败则尝试手机号，再失败则尝试邮箱
   var username = null;
   if (users[credential]) {
     username = credential;
@@ -2177,8 +2217,14 @@ function doUserLogin() {
     for (var uname in users) {
       if (users[uname].phone === credential) { username = uname; break; }
     }
+    // 通过邮箱查找用户名
+    if (!username) {
+      for (var uname2 in users) {
+        if (users[uname2].email === credential) { username = uname2; break; }
+      }
+    }
   }
-  if (!username) { errEl.style.display = ''; errEl.textContent = '用户名/手机号不存在'; return; }
+  if (!username) { errEl.style.display = ''; errEl.textContent = '用户名/手机号/邮箱不存在'; return; }
   if (users[username].password !== hashPassword(password)) { errEl.style.display = ''; errEl.textContent = '密码错误'; return; }
   // 登录成功
   loginUserByName(username, users[username]);
@@ -2276,6 +2322,8 @@ function loginUserByName(username, userData) {
 
 function doUserRegister() {
   var username = document.getElementById('regUsername').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var emailCode = document.getElementById('regEmailCode').value.trim();
   var phone = document.getElementById('regPhone').value.trim();
   var phoneCode = document.getElementById('regPhoneCode').value.trim();
   var password = document.getElementById('regPassword').value;
@@ -2283,30 +2331,29 @@ function doUserRegister() {
   var errEl = document.getElementById('regError');
   if (!username || username.length < 2) { errEl.style.display = ''; errEl.textContent = '用户名至少2个字符'; return; }
   if (!/^[一-龥a-zA-Z0-9_]+$/.test(username)) { errEl.style.display = ''; errEl.textContent = '用户名仅支持中英文、数字和下划线'; return; }
-  if (!phone || !/^1[3-9]\d{9}$/.test(phone)) { errEl.style.display = ''; errEl.textContent = '请输入有效的11位手机号'; return; }
-  if (!verifyCode('phone_' + phone, phoneCode)) { errEl.style.display = ''; errEl.textContent = '验证码错误或已过期'; return; }
-  if (!password || password.length < 4) { errEl.style.display = ''; errEl.textContent = '密码至少4个字符'; return; }
+  // 邮箱验证（必须）
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.style.display = ''; errEl.textContent = '请输入有效的邮箱地址'; return; }
+  if (!verifyCode('email_' + email, emailCode)) { errEl.style.display = ''; errEl.textContent = '邮箱验证码错误或已过期（5分钟有效）'; return; }
+  // 手机号验证（选填，如果填了则需验证）
+  if (phone && !/^1[3-9]\d{9}$/.test(phone)) { errEl.style.display = ''; errEl.textContent = '手机号格式不正确（11位，1开头）'; return; }
+  if (phone && phoneCode && !verifyCode('phone_' + phone, phoneCode)) { errEl.style.display = ''; errEl.textContent = '短信验证码错误或已过期'; return; }
+  if (!password || password.length < 6) { errEl.style.display = ''; errEl.textContent = '密码至少6个字符'; return; }
   if (password !== confirm) { errEl.style.display = ''; errEl.textContent = '两次密码不一致'; return; }
   var users = loadUsers();
   if (users[username]) { errEl.style.display = ''; errEl.textContent = '用户名已存在'; return; }
+  // 检查邮箱是否已被注册
+  for (var uname in users) { if (users[uname].email === email) { errEl.style.display = ''; errEl.textContent = '该邮箱已被注册'; return; } }
   // 检查手机号是否已被注册
-  for (var uname in users) { if (users[uname].phone === phone) { errEl.style.display = ''; errEl.textContent = '该手机号已被注册'; return; } }
+  if (phone) { for (var uname2 in users) { if (users[uname2].phone === phone) { errEl.style.display = ''; errEl.textContent = '该手机号已被注册'; return; } } }
   var hash = hashPassword(password);
-  users[username] = { password: hash, createdAt: new Date().toISOString(), vipTier: 'none', vipExpiry: null, purchaseHistory: [], phone: phone, email: '', phoneVerified: true, emailVerified: false };
+  users[username] = { password: hash, createdAt: new Date().toISOString(), vipTier: 'none', vipExpiry: null, purchaseHistory: [], phone: phone || '', email: email, phoneVerified: !!phone, emailVerified: true };
   saveUsers(users);
   loginUserByName(username, users[username]);
   closeUserLogin();
   if (_pendingLoginCallback) { var cb = _pendingLoginCallback; _pendingLoginCallback = null; cb(); }
   updateVipBadge();
   updateAdminNav();
-  showToast('注册成功，欢迎使用仪贞书院！');
-}
-
-// 注册时发送验证码
-function sendRegPhoneCode() {
-  var phone = document.getElementById('regPhone').value.trim();
-  if (!phone || !/^1[3-9]\d{9}$/.test(phone)) { showToast('请先输入有效的手机号'); return; }
-  sendPhoneCode(phone);
+  showToast('🎉 注册成功，欢迎来到仪贞书院！');
 }
 
 // 找回密码时发送验证码
