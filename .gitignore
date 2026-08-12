@@ -58,3 +58,4 @@ Desktop.ini
 # Deployment docs (keep only in memory)
 ALIYUN_DEPLOY.md
 SUPABASE_TUTORIAL.md
+.wrangler/

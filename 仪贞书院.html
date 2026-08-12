@@ -178,7 +178,7 @@ body{padding-bottom:0}
       <a href="#mingli" class="nav-link" data-page="mingli" onclick="navigate('mingli')">🔮 传统探索</a>
       <a href="#about" class="nav-link" data-page="about" onclick="navigate('about')">关于本站</a>
       <a href="#vip" class="nav-link" data-page="vip" onclick="navigate('vip')"><span id="vipNavBadge"></span>👑 VIP</a>
-      <a href="#admin" class="nav-link" data-page="admin" onclick="if(!isAdmin()){ensureAdmin(function(){navigate('admin');});return;}navigate('admin')" id="adminNavLink">🛡️ 管理</a>
+      <a href="#admin" class="nav-link" data-page="admin" onclick="if(!isAdmin()){ensureAdmin(function(){navigate('admin');});return;}navigate('admin')" id="adminNavLink">🛡️ 管理<span id="adminPendingBadge" style="display:none;background:#d9534f;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:4px;font-weight:700;"></span></a>
       <a href="#settings" class="nav-link admin-only" id="settingsNavLink" data-page="settings" onclick="navigate('settings')" style="display:none;">⚙️ 设置</a>
     </nav>
   </div>
@@ -2934,24 +2934,35 @@ function openVipPurchase(tierId) {
   if (!tier) return;
   var hasWechat = !!getStoredQR('wechat');
   var hasAlipay = !!getStoredQR('alipay');
+  // Get contact info for support display
+  var contactInfo = {};
+  try { contactInfo = JSON.parse(localStorage.getItem(STORAGE_KEY_CONTACT_INFO)||'{}'); } catch(e) {}
   var body = document.getElementById('vipPurchaseBody');
   body.innerHTML = '<div class="vip-purchase-steps">' +
-    '<div class="step active" id="purchaseStep1"><div class="step-num">1</div><div class="step-label">选择套餐</div><div class="step-desc">'+tier.name+' · ¥'+tier.price.toFixed(2)+'</div></div>' +
+    '<div class="step active" id="purchaseStep1"><div class="step-num">1</div><div class="step-label">选择套餐</div><div class="step-desc">'+escHtml(tier.name)+' · ¥'+tier.price.toFixed(2)+'</div></div>' +
     '<div class="step" id="purchaseStep2"><div class="step-num">2</div><div class="step-label">扫码支付</div><div class="step-desc">微信/支付宝</div></div>' +
     '<div class="step" id="purchaseStep3"><div class="step-num">3</div><div class="step-label">等待确认</div><div class="step-desc">管理员审核</div></div>' +
     '</div><div id="purchaseStepContent"><div class="vip-qr-code">' +
     '<p style="margin-bottom:12px;font-weight:600;">请扫描下方收款码支付 <span style="color:var(--red-primary);font-size:18px;">¥'+tier.price.toFixed(2)+'</span></p>' +
     '<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">' +
-    (hasWechat ? '<div style="text-align:center;"><img src="'+getStoredQR('wechat')+'" alt="微信收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💚 微信支付</p></div>' : '<div style="padding:20px;border:1px dashed var(--border);border-radius:8px;color:var(--ink-lighter);">微信收款码未设置</div>') +
-    (hasAlipay ? '<div style="text-align:center;"><img src="'+getStoredQR('alipay')+'" alt="支付宝收款码" style="max-width:180px;border-radius:8px;"><p style="font-size:12px;margin-top:4px;">💙 支付宝</p></div>' : '') +
+    (hasWechat ? '<div style="text-align:center;"><div style="border:2px solid #07c160;border-radius:12px;padding:8px;background:#fff;display:inline-block;"><img src="'+getStoredQR('wechat')+'" alt="微信收款码" style="max-width:180px;border-radius:8px;display:block;"></div><p style="font-size:13px;margin-top:6px;font-weight:600;">💚 微信支付</p><p style="font-size:11px;color:var(--ink-lighter);">打开微信"扫一扫"</p></div>' : '<div style="padding:20px;border:1px dashed var(--border);border-radius:8px;color:var(--ink-lighter);text-align:center;">💚<br>微信收款码<br>未设置</div>') +
+    (hasAlipay ? '<div style="text-align:center;"><div style="border:2px solid #1677ff;border-radius:12px;padding:8px;background:#fff;display:inline-block;"><img src="'+getStoredQR('alipay')+'" alt="支付宝收款码" style="max-width:180px;border-radius:8px;display:block;"></div><p style="font-size:13px;margin-top:6px;font-weight:600;">💙 支付宝</p><p style="font-size:11px;color:var(--ink-lighter);">打开支付宝"扫一扫"</p></div>' : '') +
     '</div>' +
-    (!hasWechat && !hasAlipay ? '<p style="text-align:center;margin-top:12px;color:var(--ink-lighter);font-size:13px;">收款码暂未设置，请联系管理员</p>' : '') +
-    '<div style="max-width:320px;margin:16px auto 0;">' +
+    (!hasWechat && !hasAlipay ? '<p style="text-align:center;margin-top:12px;color:#d9534f;font-size:13px;">收款码暂未设置，请联系管理员</p>' : '') +
+    // Payment reference
+    '<div style="max-width:360px;margin:16px auto 0;">' +
     '<label style="font-size:13px;font-weight:600;">📝 付款参考号（选填）</label>' +
     '<input type="text" id="vipPaymentReference" placeholder="请输入微信/支付宝交易单号后4-6位" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;margin-top:6px;box-sizing:border-box;">' +
     '<p style="font-size:11px;color:var(--ink-lighter);margin-top:4px;">填写后管理员可更快确认您的付款</p></div>' +
-    '<button class="btn btn-primary" style="margin-top:16px;min-width:200px;" onclick="submitPendingPayment()" '+(state.isLoggedIn?'':'disabled')+'>我已支付，等待管理员确认</button>' +
+    // Trust / security notice
+    '<div style="max-width:360px;margin:12px auto 0;background:#f0f9ff;border:1px solid #b6d4fe;border-radius:8px;padding:10px 14px;">' +
+    '<p style="font-size:12px;color:#0c5460;margin:0;">🔒 <strong>安全保障：</strong>您的付款直接进入管理员个人账户，管理员确认后即刻开通VIP，无需等待。</p></div>' +
+    // Support contact
+    (contactInfo.wechat || contactInfo.email ? '<div style="max-width:360px;margin:8px auto 0;text-align:center;"><p style="font-size:12px;color:var(--ink-lighter);margin:0;">📞 支付遇到问题？联系客服：'+(contactInfo.wechat?'微信 '+escHtml(contactInfo.wechat):'')+(contactInfo.wechat&&contactInfo.email?' | ':'')+(contactInfo.email?'邮箱 '+escHtml(contactInfo.email):'')+'</p></div>' : '') +
+    // Action buttons
+    '<button class="btn btn-primary" style="margin-top:16px;min-width:200px;" onclick="submitPendingPayment()" '+(state.isLoggedIn?'':'disabled')+'>✅ 我已支付，等待管理员确认</button>' +
     (!state.isLoggedIn ? '<p style="font-size:11px;color:#d9534f;margin-top:8px;">⚠️ 请先登录后再提交</p>' : '<p style="font-size:11px;color:var(--ink-lighter);margin-top:8px;">支付完成后点击上方按钮，管理员确认后即刻开通VIP</p>') +
+    '<p style="font-size:11px;color:var(--ink-lighter);margin-top:4px;">💡 提示：请保存支付截图，以便后续核对</p>' +
     '</div></div>';
   document.getElementById('vipPurchaseModal').classList.add('open');
 }
@@ -2970,6 +2981,7 @@ function submitPendingPayment() {
     localStorage.setItem(STORAGE_KEY_PENDING_PAYMENTS, JSON.stringify(list));
   } catch(e) {}
   logActivity('payment_pending', state.currentUser.username, 'VIP购买待确认: '+tier.name+' ¥'+tier.price.toFixed(2)+(reference?' 参考号:'+reference:''));
+  updateAdminNav();
   document.getElementById('purchaseStep2').classList.add('active');
   document.getElementById('purchaseStep3').classList.add('active');
   var body = document.getElementById('purchaseStepContent');
@@ -8055,6 +8067,20 @@ function updateAdminNav() {
   var show = isAdmin() ? '' : 'none';
   var els = document.querySelectorAll('.admin-only');
   for (var i = 0; i < els.length; i++) { els[i].style.display = show; }
+  // Update pending payment badge
+  var badge = document.getElementById('adminPendingBadge');
+  if (badge) {
+    try {
+      var pending = JSON.parse(localStorage.getItem(STORAGE_KEY_PENDING_PAYMENTS)||'[]');
+      var count = pending.filter(function(p){return p.status==='pending'}).length;
+      if (count > 0) {
+        badge.style.display = 'inline';
+        badge.textContent = count;
+      } else {
+        badge.style.display = 'none';
+      }
+    } catch(e) { badge.style.display = 'none'; }
+  }
 }
 
 /* ========== Admin Dashboard ========== */
@@ -8108,6 +8134,18 @@ function renderAdminOverview() {
     html += '<div style="font-size:26px;">'+s.i+'</div><div style="font-size:22px;font-weight:700;color:var(--ink);margin:6px 0;">'+s.v+'</div><div style="font-size:11px;color:var(--ink-lighter);">'+s.l+'</div></div>';
   });
   html += '</div>';
+
+  // QR payment setup status alert
+  var hasWechat = !!getStoredQR('wechat');
+  var hasAlipay = !!getStoredQR('alipay');
+  if (!hasWechat || !hasAlipay) {
+    html += '<div style="background:linear-gradient(135deg,#fff3cd,#ffeaa7);border:1px solid #f0ad4e;border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">';
+    html += '<span style="font-size:28px;">⚠️</span><div style="flex:1;"><strong style="color:#856404;">收款码尚未完整配置</strong><p style="font-size:13px;color:#856404;margin:4px 0 0;">';
+    if (!hasWechat && !hasAlipay) html += '微信和支付宝收款码均未上传，用户无法完成VIP支付。';
+    else if (!hasWechat) html += '微信收款码未上传，用户无法使用微信支付。';
+    else html += '支付宝收款码未上传，用户无法使用支付宝支付。';
+    html += '</p></div><button class="btn btn-gold btn-sm" onclick="renderAdminDashboard(\'settings\')" style="white-space:nowrap;">⚙️ 前往设置</button></div>';
+  }
 
   html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
   html += '<div style="background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);"><h4>📜 操作日志</h4>';
@@ -8243,6 +8281,7 @@ function approvePayment(index) {
   showToast('✅ 已为 '+p.username+' 开通VIP');
   renderAdminDashboard('payments');
   updateVipBadge();
+  updateAdminNav();
 }
 
 function rejectPayment(index) {
@@ -8256,6 +8295,7 @@ function rejectPayment(index) {
   logAdminAction('拒绝VIP支付: '+p.username);
   showToast('已拒绝 '+p.username+' 的支付申请');
   renderAdminDashboard('payments');
+  updateAdminNav();
 }
 
 /* ========== Activity Log ========== */
