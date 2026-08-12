@@ -1,4 +1,4 @@
-const CAIGENTAN_CONTENT = `菜根谭·前集
+var CAIGENTAN_CONTENT = `菜根谭·前集
 
 【修身】
 

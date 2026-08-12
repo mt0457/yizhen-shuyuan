@@ -1,4 +1,4 @@
-const HUANGZONGXI_YIXUEXIANGSHULUN_CONTENT = `黄宗羲·易学象数论
+var HUANGZONGXI_YIXUEXIANGSHULUN_CONTENT = `黄宗羲·易学象数论
 
 黄宗羲（1610—1695），字太冲，号南雷，学者称梨洲先生，浙江余姚人。明末清初三大思想家之一。父黄尊素为东林名士，死于阉祸。宗羲年十九袖锥入京讼冤。明亡不仕，隐居著述。其学博大精深，于经史百家无所不通。著《明儒学案》《宋元学案》，开中国学术史之先河。
 

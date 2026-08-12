@@ -1,4 +1,4 @@
-const JIAOYANSHOU_YILIN_XIAJING_CONTENT = `
+var JIAOYANSHOU_YILIN_XIAJING_CONTENT = `
 ◆ 第31卦 咸䷞之林
 咸之乾：登高望遠，不見青天。黃雲蔽日，使我心酸。
 咸之坤：採薪得鹿，福祿自足。失之東隅，收之桑竹。

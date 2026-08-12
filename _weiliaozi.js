@@ -1,4 +1,4 @@
-const WEILIAOZI_CONTENT = `尉缭子
+var WEILIAOZI_CONTENT = `尉缭子
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 战国·尉缭 著
 兵书经典，与《孙子兵法》《吴子》并称

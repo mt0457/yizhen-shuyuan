@@ -1,4 +1,4 @@
-const FAWEILUN_CONTENT = `发微论
+var FAWEILUN_CONTENT = `发微论
 宋·蔡元定 著
 
 ═══════════════════════════════════════════════════════

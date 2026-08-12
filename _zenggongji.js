@@ -1,4 +1,4 @@
-const ZENGGONGJI_CONTENT = `曾巩集
+var ZENGGONGJI_CONTENT = `曾巩集
 
 曾巩（1019年—1083年），字子固，建昌南丰（今江西南丰）人。
 北宋著名散文家，"唐宋八大家"之一，世称"南丰先生"。

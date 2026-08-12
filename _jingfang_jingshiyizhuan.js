@@ -1,4 +1,4 @@
-const JINGFANG_JINGSHIYIZHUAN_CONTENT = `京房·京氏易传
+var JINGFANG_JINGSHIYIZHUAN_CONTENT = `京房·京氏易传
 
 京房（前77—前37），字君明，东郡顿丘（今河南清丰）人。本姓李，推律自定为京氏。师事焦延寿，尽得《易林》之秘。延寿尝曰："得吾道以亡身者，必京生也。"汉元帝时以明灾异得幸，为石显等所谮，下狱弃市，年四十一。
 

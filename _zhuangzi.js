@@ -1,4 +1,4 @@
-const ZHUANGZI_CONTENT = `【内篇】
+var ZHUANGZI_CONTENT = `【内篇】
 
 逍遥游第一
 

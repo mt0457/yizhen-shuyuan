@@ -1,4 +1,4 @@
-const WANGFUZHI_ZHOUYINEIZHUAN_CONTENT = `王夫之·周易内传
+var WANGFUZHI_ZHOUYINEIZHUAN_CONTENT = `王夫之·周易内传
 
 王夫之（1619—1692），《周易内传》六卷，成于康熙二十四年（1685），时年六十七。循传统注疏之体，逐卦逐爻注释发挥，参以毕生哲思。以乾坤并建为纲，以阴阳合一为宗，以即象见理为法。此船山晚年定论。
 

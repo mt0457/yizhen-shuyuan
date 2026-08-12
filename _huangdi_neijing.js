@@ -1,6 +1,6 @@
 // 黄帝内经 — 全书完整内容
 // 素问81篇 + 灵枢81篇，共162篇
-const HUANGDI_NEIJING_CONTENT = `
+var HUANGDI_NEIJING_CONTENT = `
 
 ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
   黄 帝 内 经 · 全 书 目 录

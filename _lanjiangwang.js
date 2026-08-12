@@ -1,4 +1,4 @@
-const LANJIANGWANG_CONTENT = `栏江网
+var LANJIANGWANG_CONTENT = `栏江网
 
 明·佚名 著  清·余春台 整理
 

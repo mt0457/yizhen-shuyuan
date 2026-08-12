@@ -1,4 +1,4 @@
-const SOUSHENJI_CONTENT = `搜神记·卷一·神农
+var SOUSHENJI_CONTENT = `搜神记·卷一·神农
 
 神农以赭鞭鞭百草，尽知其平毒寒温之性，臭味所主，以播百谷，故天下号神农也。
 

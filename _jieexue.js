@@ -1,4 +1,4 @@
-const JIEEXUE_CONTENT = `解厄学
+var JIEEXUE_CONTENT = `解厄学
 
 《解厄学》为北宋宰相晏殊所著处世经典，与《菜根谭》《围炉夜话》《小窗幽记》并称中国古代处世四大奇书。
 

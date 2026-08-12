@@ -1,4 +1,4 @@
-const JIAOYANSHOU_YILIN_SHANGJING_CONTENT = `焦延寿·易林
+var JIAOYANSHOU_YILIN_SHANGJING_CONTENT = `焦延寿·易林
 
 《易林》，又称《焦氏易林》，西汉焦延寿（焦赣）撰。焦延寿，字延寿，一说名赣，梁国（今河南商丘）人，汉昭帝时官至小黄令。其学得之于孟喜，传之于京房，为汉代象数易学之重镇。
 

@@ -1,4 +1,4 @@
-const YANGWANLI_CHENGZHAIYIZHUAN_CONTENT = `杨万里·诚斋易传
+var YANGWANLI_CHENGZHAIYIZHUAN_CONTENT = `杨万里·诚斋易传
 
 杨万里（1127—1206），字廷秀，号诚斋，吉州吉水（今江西吉水）人。南宋著名诗人、理学家，与陆游、范成大、尤袤并称"中兴四大诗人"。绍兴二十四年进士，历任国子博士、太常博士、秘书少监等职。为人刚正，屡忤权相，晚年家居十五年不出，卒谥文节。
 

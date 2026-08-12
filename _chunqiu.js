@@ -1,4 +1,4 @@
-const CHUNQIU_CONTENT = `春秋（全文）
+var CHUNQIU_CONTENT = `春秋（全文）
 
 【春秋经·卷一】隐公（在位十一年）
 

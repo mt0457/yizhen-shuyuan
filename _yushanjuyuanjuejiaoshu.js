@@ -1,4 +1,4 @@
-const YUSHANJUYUANJUEJIAOSHU_CONTENT = `与山巨源绝交书
+var YUSHANJUYUANJUEJIAOSHU_CONTENT = `与山巨源绝交书
 
 嵇康（224—263），字叔夜，谯国铚人。三国魏著名文学家音乐家。竹林七贤之一。官至中散大夫。山涛（巨源）亦竹林七贤之一，后出仕司马氏。山涛荐嵇康自代，嵇康作此书与之绝交。后为司马昭所杀，临刑奏广陵散。
 

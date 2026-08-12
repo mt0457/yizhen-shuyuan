@@ -1,4 +1,4 @@
-const DAODEJING_CONTENT = `【道经】
+var DAODEJING_CONTENT = `【道经】
 
 第一章
 

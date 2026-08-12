@@ -1,4 +1,4 @@
-const WENXINDIAOLONG_CONTENT = `文心雕龙
+var WENXINDIAOLONG_CONTENT = `文心雕龙
 	南朝梁·刘勰著
 	中国文学理论批评史上第一部体系严密、结构完整的文学理论专著
 

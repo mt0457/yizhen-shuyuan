@@ -1,4 +1,4 @@
-const LIUZONGYUANJI_CONTENT = `柳宗元集
+var LIUZONGYUANJI_CONTENT = `柳宗元集
 
 柳宗元（773—819），字子厚，河东人。唐代文学家哲学家，唐宋八大家之一。与韩愈并称韩柳。因参与永贞革新被贬永州柳州，卒于柳州任上年仅四十七岁。
 

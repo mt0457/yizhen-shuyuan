@@ -1,4 +1,4 @@
-const LIDAOPING_ZHOUYIJIJIEZUANSHU_CONTENT = `李道平·周易集解篡疏
+var LIDAOPING_ZHOUYIJIJIEZUANSHU_CONTENT = `李道平·周易集解篡疏
 
 李道平（1788—1844），字远山，湖北安陆人。嘉庆举人，毕生治易。因李鼎祚《周易集解》采三十五家汉晋易说而辞奥难读，遂为之篡疏。凡李氏所采，必详出处、析义理、疏隐奥。于虞翻荀爽阐发尤详。与惠栋《周易述》、张惠言《虞氏义》鼎足而三。
 

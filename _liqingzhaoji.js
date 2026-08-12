@@ -1,4 +1,4 @@
-const LIQINGZHAOJI_CONTENT = `李清照集
+var LIQINGZHAOJI_CONTENT = `李清照集
 
 李清照（1084—约1155），号易安居士。齐州章丘人。南宋著名女词人，婉约词派代表，被誉为千古第一才女。其词以南渡为界前后风格迥异。
 

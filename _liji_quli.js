@@ -1,4 +1,4 @@
-const LIJI_QULI_CONTENT = `礼记·曲礼
+var LIJI_QULI_CONTENT = `礼记·曲礼
 
 《礼记》为儒家十三经之一，与《周礼》《仪礼》合称三礼，是中国古代礼学之核心经典。全书四十九篇，为西汉戴圣编纂。
 

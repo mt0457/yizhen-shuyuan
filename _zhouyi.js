@@ -1,4 +1,4 @@
-const ZHOUYI_CONTENT = `乾卦第一
+var ZHOUYI_CONTENT = `乾卦第一
 
 乾：元，亨，利，贞。
 

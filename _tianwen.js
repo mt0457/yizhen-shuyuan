@@ -1,4 +1,4 @@
-const TIANWEN_CONTENT = `天问
+var TIANWEN_CONTENT = `天问
 
 【题解】
 《天问》是屈原作品中的奇文，全篇由一百七十多个问题组成，涉及宇宙起源、天文地理、神话传说、
