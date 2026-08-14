@@ -38,6 +38,7 @@
 <!-- 数据访问层 -->
 <script src="_supabase-sdk.js" defer></script>
 <script src="_zeng_data.js" defer></script>
+<script src="_zeng_available.js" defer></script>
 <script src="_api.js"></script>
 <style>
 /* === 关键暖色主题（内嵌保证100%加载，手机端不丢色） === */
@@ -1919,15 +1920,11 @@ const DEFAULT_BOOKS = [
 	];
 
 const DEFAULT_VIDEOS = [
-  { id:'zs1', title:'易经的智慧', category:'曾仕强', thumbType:1, status:'approved', desc:'曾仕强教授逐卦讲解六十四卦，共150集。从乾坤到未济，每卦2集深入浅出。', url:'曾仕强/曾仕强/易经的智慧150集/播放目录.html', type:'zengseries', bvid:'BV1usTXzaEE6', pageBase:0, allowDonate:false },
   { id:'zs2', title:'易经的奥秘', category:'曾仕强', thumbType:2, status:'approved', desc:'央视百家讲坛系列。何为易经、阴阳、太极、八卦，15集解开易经千年之谜。B站高清流畅播放。', url:'曾仕强/曾仕强/易经的奥秘15集/播放目录.html', type:'zengseries', bvid:'BV11qe4ewEmP', pageBase:0, allowDonate:false },
   { id:'zs3', title:'易经的人生智慧', category:'曾仕强', thumbType:3, status:'approved', desc:'20集专题讲座。善始善终、一阴一阳、卦爻符号、廿一世纪易学使命。', url:'曾仕强/曾仕强/易经的人生智慧20集/播放目录.html', type:'zengseries', bvid:'BV12v4y1o7Fy', pageBase:0, allowDonate:false },
   { id:'zs4', title:'论三国智慧', category:'曾仕强', thumbType:4, status:'approved', desc:'曾仕强从管理学和人生智慧角度解读三国演义，86集全。桃园结义到三国归晋。', url:'曾仕强/曾仕强/曾仕强论三国智慧86集/播放目录.html', type:'zengseries', bvid:'BV1J5G26YEfK', pageBase:0, allowDonate:false },
   { id:'zs5', title:'大道易行：解易经六十四卦', category:'曾仕强', thumbType:5, status:'approved', desc:'大型易经讲座现场录制。风水轮流转、乐天知命、易经占卜、为人类2035年占卜。9集。', url:'曾仕强/曾仕强/大道易行解易经六十四卦9集/播放目录.html', type:'zengseries', bvid:'BV18k4y1L7QH', pageBase:0, allowDonate:false },
-  { id:'zs6', title:'人生智慧', category:'曾仕强', thumbType:1, status:'approved', desc:'曾仕强主讲人生智慧系列。伏羲·黄帝·姜子牙·老子·范蠡·鬼谷子·张良·郭子仪·刘伯温·郑和·康熙·曾国藩·胡雪岩，共97集。', url:'曾仕强/曾仕强/胡雪岩的人生智慧23集/播放目录.html', type:'zengseries', bvid:'BV1PL411C7z2', pageBase:0, allowDonate:false },
-  { id:'zs7', title:'胡雪岩的启示', category:'曾仕强', thumbType:2, status:'approved', desc:'央视百家讲坛系列。德行定终身、诚信为本、随机应变。15集，B站高清流畅播放。', url:'曾仕强/曾仕强/胡雪岩的启示15集/播放目录.html', type:'zengseries', bvid:'BV1UqyNBBE45', pageBase:0, allowDonate:false },
   { id:'zs8', title:'老子的人生智慧', category:'曾仕强', thumbType:3, status:'approved', desc:'道家哲学精华。道法自然、无为而治、柔弱胜刚强。12集。', url:'曾仕强/曾仕强/老子的人生智慧12集/播放目录.html', type:'zengseries', bvid:'BV1Q24y1v71X', pageBase:0, allowDonate:false },
-  { id:'zs9', title:'财神文化', category:'曾仕强', thumbType:4, status:'approved', desc:'道德是最高信仰。让自己求合理应变，德本财末才合道。含财神学+财神文化共36集。', url:'曾仕强/曾仕强/财神文化12集/播放目录.html', type:'zengseries', bvid:'BV12N411G7Z7', pageBase:0, allowDonate:false },
   { id:'zs10', title:'曾国藩的识人用人之道', category:'曾仕强', thumbType:5, status:'approved', desc:'曾仕强解读同乡先贤。识时务、勤读史、讲道德。6集。', url:'曾仕强/曾仕强/曾国藩的识人用人之道6集/播放目录.html', type:'zengseries', bvid:'BV1jY411g7gB', pageBase:0, allowDonate:false },
   { id:'zs11', title:'关公的领导艺术', category:'曾仕强', thumbType:1, status:'approved', desc:'忠义千秋。关公领导力分析，4集。', url:'曾仕强/曾仕强/关公的领导艺术4集/播放目录.html', type:'zengseries', bvid:'BV164766ZEWf', pageBase:4, dataFolder:'领导艺术合集24集', episodeRange:[4,8], allowDonate:false },
   { id:'zs12', title:'刘伯温的人生智慧', category:'曾仕强', thumbType:2, status:'approved', desc:'明朝开国军师。神机妙算、功成身退。4集。', url:'曾仕强/曾仕强/刘伯温的人生智慧4集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:0, dataFolder:'人生智慧合集32集', episodeRange:[0,4], allowDonate:false },
@@ -1942,7 +1939,6 @@ const DEFAULT_VIDEOS = [
   { id:'zs21', title:'郭子仪的人生智慧', category:'曾仕强', thumbType:1, status:'approved', desc:'唐朝中兴名将。功高不震主、权大不遭忌。4集。', url:'曾仕强/曾仕强/郭子仪的人生智慧4集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:4, dataFolder:'人生智慧合集32集', episodeRange:[4,8], allowDonate:false },
   { id:'zs22', title:'鬼谷子的人生智慧', category:'曾仕强', thumbType:2, status:'approved', desc:'战国纵横家鼻祖。苏秦张仪之师。捍阔之道。4集。', url:'曾仕强/曾仕强/鬼谷子的人生智慧4集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:44, dataFolder:'人生智慧合集32集', episodeRange:[44,48], allowDonate:false },
   { id:'zs23', title:'黄帝的人生智慧', category:'曾仕强', thumbType:3, status:'approved', desc:'中华民族始祖。垂拱而治、道法自然。4集。', url:'曾仕强/曾仕强/黄帝的人生智慧4集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:12, dataFolder:'人生智慧合集32集', episodeRange:[12,16], allowDonate:false },
-  { id:'zs24', title:'范蠡的人生智慧', category:'曾仕强', thumbType:4, status:'approved', desc:'三致千金、泛舟五湖。功成身退、经商鼻祖。8集。', url:'曾仕强/曾仕强/范蠡的人生智慧8集/播放目录.html', type:'zengseries', bvid:'BV1jY4y167RC', pageBase:0, allowDonate:false },
   { id:'zs25', title:'郑和的人生智慧', category:'曾仕强', thumbType:5, status:'approved', desc:'七下西洋。大明航海家的格局与智慧。4集。', url:'曾仕强/曾仕强/郑和的人生智慧4集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:40, dataFolder:'人生智慧合集32集', episodeRange:[40,44], allowDonate:false },
   { id:'zs26', title:'人人可以心想事成', category:'曾仕强', thumbType:1, status:'approved', desc:'心想事成的秘密。吸引力法则的东方智慧解读。全集。', url:'曾仕强/曾仕强/人人可以心想事成1集/播放目录.html', type:'zengseries', bvid:'BV18r4y1s7an', pageBase:0, allowDonate:false },
   { id:'zs27', title:'人生智慧合集', category:'曾仕强', thumbType:2, status:'approved', desc:'【合集】刘伯温·郭子仪·姜子牙·黄帝·康熙·老子·范蠡·张良·郑和·鬼谷子。共48集，B站高清。', url:'曾仕强/曾仕强/人生智慧合集32集/播放目录.html', type:'zengseries', bvid:'BV1F84y1c72P', pageBase:0, allowDonate:false },
@@ -3266,6 +3262,24 @@ function init() {
   if (state.videos.length > (savedVideos ? JSON.parse(savedVideos).length : 0)) {
     saveVideos();
   }
+  // v539: 彻底删除源丢失的视频系列 + 修正 dataFolder 映射（对老用户 localStorage 也生效）
+  var REMOVED_VIDEO_IDS = ['zs1','zs6','zs7','zs9','zs24'];
+  var VIDEO_PATCHES = {
+    zs11: { dataFolder:'关公的领导艺术4集' }, // 修正：全集在"关公的领导艺术4集"目录
+    zs20: { status:'approved', dataFolder:'关公的领导艺术4集', episodeRange:[12,16] }, // 修正：赵云4集在"关公的领导艺术4集"目录第12-16集
+    zs28: { dataFolder:'关公的领导艺术4集' }  // 修正：领导艺术全集在"关公的领导艺术4集"目录
+  };
+  var _patched = false;
+  state.videos.forEach(function(v) {
+    var patch = VIDEO_PATCHES[v.id];
+    if (patch) {
+      Object.keys(patch).forEach(function(k) { if (v[k] !== patch[k]) { v[k] = patch[k]; _patched = true; } });
+    }
+  });
+  var _beforeRemove = state.videos.length;
+  state.videos = state.videos.filter(function(v){ return REMOVED_VIDEO_IDS.indexOf(v.id) === -1; });
+  if (state.videos.length !== _beforeRemove) _patched = true;
+  if (_patched) saveVideos();
   // Sort videos: 曾仕强 first, then by title
   state.videos.sort(function(a,b){
     if(a.category==='曾仕强' && b.category!=='曾仕强') return -1;
@@ -4187,6 +4201,54 @@ function openPlayer(videoId) {
       return "videos/" + lookupKey + "/" + epBaseName + ".m3u8";
     }
 
+    // Preload next episode .m3u8 into browser cache (lightweight ~1KB manifest)
+    var _preloaded = {};
+    function preloadEpisode(idx) {
+      if (idx < 0 || idx >= episodes.length) return;
+      var url = getHlsSrc(idx);
+      if (_preloaded[url]) return;
+      _preloaded[url] = true;
+      // Use fetch to warm browser HTTP cache — manifest is tiny, cost negligible
+      fetch(url, { mode: 'cors', credentials: 'omit' }).catch(function(){});
+    }
+
+    // Shared HLS config — optimized for fast startup
+    var HLS_CONFIG = {
+      enableWorker: false,
+      lowLatencyMode: false,
+      startLevel: -1,           // start lowest quality → first frame ASAP, then auto-ramp
+      maxBufferLength: 8,       // tighter buffer = faster
+      maxMaxBufferLength: 20,
+      manifestLoadPolicy: {
+        default: { maxTimeToFirstByteMs: 4000, maxLoadTimeMs: 8000, timeoutRetry: { maxNumRetry: 2 } }
+      }
+    };
+
+    function buildHls(videoEl) {
+      var hls = new Hls(HLS_CONFIG);
+      _hlsInstance = hls;
+
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        var ov = document.getElementById('zengLoadingOverlay');
+        if (ov) ov.style.display = 'none';
+        videoEl.play().catch(function(){});
+        // Preload next 2 episodes after current one starts
+        preloadEpisode(curIdx + 1);
+        preloadEpisode(curIdx + 2);
+      });
+
+      hls.on(Hls.Events.ERROR, function(event, data) {
+        if (data.fatal) {
+          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); }
+          else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); }
+          else { hls.destroy(); _hlsInstance = null; }
+        }
+      });
+
+      hls.attachMedia(videoEl);
+      return hls;
+    }
+
     function switchEpisode(idx) {
       if (idx === curIdx && _playerBuilt) return;
       curIdx = idx;
@@ -4213,38 +4275,25 @@ function openPlayer(videoId) {
         }
       }
 
-      // Show loading overlay
       var overlay = document.getElementById('zengLoadingOverlay');
-      if (overlay) overlay.style.display = 'flex';
-
-      // Switch HLS source on existing video element
       var videoEl = document.getElementById('zengVideoEl');
       if (!videoEl) return;
       var hlsSrc = getHlsSrc(idx);
 
       if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-        if (_hlsInstance) { _hlsInstance.destroy(); _hlsInstance = null; }
-        var hls = new Hls({ enableWorker: false, lowLatencyMode: false });
-        hls.loadSource(hlsSrc);
-        hls.attachMedia(videoEl);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          if (overlay) overlay.style.display = 'none';
-          videoEl.play().catch(function(){});
-        });
-        hls.on(Hls.Events.ERROR, function(event, data) {
-          if (data.fatal) {
-            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); }
-            else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); }
-            else { hls.destroy(); }
-          }
-        });
-        _hlsInstance = hls;
+        // ★ Reuse existing HLS instance — loadSource() is 3-5x faster than destroy+create
+        if (_hlsInstance) {
+          if (overlay) overlay.style.display = 'flex';
+          _hlsInstance.loadSource(hlsSrc);
+        } else {
+          if (overlay) overlay.style.display = 'flex';
+          var hls = buildHls(videoEl);
+          hls.loadSource(hlsSrc);
+        }
       } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS (Safari)
+        if (overlay) overlay.style.display = 'flex';
         videoEl.src = hlsSrc;
-        videoEl.addEventListener('loadedmetadata', function(){
-          if (overlay) overlay.style.display = 'none';
-          videoEl.play().catch(function(){});
-        });
       }
     }
 
@@ -4255,20 +4304,30 @@ function openPlayer(videoId) {
       var hlsSrc = getHlsSrc(idx);
       var totalEps = episodes.length;
 
+      // Preload episode 2 immediately while DOM builds
+      preloadEpisode(1);
+
       // Build episode sidebar list
       var sideList = "";
       for (var i = 0; i < episodes.length; i++) {
         var e = episodes[i];
         var isActive = i === idx;
         var shortTitle = (e.title || ("第"+(i+1)+"集")).substring(0, 18);
-        sideList += "<div class=\"zeng-ep-item\" onclick=\"window._zengPlay("+i+")\" style=\"padding:8px 10px;cursor:pointer;font-size:12px;line-height:1.4;border-bottom:1px solid var(--border-light);"+(isActive?"background:var(--red-primary);color:#fff;font-weight:600;":"")+"\">"+(i+1)+". "+shortTitle+"</div>";
+        var _epBase = (e.file || "").replace(/\.\w+$/i, '');
+        var _epAvail = (typeof ZENG_AVAILABLE === 'undefined') || ZENG_AVAILABLE[_epBase];
+        if (!_epAvail) {
+          // 缺失集：置灰不可点
+          sideList += "<div class=\"zeng-ep-item\" style=\"padding:8px 10px;font-size:12px;line-height:1.4;border-bottom:1px solid var(--border-light);color:var(--ink-lighter);opacity:0.45;cursor:not-allowed;\">"+(i+1)+". "+shortTitle+"<span style=\"font-size:11px;color:#bbb;\">（暂缺）</span></div>";
+        } else {
+          sideList += "<div class=\"zeng-ep-item\" onclick=\"window._zengPlay("+i+")\" style=\"padding:8px 10px;cursor:pointer;font-size:12px;line-height:1.4;border-bottom:1px solid var(--border-light);"+(isActive?"background:var(--red-primary);color:#fff;font-weight:600;":"")+"\">"+(i+1)+". "+shortTitle+"</div>";
+        }
       }
 
       container.innerHTML =
         "<div id=\"zengTitleBar\" style=\"padding:10px 14px;font-size:14px;background:var(--bg-warm);border-bottom:1px solid var(--border-light);\">📺 "+video.title+" — 第"+(idx+1)+"/"+totalEps+"集："+epTitle+"</div>"+
         "<div class=\"zeng-player-layout\">"+
           "<div class=\"zeng-player-video\" style=\"position:relative;\">"+
-            "<video id=\"zengVideoEl\" controls autoplay style=\"width:100%;height:100%;object-fit:contain;\" playsinline></video>"+
+            "<video id=\"zengVideoEl\" controls autoplay style=\"width:100%;height:100%;object-fit:contain;background:#000;\" playsinline></video>"+
             "<div id=\"zengLoadingOverlay\" style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.04);pointer-events:none;\"><div style=\"background:rgba(0,0,0,0.7);color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;\">⏳ 加载中...</div></div>"+
           "</div>"+
           "<div class=\"zeng-player-sidebar\">"+
@@ -4279,27 +4338,12 @@ function openPlayer(videoId) {
 
       _playerBuilt = true;
 
-      // Initialize HLS playback
       var videoEl = document.getElementById('zengVideoEl');
       if (!videoEl) return;
+
       if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-        if (_hlsInstance) { _hlsInstance.destroy(); _hlsInstance = null; }
-        var hls = new Hls({ enableWorker: false, lowLatencyMode: false });
+        var hls = buildHls(videoEl);
         hls.loadSource(hlsSrc);
-        hls.attachMedia(videoEl);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-          var ov = document.getElementById('zengLoadingOverlay');
-          if (ov) ov.style.display = 'none';
-          videoEl.play().catch(function(){});
-        });
-        hls.on(Hls.Events.ERROR, function(event, data) {
-          if (data.fatal) {
-            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) { hls.startLoad(); }
-            else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); }
-            else { hls.destroy(); }
-          }
-        });
-        _hlsInstance = hls;
       } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
         // Native HLS (Safari)
         videoEl.src = hlsSrc;
@@ -4317,11 +4361,23 @@ function openPlayer(videoId) {
       }
     }
 
+    function _isEpAvail(i) {
+      if (typeof ZENG_AVAILABLE === 'undefined') return true;
+      if (i < 0 || i >= episodes.length) return false;
+      var _b = (episodes[i].file || "").replace(/\.\w+$/i, '');
+      return !!ZENG_AVAILABLE[_b];
+    }
+
     window._zengPlay = function(i) {
+      if (!_isEpAvail(i)) return;
       if (!_playerBuilt) { buildLocalPlayer(i); }
       else { switchEpisode(i); }
     };
-    buildLocalPlayer(0);
+
+    // 初始集：若第0集缺失，自动跳到第一个可用集
+    var _startIdx = 0;
+    for (var _si = 0; _si < episodes.length; _si++) { if (_isEpAvail(_si)) { _startIdx = _si; break; } }
+    buildLocalPlayer(_startIdx);
     document.getElementById("playerModal").classList.add("open");
     document.body.style.overflow = "hidden";
     return;
